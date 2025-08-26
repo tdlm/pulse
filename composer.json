@@ -6,11 +6,23 @@
     "authors": [
         {
             "name": "Scott Weaver",
-            "email": "scottmweaver@gmail.com"
+            "homepage": "https://tdlm.github.io"
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "ext-json": "*"
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "php-stubs/wordpress-stubs": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "WP_Pulse\\": "includes/classes/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
     }
 }

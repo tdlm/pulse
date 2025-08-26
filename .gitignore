@@ -63,7 +63,7 @@ build/
 # Coverage directory used by tools like istanbul
 coverage/
 
-# Composer (if using PHP dependencies)
+# Composer
 vendor/
 composer.lock
 
