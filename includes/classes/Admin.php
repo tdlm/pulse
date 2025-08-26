@@ -15,7 +15,7 @@ class Admin {
             'manage_options',
             'wp-pulse',
             [self::class, 'render_page'],
-            'dashicons-heart',
+            'dashicons-visibility',
             2.75
         );
     }
