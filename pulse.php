@@ -56,3 +56,7 @@ register_deactivation_hook(__FILE__, ['\WP_Pulse\Core', 'deactivate']);
 
 // Bootstrap the plugin.
 \WP_Pulse\Core::bootstrap();
+
+if (true === is_admin()) {
+    \WP_Pulse\Admin::bootstrap();
+}
