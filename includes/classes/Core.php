@@ -34,6 +34,6 @@ class Core
      */
     public static function bootstrap()
     {
-        // Silence is golden.
+        Pulses::load();
     }
 }
