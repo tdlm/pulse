@@ -1,0 +1,16 @@
+{
+    "name": "tdlm/pulse",
+    "description": "Pulse tracks user activity for logged in users in stunning detail.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Scott Weaver",
+            "email": "scottmweaver@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*"
+    }
+}
