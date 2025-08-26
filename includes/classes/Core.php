@@ -1,6 +1,12 @@
 <?php
-
-namespace Pulse;
+/**
+ * Pulse for WordPress.
+ *
+ * @package Pulse
+ * @subpackage Core
+ * @since 1.0.0
+ */
+namespace WP_Pulse;
 
 class Core
 {

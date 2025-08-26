@@ -13,7 +13,6 @@
  * Requires at least: 5.0
  * Tested up to: 6.4
  * Requires PHP: 7.4
- * Network: false
  *
  * @package Pulse
  */
@@ -30,11 +29,10 @@ define('PULSE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PULSE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PULSE_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
-
 // Register autoloader.
 spl_autoload_register(
     function ($class_name) {
-        $prefix = 'Pulse\\';
+        $prefix = 'WP_Pulse\\';
         $base_dir = __DIR__ . '/includes/classes/';
         $len = strlen($prefix);
 
@@ -53,8 +51,8 @@ spl_autoload_register(
 
 
 // Activation/Deactivation.
-register_activation_hook( __FILE__, [ '\Pulse\Core', 'activate' ] );
-register_deactivation_hook( __FILE__, [ '\Pulse\Core', 'deactivate' ] );
+register_activation_hook(__FILE__, ['\WP_Pulse\Core', 'activate']);
+register_deactivation_hook(__FILE__, ['\WP_Pulse\Core', 'deactivate']);
 
 // Bootstrap the plugin.
-\Pulse\Core::bootstrap();
+\WP_Pulse\Core::bootstrap();
