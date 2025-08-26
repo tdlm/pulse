@@ -30,8 +30,31 @@ define('PULSE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PULSE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PULSE_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
-function pulse_init() {
-    echo "<!-- Pulse for WordPress -->";
-}
 
-add_action('init', 'pulse_init');
+// Register autoloader.
+spl_autoload_register(
+    function ($class_name) {
+        $prefix = 'Pulse\\';
+        $base_dir = __DIR__ . '/includes/classes/';
+        $len = strlen($prefix);
+
+        if (0 !== strncmp($prefix, $class_name, $len)) {
+            return;
+        }
+
+        $relative_class = substr($class_name, $len);
+        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+        if (true === file_exists($file)) {
+            require $file;
+        }
+    }
+);
+
+
+// Activation/Deactivation.
+register_activation_hook( __FILE__, [ '\Pulse\Core', 'activate' ] );
+register_deactivation_hook( __FILE__, [ '\Pulse\Core', 'deactivate' ] );
+
+// Bootstrap the plugin.
+\Pulse\Core::bootstrap();
