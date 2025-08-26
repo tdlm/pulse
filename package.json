@@ -1,7 +1,7 @@
 {
-  "name": "pulse-wordpress-plugin",
+  "name": "wp-pulse",
   "version": "1.0.0",
-  "description": "A WordPress plugin for pulse functionality",
+  "description": "Pulse tracks user activity for logged in users in stunning detail.",
   "main": "pulse.php",
   "scripts": {
     "wp-env": "wp-env",
@@ -15,7 +15,10 @@
   "keywords": [
     "wordpress",
     "plugin",
-    "pulse"
+    "pulse",
+    "activity",
+    "log",
+    "track"
   ],
   "author": "Scott Weaver",
   "license": "GPL-2.0-or-later",
