@@ -10,7 +10,8 @@
     "env:destroy": "wp-env destroy",
     "env:reset": "wp-env destroy && wp-env start",
     "env:logs": "wp-env logs",
-    "env:cli": "wp-env run cli wp"
+    "env:cli": "wp-env run cli wp",
+    "env:shell": "wp-env run cli bash"
   },
   "keywords": [
     "wordpress",
