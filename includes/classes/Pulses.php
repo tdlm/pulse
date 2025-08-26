@@ -1,8 +1,8 @@
 <?php
 /**
- * Pulse for WordPress.
+ * Pulses.
  *
- * @package Pulse
+ * @package WP_Pulse
  * @subpackage Pulses
  * @since 1.0.0
  */

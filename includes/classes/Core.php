@@ -2,7 +2,7 @@
 /**
  * Pulse for WordPress.
  *
- * @package Pulse
+ * @package WP_Pulse
  * @subpackage Core
  * @since 1.0.0
  */

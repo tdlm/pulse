@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Pulse.
+ *
+ * @package WP_Pulse
+ * @subpackage Pulse
+ * @since 1.0.0
+ */
 namespace WP_Pulse;
 
 class Pulse
