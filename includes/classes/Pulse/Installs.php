@@ -72,14 +72,10 @@ class Installs extends Pulse {
 	 * @return void
 	 */
 	public function callback_switch_theme( $slug, $theme ) {
-		// error_log( print_r( compact('slug','theme'), true ) );
-		error_log( print_r( $theme->get( 'Name' ), true ) );
-		error_log( print_r( $theme->get( 'Version' ), true ) );
-
 		$theme_details = [
-			'Name'           => $theme->get( 'Name' ),
-			'Version'        => $theme->get( 'Version' ),
-			'Status'         => $theme->get( 'Status' ),
+			'Name'    => $theme->get( 'Name' ),
+			'Version' => $theme->get( 'Version' ),
+			'Status'  => $theme->get( 'Status' ),
 		];
 
 		Log::log(
