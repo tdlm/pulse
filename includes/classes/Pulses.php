@@ -8,27 +8,30 @@
  */
 namespace WP_Pulse;
 
-class Pulses
-{
-    /**
-     * Load pulses.
-     * @return void
-     */
-    public static function load()
-    {
-        $pulses = apply_filters('wp_pulse_pulses', [
-            'installs'
-        ]);
+class Pulses {
 
-        foreach ($pulses as $pulse) {
-            $pulse_class = 'WP_Pulse\\Pulse\\' . $pulse;
+	/**
+	 * Load pulses.
+	 *
+	 * @return void
+	 */
+	public static function load() {
+		$pulses = apply_filters(
+			'wp_pulse_pulses',
+			[
+				'installs',
+			]
+		);
 
-            if ( true === class_exists( $pulse_class ) ) {
-                $pulse = new $pulse_class();
-                $pulse->register();
-            } else {
-                error_log( sprintf( 'Pulse class %s does not exist.', $pulse_class ) );
-            }
-        }
-    }
+		foreach ( $pulses as $pulse ) {
+			$pulse_class = 'WP_Pulse\\Pulse\\' . $pulse;
+
+			if ( true === class_exists( $pulse_class ) ) {
+				$pulse = new $pulse_class();
+				$pulse->register();
+			} else {
+				error_log( sprintf( 'Pulse class %s does not exist.', $pulse_class ) );
+			}
+		}
+	}
 }

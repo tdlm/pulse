@@ -18,45 +18,45 @@
  */
 
 // Prevent direct access
-if (false === defined('ABSPATH')) {
-    exit;
+if ( false === defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 // Define plugin constants
-define('PULSE_VERSION', '1.0.0');
-define('PULSE_PLUGIN_FILE', __FILE__);
-define('PULSE_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('PULSE_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('PULSE_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define( 'PULSE_VERSION', '1.0.0' );
+define( 'PULSE_PLUGIN_FILE', __FILE__ );
+define( 'PULSE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'PULSE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'PULSE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // Register autoloader.
 spl_autoload_register(
-    function ($class_name) {
-        $prefix = 'WP_Pulse\\';
-        $base_dir = __DIR__ . '/includes/classes/';
-        $len = strlen($prefix);
+	function ( $class_name ) {
+		$prefix   = 'WP_Pulse\\';
+		$base_dir = __DIR__ . '/includes/classes/';
+		$len      = strlen( $prefix );
 
-        if (0 !== strncmp($prefix, $class_name, $len)) {
-            return;
-        }
+		if ( 0 !== strncmp( $prefix, $class_name, $len ) ) {
+			return;
+		}
 
-        $relative_class = substr($class_name, $len);
-        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+		$relative_class = substr( $class_name, $len );
+		$file           = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
 
-        if (true === file_exists($file)) {
-            require $file;
-        }
-    }
+		if ( true === file_exists( $file ) ) {
+			require $file;
+		}
+	}
 );
 
 
 // Activation/Deactivation.
-register_activation_hook(__FILE__, ['\WP_Pulse\Core', 'activate']);
-register_deactivation_hook(__FILE__, ['\WP_Pulse\Core', 'deactivate']);
+register_activation_hook( __FILE__, [ '\WP_Pulse\Core', 'activate' ] );
+register_deactivation_hook( __FILE__, [ '\WP_Pulse\Core', 'deactivate' ] );
 
 // Bootstrap the plugin.
 \WP_Pulse\Core::bootstrap();
 
-if (true === is_admin()) {
-    \WP_Pulse\Admin::bootstrap();
+if ( true === is_admin() ) {
+	\WP_Pulse\Admin::bootstrap();
 }

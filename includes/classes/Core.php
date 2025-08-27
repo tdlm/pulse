@@ -8,43 +8,43 @@
  */
 namespace WP_Pulse;
 
-class Core
-{
-    public static $option_key_db_version = 'wp_pulse_version_db';
+class Core {
 
-    /**
-     * Activate the plugin.
-     * @return void
-     */
-    public static function activate()
-    {
-        Install::migrate();
-    }
+	public static $option_key_db_version = 'wp_pulse_version_db';
 
-    /**
-     * Deactivate the plugin.
-     * @return void
-     */
-    public static function deactivate()
-    {
-        // Silence is golden.
-    }
+	/**
+	 * Activate the plugin.
+	 *
+	 * @return void
+	 */
+	public static function activate() {
+		Install::migrate();
+	}
 
-    /**
-     * Bootstrap the plugin.
-     * @return void
-     */
-    public static function bootstrap()
-    {
-        Pulses::load();
-    }
+	/**
+	 * Deactivate the plugin.
+	 *
+	 * @return void
+	 */
+	public static function deactivate() {
+		// Silence is golden.
+	}
 
-    /**
-     * Get the plugin's database version.
-     * 
-     * @return string
-     */
-    public static function get_db_version() {
-        return get_option(self::$option_key_db_version, '');
-    }
+	/**
+	 * Bootstrap the plugin.
+	 *
+	 * @return void
+	 */
+	public static function bootstrap() {
+		Pulses::load();
+	}
+
+	/**
+	 * Get the plugin's database version.
+	 *
+	 * @return string
+	 */
+	public static function get_db_version() {
+		return get_option( self::$option_key_db_version, '' );
+	}
 }

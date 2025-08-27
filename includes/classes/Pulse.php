@@ -8,49 +8,48 @@
  */
 namespace WP_Pulse;
 
-class Pulse
-{
-    public $actions = [];
+class Pulse {
 
-    private $is_registered = false;
+	public $actions = [];
 
-    public function __construct()
-    {
-        // Silence is golden.
-    }
+	private $is_registered = false;
 
-    public function register() {
-        if ( true === $this->is_registered ) {
-            return;
-        }
+	public function __construct() {
+		// Silence is golden.
+	}
 
-        foreach ( $this->actions as $action ) {
-            add_action( $action, [ $this, 'callback' ], 10, 99 );
-        }
+	public function register() {
+		if ( true === $this->is_registered ) {
+			return;
+		}
 
-        $this->is_registered = true;        
-    }
+		foreach ( $this->actions as $action ) {
+			add_action( $action, [ $this, 'callback' ], 10, 99 );
+		}
 
-    public function unregister() {
-        if ( false === $this->is_registered ) {
-            return;
-        }
+		$this->is_registered = true;
+	}
 
-        foreach ( $this->actions as $action ) {
-            remove_action( $action, [ $this, 'callback' ], 10, 99 );
-        }
+	public function unregister() {
+		if ( false === $this->is_registered ) {
+			return;
+		}
 
-        $this->is_registered = false;
-    }
+		foreach ( $this->actions as $action ) {
+			remove_action( $action, [ $this, 'callback' ], 10, 99 );
+		}
 
-    public function callback() {
-        $action = current_filter();
-        $callback = [ $this, 'callback_' . preg_replace( '/[^a-z0-9_]/', '_', $action ) ];
+		$this->is_registered = false;
+	}
 
-        if ( true === is_callable( $callback ) ) {
-            return call_user_func_array( $callback, func_get_args() );
-        }
+	public function callback() {
+		$action   = current_filter();
+		$callback = [ $this, 'callback_' . preg_replace( '/[^a-z0-9_]/', '_', $action ) ];
 
-        return false;
-    }
+		if ( true === is_callable( $callback ) ) {
+			return call_user_func_array( $callback, func_get_args() );
+		}
+
+		return false;
+	}
 }
