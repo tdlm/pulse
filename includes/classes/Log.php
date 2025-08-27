@@ -16,7 +16,7 @@ class Log
      * @param mixed $description
      * @param mixed $user_id
      */
-    public static function log($action, $description, $user_id = null)
+    public static function log($action, $description, $context, $user_id = null)
     {
         global $wpdb;
 
@@ -27,6 +27,7 @@ class Log
         $pulse = [
             'action' => $action,
             'description' => $description,
+            'context' => $context,
             'user_id' => $user_id,
             'ip' => filter_var(filter_input(INPUT_SERVER, 'REMOTE_ADDR'), FILTER_VALIDATE_IP),
             'created_at' => current_time('mysql', true),
