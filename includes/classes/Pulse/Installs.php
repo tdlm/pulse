@@ -35,12 +35,14 @@ class Installs extends Pulse {
 	 * @return void
 	 */
 	public function callback_activate_plugin( $slug ) {
-		$name = $this->get_plugin_name( $slug );
+		$plugin_details = $this->get_plugin_details( $slug );
 
 		Log::log(
 			'activate_plugin',
-			sprintf( 'Plugin %s activated.', $name ),
+			sprintf( 'Plugin %s version %s activated.', $plugin_details['Name'], $plugin_details['Version'] ),
 			'plugin',
+			null,
+			$this->get_plugin_details( $slug )
 		);
 	}
 
@@ -51,11 +53,11 @@ class Installs extends Pulse {
 	 * @return void
 	 */
 	public function callback_deactivate_plugin( $slug ) {
-		$name = $this->get_plugin_name( $slug );
+		$plugin_details = $this->get_plugin_details( $slug );
 
 		Log::log(
 			'deactivate_plugin',
-			sprintf( 'Plugin %s deactivated.', $name ),
+			sprintf( 'Plugin %s version %s deactivated.', $plugin_details['Name'], $plugin_details['Version'] ),
 			'plugin',
 		);
 	}
@@ -75,19 +77,36 @@ class Installs extends Pulse {
 	}
 
 	/**
-	 * Get plugin name.
+	 * Get plugin detail.
 	 *
 	 * @param string $slug Plugin slug.
-	 * @return string Plugin name or empty string if not found.
+	 * @param string $key Plugin detail key.
+	 * @return string Plugin detail value.
 	 */
-	public function get_plugin_name( $slug ) {
-		$plugins = $this->get_plugins();
+	public function get_plugin_detail( $slug, $key ) {
+		$details = $this->get_plugin_details( $slug );
 
-		if ( false === isset( $plugins[ $slug ], $plugins[ $slug ]['Name'] ) ) {
+		if ( false === isset( $details[ $key ] ) ) {
 			return '';
 		}
 
-		return $plugins[ $slug ]['Name'];
+		return $details[ $key ];
+	}
+
+	/**
+	 * Get plugin details.
+	 *
+	 * @param string $slug Plugin slug.
+	 * @return array Plugin details.
+	 */
+	public function get_plugin_details( $slug ) {
+		$plugins = $this->get_plugins();
+
+		if ( false === isset( $plugins[ $slug ] ) ) {
+			return [];
+		}
+
+		return array_filter( $plugins[ $slug ] );
 	}
 
 	/**

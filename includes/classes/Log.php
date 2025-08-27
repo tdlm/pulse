@@ -21,9 +21,11 @@ class Log {
 	 * @param string   $description The description of the action.
 	 * @param string   $context The context of the action.
 	 * @param int|null $user_id The user ID of the user who performed the action.
+	 * @param array    $meta The meta data to log.
 	 * @return int|false
 	 */
-	public static function log( $action, $description, $context, $user_id = null ) {
+	public static function log( $action, $description, $context, $user_id = null, $meta = [] ) {
+		// @var \wpdb $wpdb The WordPress database object.
 		global $wpdb;
 
 		if ( true === is_null( $user_id ) ) {
@@ -31,16 +33,33 @@ class Log {
 		}
 
 		$pulse = [
-			'action'      => $action,
-			'description' => $description,
-			'context'     => $context,
+			'action'      => wp_strip_all_tags( $action ),
+			'description' => wp_strip_all_tags( $description ),
+			'context'     => wp_strip_all_tags( $context ),
 			'user_id'     => $user_id,
 			'ip'          => filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP ),
 			'created_at'  => current_time( 'mysql', true ),
 		];
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$pulse_id = $wpdb->insert( $wpdb->prefix . 'pulse', $pulse );
+		$result = $wpdb->insert( $wpdb->prefix . 'pulse', $pulse );
+
+		$pulse_id = $wpdb->insert_id;
+
+		if ( false === empty( $meta ) ) {
+			foreach ( $meta as $key => $value ) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+				$wpdb->insert(
+					$wpdb->prefix . 'pulse_meta',
+					[
+						'pulse_id'   => $pulse_id,
+						'meta_key'   => $key,
+						'meta_value' => $value,
+						'created_at' => current_time( 'mysql', true ),
+					]
+				);
+			}
+		}
 
 		if ( true === is_numeric( $pulse_id ) ) {
 			return $pulse_id;
