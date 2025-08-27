@@ -9,6 +9,7 @@
 namespace WP_Pulse\Pulse;
 
 use WP_Pulse\Pulse;
+use WP_Pulse\Log;
 
 class Installs extends Pulse
 {
@@ -26,7 +27,7 @@ class Installs extends Pulse
     public function callback_activate_plugin($slug)
     {
         $name = $this->get_plugin_name($slug);
-        error_log(sprintf('activate_plugin: %s', $name));
+        Log::log('activate_plugin', sprintf('Plugin %s activated.', $name));
     }
 
     /**
@@ -38,7 +39,7 @@ class Installs extends Pulse
     public function callback_deactivate_plugin($slug)
     {
         $name = $this->get_plugin_name($slug);
-        error_log(sprintf('deactivate_plugin: %s', $name));
+        Log::log('deactivate_plugin', sprintf('Plugin %s deactivated.', $name));
     }
 
     /**
