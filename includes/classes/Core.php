@@ -18,7 +18,6 @@ class Core
      */
     public static function activate()
     {
-        // Silence is golden.
         Install::migrate();
     }
 
@@ -40,6 +39,11 @@ class Core
         Pulses::load();
     }
 
+    /**
+     * Get the plugin's database version.
+     * 
+     * @return string
+     */
     public static function get_db_version() {
         return get_option(self::$option_key_db_version, '');
     }
