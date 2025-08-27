@@ -1,9 +1,9 @@
 <?php
 /**
- * Pulse for WordPress.
+ * Pulse core functionality and actions.
  *
  * @package WP_Pulse
- * @subpackage Core
+ * @subpackage Pulse
  * @since 1.0.0
  */
 

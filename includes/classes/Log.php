@@ -1,8 +1,10 @@
 <?php
 /**
- * Log class.
+ * Handles logging activity to the database.
  *
  * @package WP_Pulse
+ * @subpackage Pulse
+ * @since 1.0.0
  */
 
 namespace WP_Pulse;

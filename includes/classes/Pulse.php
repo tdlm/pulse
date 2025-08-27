@@ -1,6 +1,6 @@
 <?php
 /**
- * Pulse.
+ * The base class for all pulses.
  *
  * @package WP_Pulse
  * @subpackage Pulse

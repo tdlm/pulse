@@ -1,6 +1,6 @@
 <?php
 /**
- * Pulses.
+ * Responsible for registering all the pulses.
  *
  * @package WP_Pulse
  * @subpackage Pulses

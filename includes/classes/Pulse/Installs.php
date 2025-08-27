@@ -1,6 +1,6 @@
 <?php
 /**
- * Installs pulse.
+ * Keeps a finger on the pulse of install-related activity.
  *
  * @package WP_Pulse
  * @subpackage Pulse\Installs

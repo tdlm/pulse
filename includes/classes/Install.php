@@ -1,8 +1,10 @@
 <?php
 /**
- * Install class.
+ * Everything that has to do with installing and updating the plugin.
  *
  * @package WP_Pulse
+ * @subpackage Pulse
+ * @since 1.0.0
  */
 
 namespace WP_Pulse;

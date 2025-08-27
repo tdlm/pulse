@@ -1,8 +1,10 @@
 <?php
 /**
- * Admin class.
+ * Where all the admin stuff happens.
  *
  * @package WP_Pulse
+ * @subpackage Pulse
+ * @since 1.0.0
  */
 
 namespace WP_Pulse;
