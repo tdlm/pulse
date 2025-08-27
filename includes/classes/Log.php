@@ -42,7 +42,7 @@ class Log {
 		];
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$result = $wpdb->insert( $wpdb->prefix . 'pulse', $pulse );
+		$wpdb->insert( $wpdb->prefix . 'pulse', $pulse );
 
 		$pulse_id = $wpdb->insert_id;
 
@@ -53,7 +53,9 @@ class Log {
 					$wpdb->prefix . 'pulse_meta',
 					[
 						'pulse_id'   => $pulse_id,
-						'meta_key'   => $key,
+						// @phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+						'meta_key'   => strtolower( $key ),
+						// @phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 						'meta_value' => $value,
 						'created_at' => current_time( 'mysql', true ),
 					]
