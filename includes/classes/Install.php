@@ -37,10 +37,11 @@ class Install {
 
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE {$wpdb->prefix}pulse (
+        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}pulse (
           id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
           action varchar(255) NOT NULL,
           description longtext NOT NULL,
+          context longtext NOT NULL,
           user_id bigint(20) NOT NULL DEFAULT 0,
           ip VARCHAR(255) NOT NULL,
           created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -49,7 +50,7 @@ class Install {
         dbDelta($sql);
 
         // Create the pulse meta table.
-        $sql = "CREATE TABLE {$wpdb->prefix}pulse_meta (
+        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}pulse_meta (
           id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
           pulse_id bigint(20) NOT NULL,
           meta_key varchar(255) NOT NULL,
