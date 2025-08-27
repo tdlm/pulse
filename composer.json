@@ -1,5 +1,6 @@
 {
     "name": "tdlm/pulse",
+    "version": "1.0.0",
     "description": "Pulse tracks user activity for logged in users in stunning detail.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
