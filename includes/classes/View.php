@@ -35,7 +35,7 @@ class View {
 	 * @param array  $data  The data for the template.
 	 */
 	public function __construct( string $path, array $data = [] ) {
-		$this->path = $path;
+		$this->path = PULSE_PLUGIN_DIR . 'templates/' . $path;
 		$this->data = $data;
 	}
 
