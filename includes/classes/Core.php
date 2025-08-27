@@ -12,7 +12,7 @@ namespace WP_Pulse;
 /**
  * Core class.
  */
-class Core {
+class Core extends Singleton {
 
 	/**
 	 * The option key for the database version.
@@ -44,10 +44,8 @@ class Core {
 	 *
 	 * @return void
 	 */
-	public static function bootstrap() {
+	public static function init() {
 		Pulses::load();
-
-		add_action( 'init', [ self::class, 'auto_register_assets' ] );
 	}
 
 	/**
@@ -62,7 +60,7 @@ class Core {
 	/**
 	 * Automatically register JavaScript and CSS assets.
 	 *
-	 * @since 1.0.0
+	 * @action init
 	 *
 	 * @return void
 	 */
@@ -74,7 +72,7 @@ class Core {
 
 		// Enqueue runtime.js, if it exists.
 		if ( true === is_readable( $asset_root . 'runtime.js' ) ) {
-			self::enqueue_script(
+			Helpers\Media\enqueue_script(
 				'pulse/runtime',
 				$asset_uri . 'runtime.js',
 				[],

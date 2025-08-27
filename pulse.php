@@ -31,6 +31,7 @@ define( 'PULSE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // Load helpers.
 require_once __DIR__ . '/includes/helpers/media.php';
+require_once __DIR__ . '/includes/helpers/strings.php';
 
 // Register autoloader.
 spl_autoload_register(
@@ -52,14 +53,13 @@ spl_autoload_register(
 	}
 );
 
-
 // Activation/Deactivation.
 register_activation_hook( __FILE__, [ '\WP_Pulse\Core', 'activate' ] );
 register_deactivation_hook( __FILE__, [ '\WP_Pulse\Core', 'deactivate' ] );
 
 // Bootstrap the plugin.
-\WP_Pulse\Core::bootstrap();
+\WP_Pulse\Core::instance();
 
 if ( true === is_admin() ) {
-	\WP_Pulse\Admin::bootstrap();
+	\WP_Pulse\Admin::instance();
 }
