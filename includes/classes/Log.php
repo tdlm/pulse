@@ -7,14 +7,19 @@
 
 namespace WP_Pulse;
 
+/**
+ * Log class.
+ */
 class Log {
 
 	/**
 	 * Log an action.
 	 *
-	 * @param mixed $action
-	 * @param mixed $description
-	 * @param mixed $user_id
+	 * @param string   $action The action that was performed.
+	 * @param string   $description The description of the action.
+	 * @param string   $context The context of the action.
+	 * @param int|null $user_id The user ID of the user who performed the action.
+	 * @return int|false
 	 */
 	public static function log( $action, $description, $context, $user_id = null ) {
 		global $wpdb;
@@ -32,6 +37,7 @@ class Log {
 			'created_at'  => current_time( 'mysql', true ),
 		];
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$pulse_id = $wpdb->insert( $wpdb->prefix . 'pulse', $pulse );
 
 		if ( true === is_numeric( $pulse_id ) ) {
