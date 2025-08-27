@@ -13,7 +13,8 @@
         "php": ">=7.4"
     },
     "require-dev": {
-        "php-stubs/wordpress-stubs": "^6.4"
+        "php-stubs/wordpress-stubs": "^6.4",
+        "wp-coding-standards/wpcs": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -22,7 +23,12 @@
     },
     "config": {
         "allow-plugins": {
-            "composer/installers": true
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+        "lint": "vendor/bin/phpcs .",
+        "fix": "vendor/bin/phpcbf ."
     }
 }
