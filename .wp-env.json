@@ -3,6 +3,7 @@
   "plugins": [
     "."
   ],
+  "mysqlPort": 33066,
   "port": 8888,
   "testsPort": 8889,
   "config": {
@@ -10,5 +11,10 @@
     "WP_DEBUG_LOG": true,
     "WP_DEBUG_DISPLAY": true,
     "SCRIPT_DEBUG": true
+  },
+  "env": {
+    "tests": {
+      "mysqlPort": 33067
+    }
   }
 }
