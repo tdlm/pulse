@@ -59,20 +59,35 @@ class Installs extends Pulse {
 			'deactivate_plugin',
 			sprintf( 'Plugin %s version %s deactivated.', $plugin_details['Name'], $plugin_details['Version'] ),
 			'plugin',
+			null,
+			$this->get_plugin_details( $slug )
 		);
 	}
 
 	/**
 	 * Switch theme callback.
 	 *
-	 * @param string $slug Theme slug.
+	 * @param string    $slug Theme slug.
+	 * @param \WP_Theme $theme Theme details.
 	 * @return void
 	 */
-	public function callback_switch_theme( $slug ) {
+	public function callback_switch_theme( $slug, $theme ) {
+		// error_log( print_r( compact('slug','theme'), true ) );
+		error_log( print_r( $theme->get( 'Name' ), true ) );
+		error_log( print_r( $theme->get( 'Version' ), true ) );
+
+		$theme_details = [
+			'Name'           => $theme->get( 'Name' ),
+			'Version'        => $theme->get( 'Version' ),
+			'Status'         => $theme->get( 'Status' ),
+		];
+
 		Log::log(
 			'switch_theme',
-			sprintf( 'Theme %s switched.', $slug ),
+			sprintf( 'Theme %s version %s switched.', $theme->get( 'Name' ), $theme->get( 'Version' ) ),
 			'theme',
+			null,
+			$theme_details
 		);
 	}
 
