@@ -6,10 +6,19 @@
  * @subpackage Core
  * @since 1.0.0
  */
+
 namespace WP_Pulse;
 
+/**
+ * Core class.
+ */
 class Core {
 
+	/**
+	 * The option key for the database version.
+	 *
+	 * @var string
+	 */
 	public static $option_key_db_version = 'wp_pulse_version_db';
 
 	/**

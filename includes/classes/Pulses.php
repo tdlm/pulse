@@ -6,8 +6,12 @@
  * @subpackage Pulses
  * @since 1.0.0
  */
+
 namespace WP_Pulse;
 
+/**
+ * Pulses class.
+ */
 class Pulses {
 
 	/**
@@ -29,8 +33,6 @@ class Pulses {
 			if ( true === class_exists( $pulse_class ) ) {
 				$pulse = new $pulse_class();
 				$pulse->register();
-			} else {
-				error_log( sprintf( 'Pulse class %s does not exist.', $pulse_class ) );
 			}
 		}
 	}

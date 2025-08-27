@@ -7,29 +7,44 @@
 
 namespace WP_Pulse;
 
+/**
+ * Install class.
+ */
 class Install {
 
+	/**
+	 * The migrations to run.
+	 *
+	 * @var array
+	 */
 	protected static $migrations = [
 		'1.0.0' => 'v1_0_0_create_base_tables',
 	];
 
+	/**
+	 * Migrate the database.
+	 *
+	 * @return void
+	 */
 	public static function migrate() {
 		$current_db_version = Core::get_db_version();
 
 		if ( version_compare( $current_db_version, PULSE_VERSION, '>=' ) ) {
-			error_log( 'Pulse: Database is up to date.' );
 			return;
 		}
 
 		foreach ( self::$migrations as $version => $migration ) {
 			if ( version_compare( $current_db_version, $version, '<' ) ) {
-				error_log( 'Pulse: Migrating to version ' . $version );
-				self::$migration();
-				error_log( 'Pulse: Migrating to version ' . $version . ' complete.' );
+				call_user_func( [ self::class, $migration ] );
 			}
 		}
 	}
 
+	/**
+	 * Create the base tables.
+	 *
+	 * @return void
+	 */
 	public static function v1_0_0_create_base_tables() {
 		global $wpdb;
 

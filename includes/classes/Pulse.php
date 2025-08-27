@@ -6,18 +6,33 @@
  * @subpackage Pulse
  * @since 1.0.0
  */
+
 namespace WP_Pulse;
 
+/**
+ * Pulse class.
+ */
 class Pulse {
 
+	/**
+	 * The actions to register.
+	 *
+	 * @var array
+	 */
 	public $actions = [];
 
+	/**
+	 * Whether the Pulse class has been registered.
+	 *
+	 * @var bool
+	 */
 	private $is_registered = false;
 
-	public function __construct() {
-		// Silence is golden.
-	}
-
+	/**
+	 * Register the actions.
+	 *
+	 * @return void
+	 */
 	public function register() {
 		if ( true === $this->is_registered ) {
 			return;
@@ -30,6 +45,11 @@ class Pulse {
 		$this->is_registered = true;
 	}
 
+	/**
+	 * Unregister the actions.
+	 *
+	 * @return void
+	 */
 	public function unregister() {
 		if ( false === $this->is_registered ) {
 			return;
@@ -42,6 +62,11 @@ class Pulse {
 		$this->is_registered = false;
 	}
 
+	/**
+	 * The callback for the actions.
+	 *
+	 * @return mixed
+	 */
 	public function callback() {
 		$action   = current_filter();
 		$callback = [ $this, 'callback_' . preg_replace( '/[^a-z0-9_]/', '_', $action ) ];

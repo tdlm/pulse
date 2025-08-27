@@ -6,13 +6,22 @@
  * @subpackage Pulse\Installs
  * @since 1.0.0
  */
+
 namespace WP_Pulse\Pulse;
 
 use WP_Pulse\Pulse;
 use WP_Pulse\Log;
 
+/**
+ * Installs class.
+ */
 class Installs extends Pulse {
 
+	/**
+	 * The actions to register.
+	 *
+	 * @var array
+	 */
 	public $actions = [
 		'activate_plugin',
 		'deactivate_plugin',

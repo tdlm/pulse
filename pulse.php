@@ -17,12 +17,12 @@
  * @package Pulse
  */
 
-// Prevent direct access
+// Prevent direct access.
 if ( false === defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Define plugin constants
+// Define plugin constants.
 define( 'PULSE_VERSION', '1.0.0' );
 define( 'PULSE_PLUGIN_FILE', __FILE__ );
 define( 'PULSE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
