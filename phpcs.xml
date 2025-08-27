@@ -8,6 +8,7 @@
     <exclude-pattern>*/phpunit.xml*</exclude-pattern>
     <exclude-pattern>*/assets/dist/*</exclude-pattern>
     <exclude-pattern>*/languages/*</exclude-pattern>
+    <exclude-pattern>*/assets/build/*</exclude-pattern>
 
     <!-- Third-party code -->
     <exclude-pattern>*/node_modules/*</exclude-pattern>
