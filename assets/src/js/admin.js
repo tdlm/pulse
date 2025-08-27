@@ -1,1 +1,3 @@
-console.log( 'Hello, world!!!' );
+import '../scss/admin.scss';
+
+console.log( 'Pulse' );
