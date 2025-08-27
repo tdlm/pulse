@@ -10,6 +10,8 @@ namespace WP_Pulse;
 
 class Core
 {
+    public static $option_key_db_version = 'wp_pulse_version_db';
+
     /**
      * Activate the plugin.
      * @return void
@@ -17,6 +19,7 @@ class Core
     public static function activate()
     {
         // Silence is golden.
+        Install::migrate();
     }
 
     /**
@@ -35,5 +38,9 @@ class Core
     public static function bootstrap()
     {
         Pulses::load();
+    }
+
+    public static function get_db_version() {
+        return get_option(self::$option_key_db_version, '');
     }
 }
