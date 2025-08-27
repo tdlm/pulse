@@ -29,6 +29,9 @@ define( 'PULSE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PULSE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PULSE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
+// Load helpers.
+require_once __DIR__ . '/includes/helpers/media.php';
+
 // Register autoloader.
 spl_autoload_register(
 	function ( $class_name ) {
