@@ -46,6 +46,8 @@ class Core {
 	 */
 	public static function bootstrap() {
 		Pulses::load();
+
+		add_action( 'init', [ self::class, 'auto_register_assets' ] );
 	}
 
 	/**
@@ -55,5 +57,155 @@ class Core {
 	 */
 	public static function get_db_version() {
 		return get_option( self::$option_key_db_version, '' );
+	}
+
+	/**
+	 * Automatically register JavaScript and CSS assets.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public static function auto_register_assets() {
+		$asset_root = PULSE_PLUGIN_DIR . 'assets/build/';
+		$asset_uri  = PULSE_PLUGIN_URL . 'assets/build/';
+
+		$asset_files = glob( $asset_root . '*.asset.php' );
+
+		// Enqueue runtime.js, if it exists.
+		if ( true === is_readable( $asset_root . 'runtime.js' ) ) {
+			self::enqueue_script(
+				'pulse/runtime',
+				$asset_uri . 'runtime.js',
+				[],
+				filemtime( $asset_root . 'runtime.js' )
+			);
+		}
+
+		foreach ( $asset_files as $asset_file ) {
+			$asset_script = require $asset_file;
+
+			$asset_filename = basename( $asset_file );
+
+			$asset_slug_parts = explode( '.asset.php', $asset_filename );
+			$asset_slug       = array_shift( $asset_slug_parts );
+
+			$asset_handle = sprintf( 'pulse/%s', $asset_slug );
+
+			$stylesheet_path = $asset_root . $asset_slug . '.css';
+			$stylesheet_uri  = $asset_uri . $asset_slug . '.css';
+
+			$javascript_path = $asset_root . $asset_slug . '.js';
+			$javascript_uri  = $asset_uri . $asset_slug . '.js';
+
+			if ( true === is_readable( $stylesheet_path ) ) {
+				// Filter dependencies to only include registered styles.
+				$style_dependencies = array_filter(
+					$asset_script['dependencies'],
+					function ( $dep ) {
+						return wp_style_is( $dep, 'registered' );
+					}
+				);
+
+				wp_register_style(
+					$asset_handle,
+					$stylesheet_uri,
+					$style_dependencies,
+					$asset_script['version']
+				);
+			}
+
+			if ( true === is_readable( $javascript_path ) ) {
+				// Filter dependencies to only include registered scripts.
+				$script_dependencies_before = $asset_script['dependencies'];
+				$script_dependencies_after  = array_filter(
+					$asset_script['dependencies'],
+					function ( $dep ) {
+						return wp_script_is( $dep, 'registered' );
+					}
+				);
+
+				wp_register_script(
+					$asset_handle,
+					$javascript_uri,
+					$asset_script['dependencies'],
+					$asset_script['version'],
+					[
+						'in_footer' => false,
+					]
+				);
+			}
+		}
+	}
+
+
+	/**
+	 * Enqueue script.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $handle       Script handle.
+	 * @param string $src          Script source.
+	 * @param array  $dependencies Script dependencies.
+	 * @param string $version      Script version.
+	 * @param bool   $in_footer    Whether to enqueue in footer.
+	 */
+	public static function enqueue_script(
+		string $handle,
+		string $src = '',
+		array $dependencies = [],
+		$version = false,
+		bool $in_footer = true
+	) {
+		$localizes = [];
+
+		switch ( $handle ) {
+			case 'pulse/runtime':
+				$localizes[] = [
+					'object_name' => 'Pulse',
+					'value'       => [],
+				];
+				break;
+		}
+
+		wp_enqueue_script( $handle, $src, $dependencies, $version, $in_footer );
+
+		if ( 0 < count( $localizes ) ) {
+			foreach ( $localizes as $localize ) {
+				$object_name  = $localize['object_name'] ?? '';
+				$local_params = true === isset( $localize['value'] ) && true === is_array( $localize['value'] ) ?
+					$localize['value'] :
+					[];
+
+				wp_localize_script(
+					$handle,
+					$object_name,
+					$local_params
+				);
+			}
+		}
+	}
+
+	/**
+	 * Enqueue style.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string           $handle       Style handle.
+	 * @param string           $src          Style source.
+	 * @param string[]         $dependencies Style dependencies.
+	 * @param string|bool|null $version      Style version.
+	 * @param string           $media        Style media.
+	 *
+	 * @return void
+	 */
+	public static function enqueue_style(
+		string $handle,
+		string $src = '',
+		array $dependencies = [],
+		$version = false,
+		string $media = 'all'
+	) {
+		wp_enqueue_style( $handle, $src, $dependencies, $version, $media );
 	}
 }
