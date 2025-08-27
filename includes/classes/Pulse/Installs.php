@@ -26,6 +26,7 @@ class Installs extends Pulse {
 		'activate_plugin',
 		'deactivate_plugin',
 		'switch_theme',
+		'_core_updated_successfully',
 	];
 
 	/**
@@ -84,6 +85,39 @@ class Installs extends Pulse {
 			'theme',
 			null,
 			$theme_details
+		);
+	}
+
+	/**
+	 * Core updated successfully callback.
+	 *
+	 * @param string $new_version New WordPress version.
+	 * @return void
+	 */
+	public function callback__core_updated_successfully( $new_version ) {
+		global $pagenow;
+		global $wp_version;
+
+		$auto_updated = ( 'update-core.php' !== $pagenow );
+
+		if ( true === $auto_updated ) {
+			/* translators: %s: New WordPress version. */
+			$descripton = sprintf( __( 'WordPress automatically updated to version %s.', 'wp-pulse' ), $new_version );
+		} else {
+			/* translators: %s: New WordPress version. */
+			$descripton = sprintf( __( 'WordPress updated to version %s.', 'wp-pulse' ), $new_version );
+		}
+
+		Log::log(
+			'core_updated_successfully',
+			$descripton,
+			'WordPress',
+			null,
+			[
+				'old_version'  => $wp_version,
+				'new_version'  => $new_version,
+				'auto_updated' => true === $auto_updated ? 'yes' : 'no',
+			]
 		);
 	}
 
