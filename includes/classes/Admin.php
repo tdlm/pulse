@@ -37,6 +37,8 @@ class Admin {
 	 * @return void
 	 */
 	public static function render_page() {
+		Core::enqueue_script( 'pulse/admin' );
+
 		echo '<div class="wrap"><h1>Pulse</h1></div>';
 	}
 
