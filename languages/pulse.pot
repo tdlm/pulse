@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-27T19:04:53+00:00\n"
+"POT-Creation-Date: 2025-08-27T19:19:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pulse\n"
@@ -37,4 +37,29 @@ msgstr ""
 #. Author URI of the plugin
 #: pulse.php
 msgid "https://tdlm.github.io"
+msgstr ""
+
+#. translators: %1$s: Plugin name. %2$s: Plugin version.
+#: includes/classes/Pulse/Installs.php:45
+msgid "Plugin %1$s version %2$s activated."
+msgstr ""
+
+#. translators: %1$s: Plugin name. %2$s: Plugin version.
+#: includes/classes/Pulse/Installs.php:68
+msgid "Plugin %1$s version %2$s deactivated."
+msgstr ""
+
+#. translators: %1$s: Theme name. %2$s: Theme version.
+#: includes/classes/Pulse/Installs.php:96
+msgid "Theme %1$s version %2$s switched."
+msgstr ""
+
+#. translators: %1$s: New WordPress version.
+#: includes/classes/Pulse/Installs.php:120
+msgid "WordPress automatically updated to version %1$s."
+msgstr ""
+
+#. translators: %1$s: New WordPress version.
+#: includes/classes/Pulse/Installs.php:123
+msgid "WordPress updated to version %1$s."
 msgstr ""

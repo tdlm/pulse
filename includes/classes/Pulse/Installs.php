@@ -40,7 +40,12 @@ class Installs extends Pulse {
 
 		Log::log(
 			'activate_plugin',
-			sprintf( 'Plugin %s version %s activated.', $plugin_details['Name'], $plugin_details['Version'] ),
+			sprintf(
+				/* translators: %1$s: Plugin name. %2$s: Plugin version. */
+				__( 'Plugin %1$s version %2$s activated.', 'pulse' ),
+				$plugin_details['Name'],
+				$plugin_details['Version']
+			),
 			'plugin',
 			null,
 			$this->get_plugin_details( $slug )
@@ -58,7 +63,12 @@ class Installs extends Pulse {
 
 		Log::log(
 			'deactivate_plugin',
-			sprintf( 'Plugin %s version %s deactivated.', $plugin_details['Name'], $plugin_details['Version'] ),
+			sprintf(
+				/* translators: %1$s: Plugin name. %2$s: Plugin version. */
+				__( 'Plugin %1$s version %2$s deactivated.', 'pulse' ),
+				$plugin_details['Name'],
+				$plugin_details['Version']
+			),
 			'plugin',
 			null,
 			$this->get_plugin_details( $slug )
@@ -81,7 +91,12 @@ class Installs extends Pulse {
 
 		Log::log(
 			'switch_theme',
-			sprintf( 'Theme %s version %s switched.', $theme->get( 'Name' ), $theme->get( 'Version' ) ),
+			sprintf(
+				/* translators: %1$s: Theme name. %2$s: Theme version. */
+				__( 'Theme %1$s version %2$s switched.', 'pulse' ),
+				$theme->get( 'Name' ),
+				$theme->get( 'Version' )
+			),
 			'theme',
 			null,
 			$theme_details
@@ -101,16 +116,16 @@ class Installs extends Pulse {
 		$auto_updated = ( 'update-core.php' !== $pagenow );
 
 		if ( true === $auto_updated ) {
-			/* translators: %s: New WordPress version. */
-			$descripton = sprintf( __( 'WordPress automatically updated to version %s.', 'wp-pulse' ), $new_version );
+			/* translators: %1$s: New WordPress version. */
+			$description = sprintf( __( 'WordPress automatically updated to version %1$s.', 'pulse' ), $new_version );
 		} else {
-			/* translators: %s: New WordPress version. */
-			$descripton = sprintf( __( 'WordPress updated to version %s.', 'wp-pulse' ), $new_version );
+			/* translators: %1$s: New WordPress version. */
+			$description = sprintf( __( 'WordPress updated to version %1$s.', 'pulse' ), $new_version );
 		}
 
 		Log::log(
 			'core_updated_successfully',
-			$descripton,
+			$description,
 			'WordPress',
 			null,
 			[

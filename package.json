@@ -16,7 +16,7 @@
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",
     "format-php": "npm run composer fix",
-    "i18n": "wp-env run cli wp i18n make-pot wp-content/plugins/pulse/ wp-content/plugins/pulse/languages/pulse.pot --exclude=assets/dist,node_modules/,vendor/",
+    "i18n": "wp-env run cli wp i18n make-pot wp-content/plugins/pulse/ wp-content/plugins/pulse/languages/pulse.pot --exclude=assets/build,node_modules,vendor",
     "lint-php": "npm run composer lint"
   },
   "keywords": [
