@@ -16,6 +16,7 @@ class Installs extends Pulse
     public $actions = [
         'activate_plugin',
         'deactivate_plugin',
+        'switch_theme',
     ];
 
     /**
@@ -27,7 +28,12 @@ class Installs extends Pulse
     public function callback_activate_plugin($slug)
     {
         $name = $this->get_plugin_name($slug);
-        Log::log('activate_plugin', sprintf('Plugin %s activated.', $name));
+
+        Log::log(
+            'activate_plugin',
+            sprintf('Plugin %s activated.', $name),
+            'plugin',
+        );
     }
 
     /**
@@ -39,7 +45,27 @@ class Installs extends Pulse
     public function callback_deactivate_plugin($slug)
     {
         $name = $this->get_plugin_name($slug);
-        Log::log('deactivate_plugin', sprintf('Plugin %s deactivated.', $name));
+
+        Log::log(
+            'deactivate_plugin',
+            sprintf('Plugin %s deactivated.', $name),
+            'plugin',
+        );
+    }
+
+    /**
+     * Switch theme callback.
+     * 
+     * @param string $slug Theme slug.
+     * @return void
+     */
+    public function callback_switch_theme($slug)
+    {
+        Log::log(
+            'switch_theme',
+            sprintf('Theme %s switched.', $slug),
+            'theme',
+        );
     }
 
     /**
