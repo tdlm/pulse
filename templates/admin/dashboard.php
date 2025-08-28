@@ -7,6 +7,11 @@
  * @since 1.0.0
  */
 
+/**
+ * Properties.
+ *
+ * @var array
+ */
 $props = wp_parse_args(
 	$args ?? [],
 	[]
