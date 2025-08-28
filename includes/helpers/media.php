@@ -15,7 +15,7 @@ namespace WP_Pulse\Helpers\Media;
  * @since 1.0.0
  *
  * @param string $handle       Script handle.
- * @param array  $localized_data Localized data.
+ * @param array  $localizes    Localizers.
  * @param string $src          Script source.
  * @param array  $dependencies Script dependencies.
  * @param string $version      Script version.

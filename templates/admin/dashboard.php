@@ -9,8 +9,7 @@
 
 $props = wp_parse_args(
 	$args ?? [],
-	[
-	]
+	[]
 );
 ?>
 <div class="wrap">
