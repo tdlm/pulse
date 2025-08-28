@@ -36,11 +36,8 @@ class DB {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		return $wpdb->get_results(
 			$wpdb->prepare(
-				/* translators: %s: table name, %s: order by, %s: order, %d: limit, %d: offset */
-				'SELECT * FROM %s ORDER BY %s %s LIMIT %d OFFSET %d',
-				$table_name,
-				$args['orderby'],
-				$args['order'],
+				/* translators: %d: limit, %d: offset */
+				"SELECT * FROM {$table_name} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				$args['limit'],
 				$args['offset']
 			)
