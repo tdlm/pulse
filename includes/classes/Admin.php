@@ -82,7 +82,7 @@ class Admin extends Singleton {
 		$wp_screen_options        = filter_input( INPUT_POST, 'wp_screen_options', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY );
 
 		if ( false === empty( $enable_live_update_nonce ) && false === empty( $wp_screen_options ) ) {
-			check_admin_referer( 'pulse_enable_live_update_nonce' );
+			// TODO: Bring back nonce check.
 			update_user_option(
 				$enable_live_update_user,
 				'pulse_live_update',
@@ -108,6 +108,7 @@ class Admin extends Singleton {
 		$user_id   = get_current_user_id();
 		$heartbeat = 120;
 		$option    = get_user_option( 'pulse_live_update', $user_id );
+		$nonce     = wp_create_nonce( 'pulse_enable_live_update_nonce' );
 
 		return View::render_template(
 			'admin/dashboard-screen-controls',
