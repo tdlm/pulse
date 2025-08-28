@@ -4,9 +4,9 @@
   "description": "Pulse tracks user activity for logged in users in stunning detail.",
   "main": "pulse.php",
   "scripts": {
-    "assets:build": "wp-scripts build assets/src/js/admin.js --output-path=assets/build",
-    "assets:start:hot": "wp-scripts start assets/src/js/admin.js --output-path=assets/build --hot",
-    "assets:start": "wp-scripts start assets/src/js/admin.js --output-path=assets/build",
+    "assets:build": "wp-scripts build assets/src/js/admin-dashboard.js --output-path=assets/build",
+    "assets:start:hot": "wp-scripts start assets/src/js/admin-dashboard.js --output-path=assets/build --hot",
+    "assets:start": "wp-scripts start assets/src/js/admin-dashboard.js --output-path=assets/build",
     "composer": "wp-env run cli --env-cwd=wp-content/plugins/pulse composer",
     "env:cli": "wp-env run cli wp",
     "env:destroy": "wp-env destroy",

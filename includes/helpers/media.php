@@ -15,6 +15,7 @@ namespace WP_Pulse\Helpers\Media;
  * @since 1.0.0
  *
  * @param string $handle       Script handle.
+ * @param array  $localized_data Localized data.
  * @param string $src          Script source.
  * @param array  $dependencies Script dependencies.
  * @param string $version      Script version.
@@ -22,13 +23,12 @@ namespace WP_Pulse\Helpers\Media;
  */
 function enqueue_script(
 	string $handle,
+	array $localizes = [],
 	string $src = '',
 	array $dependencies = [],
 	$version = false,
 	bool $in_footer = true
 ) {
-		$localizes = [];
-
 	switch ( $handle ) {
 		case 'pulse/runtime':
 			$localizes[] = [

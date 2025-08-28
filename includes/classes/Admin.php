@@ -37,8 +37,17 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public static function render_page() {
-		Helpers\Media\enqueue_script( 'pulse/admin' );
-		Helpers\Media\enqueue_style( 'pulse/admin' );
+		$records = DB::get_records();
+
+		Helpers\Media\enqueue_script( 'pulse/admin-dashboard', [
+			[
+				'object_name' => 'PulseAdminDashboard',
+				'value'       => [
+					'records' => $records,
+				],
+			],
+		] );
+		Helpers\Media\enqueue_style( 'pulse/admin-dashboard' );
 
 		View::include_template( 'admin/dashboard' );
 	}

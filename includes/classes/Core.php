@@ -74,6 +74,7 @@ class Core extends Singleton {
 		if ( true === is_readable( $asset_root . 'runtime.js' ) ) {
 			Helpers\Media\enqueue_script(
 				'pulse/runtime',
+				[],
 				$asset_uri . 'runtime.js',
 				[],
 				filemtime( $asset_root . 'runtime.js' )
