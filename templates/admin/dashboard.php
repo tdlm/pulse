@@ -18,6 +18,6 @@ $props = wp_parse_args(
 );
 ?>
 <div class="wrap">
-	<h1>Pulse</h1>
+	<h1><?php esc_html_e( 'Pulse', 'pulse' ); ?></h1>
 	<div id="pulse-dashboard-container"></div>
 </div>
