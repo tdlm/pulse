@@ -26,6 +26,19 @@ class Posts extends Pulse {
 		'deleted_post',
 	];
 
+
+	/**
+	 * Get labels.
+	 *
+	 * @return array The labels.
+	 */
+	public static function get_labels() {
+		return [
+			'deleted' => __( 'Deleted', 'pulse' ),
+			'posts'   => __( 'Posts', 'pulse' ),
+		];
+	}
+
 	/**
 	 * Deleted post callback.
 	 *

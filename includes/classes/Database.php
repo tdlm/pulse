@@ -93,6 +93,13 @@ class Database {
 			// Get gravatar URL.
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
 			$result->gravatar_url_2x = get_avatar_url( $result->user_email, [ 'size' => 160 ] );
+
+			$pulse                = Helpers\Strings\to_pascal_case( $result->pulse );
+			$labels               = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
+
+			$result->action_label = $labels[ $result->action ];
+			$result->context_label = $labels[ $result->context ] ?? $result->context;
+			$result->pulse_label  = $labels[ $result->pulse ];
 		}
 
 		return $results;

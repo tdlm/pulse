@@ -30,6 +30,23 @@ class Installs extends Pulse {
 	];
 
 	/**
+	 * Get labels.
+	 *
+	 * @return array The labels.
+	 */
+	public static function get_labels() {
+		return [
+			'activated'   => __( 'Activated', 'pulse' ),
+			'deactivated' => __( 'Deactivated', 'pulse' ),
+			'updated'     => __( 'Updated', 'pulse' ),
+			'installs'    => __( 'Installs', 'pulse' ),
+			'plugin'      => __( 'Plugin', 'pulse' ),
+			'theme'       => __( 'Theme', 'pulse' ),
+			'core'        => __( 'Core', 'pulse' ),
+		];
+	}
+
+	/**
 	 * Activate plugin callback.
 	 *
 	 * @param string $slug Plugin slug.

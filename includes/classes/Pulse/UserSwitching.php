@@ -29,6 +29,21 @@ class UserSwitching extends Pulse {
 	];
 
 	/**
+	 * Get labels.
+	 *
+	 * @return array The labels.
+	 */
+	public static function get_labels() {
+		return [
+			'session'          => __( 'Session', 'pulse' ),
+			'switch_back_user' => __( 'Switched Back', 'pulse' ),
+			'switch_off_user'  => __( 'Switched Off', 'pulse' ),
+			'switch_to_user'   => __( 'Switched To', 'pulse' ),
+			'user_switching'   => __( 'User Switching', 'pulse' ),
+		];
+	}
+
+	/**
 	 * Callback for switch_back_user.
 	 *
 	 * @param int $user_id The ID of the user who switched back.

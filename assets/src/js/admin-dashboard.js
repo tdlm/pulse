@@ -197,7 +197,7 @@ const AdminDashboardApp = () => {
                   title=""
                   href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${record.pulse}`}
                 >
-                  {upperFirst(record.pulse)}
+                  {upperFirst(record.pulse_label)}
                 </a>
                 <br />
                 ↳&nbsp;
@@ -205,7 +205,7 @@ const AdminDashboardApp = () => {
                   title=""
                   href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${record.pulse}&context=${record.context}`}
                 >
-                  {upperFirst(record.context)}
+                  {record.context_label}
                 </a>
               </td>
               <td data-colname="Action">
@@ -213,7 +213,7 @@ const AdminDashboardApp = () => {
                   title=""
                   href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&action=${record.action}`}
                 >
-                  {upperFirst(record.action)}
+                  {record.action_label}
                 </a>
               </td>
               <td data-colname="IP Address">
