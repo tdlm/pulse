@@ -51,19 +51,31 @@ class API extends Singleton {
 		$args = wp_parse_args(
 			$args,
 			[
+				'action'  => '',
+				'context' => '',
+				'ip'      => '',
 				'limit'   => 20,
 				'offset'  => 0,
 				'orderby' => 'created_at_gmt',
 				'order'   => 'DESC',
+				'pulse'   => '',
+				'search'  => '',
+				'user_id' => '',
 			]
 		);
 
 		$records = Database::get_records(
 			[
+				'action'  => $args['action'],
+				'context' => $args['context'],
+				'ip'      => $args['ip'],
 				'limit'   => $args['limit'],
 				'offset'  => $args['offset'],
 				'orderby' => $args['orderby'],
 				'order'   => $args['order'],
+				'pulse'   => $args['pulse'],
+				'search'  => $args['search'],
+				'user_id' => $args['user_id'],
 			]
 		);
 
