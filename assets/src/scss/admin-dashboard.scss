@@ -1,0 +1,59 @@
+#pulse-dashboard-container {
+    td[data-colname="User"] {
+        display: flex;
+        flex-direction: row;
+
+        img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    }
+
+    th#summary {
+        width: auto;
+    }
+
+    th#user_id {
+        width: 15%;
+    }
+
+    th#context,
+    th#action, 
+    th#ip {
+        width: 10%;
+    }
+
+    @media (max-width: 900px) {
+
+        th#date {
+            width: 25%;
+        }
+
+        th#user_id {
+            width: auto;
+        }
+
+        td:not(.column-primary):before {
+            display: none;
+        }
+
+        th#action,
+        th#context,
+        th#ip,
+        td[data-colname="Action"],
+        td[data-colname="Context"],
+        td[data-colname="IP Address"] {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        th#user_id,
+        td[data-colname="User"] {
+            display: none;
+        }
+    }
+}
