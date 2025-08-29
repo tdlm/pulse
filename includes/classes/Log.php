@@ -21,10 +21,11 @@ class Log {
 	 * @param string   $description The description of the action.
 	 * @param string   $context The context of the action.
 	 * @param int|null $user_id The user ID of the user who performed the action.
+	 * @param int|null $object_id The object ID of the object that was acted on.
 	 * @param array    $meta The meta data to log.
 	 * @return int|false
 	 */
-	public static function log( $action, $description, $context, $user_id = null, $meta = [] ) {
+	public static function log( $action, $description, $context, $user_id = null, $object_id = null, $meta = [] ) {
 		// @var \wpdb $wpdb The WordPress database object.
 		global $wpdb;
 
@@ -37,6 +38,7 @@ class Log {
 			'description'    => wp_strip_all_tags( $description ),
 			'context'        => wp_strip_all_tags( $context ),
 			'user_id'        => $user_id,
+			'object_id'      => $object_id,
 			'ip'             => filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP ),
 			'created_at'     => current_time( 'mysql' ), // Local time.
 			'created_at_gmt' => current_time( 'mysql', true ),
