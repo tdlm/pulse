@@ -32,6 +32,8 @@
   "author": "Scott Weaver",
   "license": "GPL-2.0-or-later",
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.83.1",
+    "@tanstack/react-query-devtools": "^5.85.5",
     "@wordpress/env": "^10.29.0",
     "@wordpress/scripts": "^30.22.0"
   },
@@ -44,6 +46,7 @@
     "url": "https://github.com/tdlm/pulse.git"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.85.5",
     "react-timeago": "^8.3.0"
   }
 }

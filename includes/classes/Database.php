@@ -65,7 +65,9 @@ class Database {
 	public static function destroy_tables() {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pulse" );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pulse_meta" );
 	}
 

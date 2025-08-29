@@ -30,7 +30,7 @@
         }
     },
     "scripts": {
-        "lint": "vendor/bin/phpcs .",
+        "lint": "vendor/bin/phpcs -ps .",
         "fix": "vendor/bin/phpcbf ."
     }
 }
