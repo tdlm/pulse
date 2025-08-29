@@ -58,9 +58,10 @@ class Install {
           id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
           action varchar(255) NOT NULL,
           description longtext NOT NULL,
+		  pulse VARCHAR(255) NOT NULL,
           context longtext NOT NULL,
           user_id bigint(20) NOT NULL DEFAULT 0,
-		  object_id bigint(20) NOT NULL DEFAULT 0,
+		  object_id bigint(20) NULL,
           ip VARCHAR(255) NOT NULL,
           created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
           created_at_gmt datetime NOT NULL DEFAULT '0000-00-00 00:00:00'

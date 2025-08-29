@@ -7,8 +7,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRoot } from "@wordpress/element";
 import TimeAgo from "react-timeago";
 import { makeIntlFormatter } from "react-timeago/defaultFormatter";
-import apiFetch from '@wordpress/api-fetch';
-
+import apiFetch from "@wordpress/api-fetch";
 
 import "../scss/admin-dashboard.scss";
 
@@ -24,10 +23,14 @@ const intlFormatter = makeIntlFormatter({
 
 const queryClient = new QueryClient();
 
+function upperFirst(sentence) {
+  return sentence.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 const fetchRecords = async () => {
   const response = await apiFetch({
-    path: '/wp-pulse/v1/records',
-    method: 'GET',
+    path: "/wp-pulse/v1/records",
+    method: "GET",
   });
   return response;
 };
@@ -143,22 +146,22 @@ const AdminDashboardApp = () => {
                   {record.display_name}
                 </a>
                 <br />
-                <small>{record.user_id}</small>
+                <small>{record.user_roles.join(", ")}</small>
               </td>
               <td data-colname="Context">
                 <a
                   title=""
-                  href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&connector=${record.connector}`}
+                  href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${record.pulse}`}
                 >
-                  {record.context}
+                  {upperFirst(record.pulse)}
                 </a>
                 <br />
                 ↳&nbsp;
                 <a
                   title=""
-                  href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&connector=${record.connector}&context=${record.context}`}
+                  href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${record.pulse}&context=${record.context}`}
                 >
-                  {record.action}
+                  {upperFirst(record.context)}
                 </a>
               </td>
               <td data-colname="Action">
@@ -166,7 +169,7 @@ const AdminDashboardApp = () => {
                   title=""
                   href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&action=${record.action}`}
                 >
-                  {record.action}
+                  {upperFirst(record.action)}
                 </a>
               </td>
               <td data-colname="IP Address">

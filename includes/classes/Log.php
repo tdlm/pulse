@@ -19,13 +19,14 @@ class Log {
 	 *
 	 * @param string   $action The action that was performed.
 	 * @param string   $description The description of the action.
+	 * @param string   $pulse The pulse that made the call.
 	 * @param string   $context The context of the action.
 	 * @param int|null $user_id The user ID of the user who performed the action.
 	 * @param int|null $object_id The object ID of the object that was acted on.
 	 * @param array    $meta The meta data to log.
 	 * @return int|false
 	 */
-	public static function log( $action, $description, $context, $user_id = null, $object_id = null, $meta = [] ) {
+	public static function log( $action, $description, $pulse, $context, $user_id = null, $object_id = null, $meta = [] ) {
 		// @var \wpdb $wpdb The WordPress database object.
 		global $wpdb;
 
@@ -36,6 +37,7 @@ class Log {
 		$pulse = [
 			'action'         => wp_strip_all_tags( $action ),
 			'description'    => wp_strip_all_tags( $description ),
+			'pulse'          => wp_strip_all_tags( $pulse ),
 			'context'        => wp_strip_all_tags( $context ),
 			'user_id'        => $user_id,
 			'object_id'      => $object_id,

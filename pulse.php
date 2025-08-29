@@ -32,6 +32,7 @@ define( 'PULSE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 // Load helpers.
 require_once __DIR__ . '/includes/helpers/media.php';
 require_once __DIR__ . '/includes/helpers/strings.php';
+require_once __DIR__ . '/includes/helpers/users.php';
 
 // Register autoloader.
 spl_autoload_register(

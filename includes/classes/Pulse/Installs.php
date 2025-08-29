@@ -46,6 +46,7 @@ class Installs extends Pulse {
 				$plugin_details['Name'],
 				$plugin_details['Version']
 			),
+			'installs',
 			'plugin',
 			null,
 			null,
@@ -70,6 +71,7 @@ class Installs extends Pulse {
 				$plugin_details['Name'],
 				$plugin_details['Version']
 			),
+			'installs',
 			'plugin',
 			null,
 			null,
@@ -99,6 +101,7 @@ class Installs extends Pulse {
 				$theme->get( 'Name' ),
 				$theme->get( 'Version' )
 			),
+			'installs',
 			'theme',
 			null,
 			null,
@@ -129,6 +132,7 @@ class Installs extends Pulse {
 		Log::log(
 			'updated',
 			$description,
+			'installs',
 			'core',
 			null,
 			null,

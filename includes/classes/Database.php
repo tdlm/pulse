@@ -49,6 +49,11 @@ class Database {
 			$user_info          = get_userdata( $result->user_id );
 			$result->user_roles = true === is_object( $user_info ) && true === property_exists( $user_info, 'roles' ) ? $user_info->roles : [];
 
+			// Get label for each role.
+			$result->user_roles = array_map( function( $role ) {
+				return \WP_Pulse\Helpers\Users\get_user_role_label( $role );
+			}, $result->user_roles );
+
 			// Get gravatar URL.
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
 			$result->gravatar_url_2x = get_avatar_url( $result->user_email, [ 'size' => 160 ] );
