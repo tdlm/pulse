@@ -33,12 +33,13 @@ class Log {
 		}
 
 		$pulse = [
-			'action'      => wp_strip_all_tags( $action ),
-			'description' => wp_strip_all_tags( $description ),
-			'context'     => wp_strip_all_tags( $context ),
-			'user_id'     => $user_id,
-			'ip'          => filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP ),
-			'created_at'  => current_time( 'mysql', true ),
+			'action'         => wp_strip_all_tags( $action ),
+			'description'    => wp_strip_all_tags( $description ),
+			'context'        => wp_strip_all_tags( $context ),
+			'user_id'        => $user_id,
+			'ip'             => filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP ),
+			'created_at'     => current_time( 'mysql' ), // Local time.
+			'created_at_gmt' => current_time( 'mysql', true ),
 		];
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
@@ -57,7 +58,8 @@ class Log {
 						'meta_key'   => strtolower( $key ),
 						// @phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 						'meta_value' => $value,
-						'created_at' => current_time( 'mysql', true ),
+						'created_at' => current_time( 'mysql' ), // Local time.
+						'created_at_gmt' => current_time( 'mysql', true ),
 					]
 				);
 			}

@@ -1,11 +1,23 @@
 import { createRoot } from "@wordpress/element";
+import TimeAgo from 'react-timeago'
+import {makeIntlFormatter} from 'react-timeago/defaultFormatter';
 
 import "../scss/admin-dashboard.scss";
 
 const app = document.getElementById("pulse-dashboard-container");
 
-const AdminDashboardApp = () => (
-  <form>
+const intlFormatter = makeIntlFormatter({
+  locale: undefined, // string
+  localeMatcher: 'best fit', // 'lookup' | 'best fit',
+  numberingSystem: 'latn', // Intl$NumberingSystem such as 'arab', 'deva', 'hebr' etc.
+  style: 'long', // 'long' | 'short' | 'narrow',
+  numeric: 'auto', //  'always' | 'auto', Using 'auto` will convert "1 day ago" to "yesterday" etc.
+});
+
+const AdminDashboardApp = () => {
+  return (
+  <form method="get" action="http://localhost:8888/wp-admin/admin.php">
+    <input type="hidden" name="page" value="wp-pulse" />
     <p className="search-box">
       <label className="screen-reader-text" htmlFor="record-search-input">
         Search Records:
@@ -33,7 +45,7 @@ const AdminDashboardApp = () => (
             className="manage-column column-date sorted asc"
             aria-sort="ascending"
           >
-            <a href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;orderby=date&amp;order=desc">
+            <a href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse&orderby=date&order=desc">
               <span>Date</span>
               <span className="sorting-indicators">
                 <span
@@ -65,73 +77,72 @@ const AdminDashboardApp = () => (
         </tr>
       </thead>
       <tbody className="the-list">
-        <tr>
+        {window.PulseAdminDashboard.records.map((record) => (
+        <tr key={record.id}>
           <td data-colname="Date">
-            <strong>
-              <time dateTime="2025-08-27T04:27:07+0000">17 hours ago</time>
-            </strong>
+            <strong><TimeAgo date={record.created_at} formatter={intlFormatter} /></strong>
             <br />
             <a
               title=""
-              href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;date=2025/08/27"
+              href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&date=${record.created_at}`}
             >
-              <time dateTime="2025-08-27T04:27:07+0000">2025/08/27</time>
+              <time dateTime={record.created_at}>{record.created_at}</time>
             </a>
-            <br />
-            04:27:07 AM GMT+0000
           </td>
-          <td data-colname="Summary">"Hello Dolly" plugin activated</td>
+          <td data-colname="Description">{record.description}</td>
           <td data-colname="User">
-            <a href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;user_id=1">
+            <a href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&user_id=${record.user_id}`}>
               <img
-                src="https://secure.gravatar.com/avatar/be3221a6fac131657111728b4d912a877ec158b123d5db3afef3bd8a59784ece?s=80&amp;d=mm&amp;r=g"
-                srcSet="https://secure.gravatar.com/avatar/be3221a6fac131657111728b4d912a877ec158b123d5db3afef3bd8a59784ece?s=160&amp;d=mm&amp;r=g 2x"
+                src={record.gravatar_url}
+                srcSet={`${record.gravatar_url_2x} 2x`}
                 alt=""
                 width="80"
                 height="80"
               />{" "}
-              admin
+              {record.display_name}
             </a>
             <br />
-            <small>Administrator</small>
+            <small>{record.user_id}</small>
           </td>
           <td data-colname="Context">
             <a
               title=""
-              href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;connector=installer"
+              href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&connector=${record.connector}`}
             >
-              Installer
+              {record.context}
             </a>
             <br />
             ↳&nbsp;
             <a
               title=""
-              href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;connector=installer&amp;context=plugins"
+              href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&connector=${record.connector}&context=${record.context}`}
             >
-              Plugins
+              {record.action}
             </a>
           </td>
           <td data-colname="Action">
             <a
               title=""
-              href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;action=activated"
+              href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&action=${record.action}`}
             >
-              Activated
+              {record.action}
             </a>
           </td>
           <td data-colname="IP Address">
             <a
               title=""
-              href="http://localhost:8888/wp-admin/admin.php?page=wp_stream&amp;ip=192.168.97.1"
+              href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&ip=${record.ip}`}
             >
-              192.168.97.1
+              {record.ip}
             </a>
           </td>
         </tr>
+        ))}
       </tbody>
-    </table>
-  </form>
-);
+      </table>
+    </form>
+  );
+};
 
 if (app) {
   const root = createRoot(app);

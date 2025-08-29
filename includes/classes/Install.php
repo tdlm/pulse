@@ -61,7 +61,8 @@ class Install {
           context longtext NOT NULL,
           user_id bigint(20) NOT NULL DEFAULT 0,
           ip VARCHAR(255) NOT NULL,
-          created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+          created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+          created_at_gmt datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
         ) {$charset_collate};";
 
 		dbDelta( $sql );
@@ -72,7 +73,8 @@ class Install {
           pulse_id bigint(20) NOT NULL,
           meta_key varchar(255) NOT NULL,
           meta_value longtext NOT NULL,
-          created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+		  created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+          created_at_gmt datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
         ) {$charset_collate};";
 
 		dbDelta( $sql );
