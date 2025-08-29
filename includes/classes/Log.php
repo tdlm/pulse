@@ -53,12 +53,12 @@ class Log {
 				$wpdb->insert(
 					$wpdb->prefix . 'pulse_meta',
 					[
-						'pulse_id'   => $pulse_id,
+						'pulse_id'       => $pulse_id,
 						// @phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-						'meta_key'   => strtolower( $key ),
+						'meta_key'       => strtolower( $key ),
 						// @phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-						'meta_value' => $value,
-						'created_at' => current_time( 'mysql' ), // Local time.
+						'meta_value'     => $value,
+						'created_at'     => current_time( 'mysql' ), // Local time.
 						'created_at_gmt' => current_time( 'mysql', true ),
 					]
 				);

@@ -49,8 +49,6 @@ class DB {
 			$user_info          = get_userdata( $result->user_id );
 			$result->user_roles = true === is_object( $user_info ) && true === property_exists( $user_info, 'roles' ) ? $user_info->roles : [];
 
-			error_log( print_r( $result->user_email, true ) );
-
 			// Get gravatar URL.
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
 			$result->gravatar_url_2x = get_avatar_url( $result->user_email, [ 'size' => 160 ] );
