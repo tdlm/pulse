@@ -23,13 +23,14 @@ class Pulses {
 		$pulses = apply_filters(
 			'wp_pulse_pulses',
 			[
-				'installs',
-				'posts',
+				'Installs',
+				'Posts',
+				'UserSwitching',
 			]
 		);
 
 		foreach ( $pulses as $pulse ) {
-			$pulse_class = 'WP_Pulse\\Pulse\\' . ucfirst( $pulse );
+			$pulse_class = 'WP_Pulse\\Pulse\\' . $pulse;
 
 			if ( true === class_exists( $pulse_class ) ) {
 				$pulse = new $pulse_class();
