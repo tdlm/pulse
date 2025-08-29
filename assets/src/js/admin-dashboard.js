@@ -4,10 +4,14 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useDebounce } from "@uidotdev/usehooks";
+import apiFetch from "@wordpress/api-fetch";
 import { createRoot } from "@wordpress/element";
+import { addQueryArgs } from '@wordpress/url';
+import { useQueryState } from "nuqs";
+import { NuqsAdapter } from 'nuqs/adapters/react';
 import TimeAgo from "react-timeago";
 import { makeIntlFormatter } from "react-timeago/defaultFormatter";
-import apiFetch from "@wordpress/api-fetch";
 
 import "../scss/admin-dashboard.scss";
 
@@ -27,20 +31,52 @@ function upperFirst(sentence) {
   return sentence.replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-const fetchRecords = async () => {
+async function fetchRecords(params) {
+  const { action, context, search, ip, pulse, user_id, signal } = params;
   const response = await apiFetch({
-    path: "/wp-pulse/v1/records",
+    path: addQueryArgs("/wp-pulse/v1/records", { action, context, search, ip, pulse, user_id }),
     method: "GET",
+    signal,
   });
+
   return response;
 };
 
 const AdminDashboardApp = () => {
+  const [search, setSearch] = useQueryState("search", {
+    defaultValue: "",
+  });
+  const [action, setAction] = useQueryState("action", {
+    defaultValue: "",
+  });
+  const [context, setContext] = useQueryState("context", {
+    defaultValue: "",
+  });
+  const [ip, setIp] = useQueryState("ip", {
+    defaultValue: "",
+  });
+  const [pulse, setPulse] = useQueryState("pulse", {
+    defaultValue: "",
+  });
+  const [user_id, setUserId] = useQueryState("user_id", {
+    defaultValue: "",
+  });
+  const debouncedSearch = useDebounce(search, 350);
+
   const { data, isLoading, isError } = useQuery({
     initialData: window.PulseAdminDashboard.records,
+    keepPreviousData: true,
     refetchInterval: 10 * 1000, // 10 seconds.
-    queryKey: ["records"],
-    queryFn: () => fetchRecords(),
+    queryKey: ["records", debouncedSearch],
+    queryFn: ({ signal }) => fetchRecords({
+      action,
+      context,
+      search: debouncedSearch,
+      ip,
+      pulse,
+      user_id,
+      signal,
+    }),
   });
 
   return (
@@ -54,7 +90,8 @@ const AdminDashboardApp = () => {
           type="search"
           id="record-search-input"
           name="search"
-          defaultValue=""
+          defaultValue={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <input
           type="submit"
@@ -142,11 +179,18 @@ const AdminDashboardApp = () => {
                     alt=""
                     width="80"
                     height="80"
-                  />{" "}
-                  {record.display_name}
+                  />
                 </a>
-                <br />
-                <small>{record.user_roles.join(", ")}</small>
+                <div>
+                  <a
+                    href={`http://localhost:8888/wp-admin/admin.php?page=wp-pulse&user_id=${record.user_id}`}
+                  >
+                    {record.display_name}
+                  </a>
+
+                  <br />
+                  <small>{record.user_roles.join(", ")}</small>
+                </div>
               </td>
               <td data-colname="Context">
                 <a
@@ -192,8 +236,10 @@ if (app) {
   const root = createRoot(app);
   root.render(
     <QueryClientProvider client={queryClient}>
-      <AdminDashboardApp />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <NuqsAdapter>
+        <AdminDashboardApp />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </NuqsAdapter>
     </QueryClientProvider>
   );
 }
