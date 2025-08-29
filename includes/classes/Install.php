@@ -60,6 +60,7 @@ class Install {
           description longtext NOT NULL,
           context longtext NOT NULL,
           user_id bigint(20) NOT NULL DEFAULT 0,
+		  object_id bigint(20) NOT NULL DEFAULT 0,
           ip VARCHAR(255) NOT NULL,
           created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
           created_at_gmt datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
