@@ -14,7 +14,7 @@ namespace WP_Pulse;
  */
 abstract class Singleton {
 
-	use Hookable;
+	use Traits\Hookable;
 
 	/**
 	 * Array of singleton instances.

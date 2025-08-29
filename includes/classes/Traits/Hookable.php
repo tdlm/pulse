@@ -7,7 +7,7 @@
  * @since 1.0.0
  */
 
-namespace WP_Pulse;
+namespace WP_Pulse\Traits;
 
 /**
  * Trait Hookable.
