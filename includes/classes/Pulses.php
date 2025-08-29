@@ -24,11 +24,12 @@ class Pulses {
 			'wp_pulse_pulses',
 			[
 				'installs',
+				'posts',
 			]
 		);
 
 		foreach ( $pulses as $pulse ) {
-			$pulse_class = 'WP_Pulse\\Pulse\\' . $pulse;
+			$pulse_class = 'WP_Pulse\\Pulse\\' . ucfirst( $pulse );
 
 			if ( true === class_exists( $pulse_class ) ) {
 				$pulse = new $pulse_class();
