@@ -15,6 +15,7 @@
     },
     "require-dev": {
         "php-stubs/wordpress-stubs": "^6.4",
+        "php-stubs/wp-cli-stubs": "^2.10",
         "wp-coding-standards/wpcs": "^3.2"
     },
     "autoload": {
