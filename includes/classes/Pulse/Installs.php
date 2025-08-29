@@ -39,7 +39,7 @@ class Installs extends Pulse {
 		$plugin_details = $this->get_plugin_details( $slug );
 
 		Log::log(
-			'activate_plugin',
+			'activated',
 			sprintf(
 				/* translators: %1$s: Plugin name. %2$s: Plugin version. */
 				__( 'Plugin %1$s version %2$s activated.', 'pulse' ),
@@ -47,6 +47,7 @@ class Installs extends Pulse {
 				$plugin_details['Version']
 			),
 			'plugin',
+			null,
 			null,
 			$this->get_plugin_details( $slug )
 		);
@@ -62,7 +63,7 @@ class Installs extends Pulse {
 		$plugin_details = $this->get_plugin_details( $slug );
 
 		Log::log(
-			'deactivate_plugin',
+			'deactivated',
 			sprintf(
 				/* translators: %1$s: Plugin name. %2$s: Plugin version. */
 				__( 'Plugin %1$s version %2$s deactivated.', 'pulse' ),
@@ -70,6 +71,7 @@ class Installs extends Pulse {
 				$plugin_details['Version']
 			),
 			'plugin',
+			null,
 			null,
 			$this->get_plugin_details( $slug )
 		);
@@ -90,7 +92,7 @@ class Installs extends Pulse {
 		];
 
 		Log::log(
-			'switch_theme',
+			'activated',
 			sprintf(
 				/* translators: %1$s: Theme name. %2$s: Theme version. */
 				__( 'Theme %1$s version %2$s activated.', 'pulse' ),
@@ -98,6 +100,7 @@ class Installs extends Pulse {
 				$theme->get( 'Version' )
 			),
 			'theme',
+			null,
 			null,
 			$theme_details
 		);
@@ -124,9 +127,10 @@ class Installs extends Pulse {
 		}
 
 		Log::log(
-			'core_updated_successfully',
+			'updated',
 			$description,
-			'WordPress',
+			'core',
+			null,
 			null,
 			[
 				'old_version'  => $wp_version,
