@@ -134,7 +134,7 @@ class Admin extends Singleton {
 			$per_page = 20;
 		}
 
-		$records = DB::get_records(
+		$records = Database::get_records(
 			[
 				'limit' => $per_page,
 			]

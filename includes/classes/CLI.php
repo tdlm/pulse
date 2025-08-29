@@ -70,7 +70,7 @@ class CLI extends \WP_CLI_Command {
 			\WP_CLI::error( 'Invalid format. Valid formats are: table, json, csv, yaml, count.' );
 		}
 
-		$records = Db::get_records(
+		$records = Database::get_records(
 			[
 				'limit'   => $args['limit'],
 				'offset'  => $args['offset'],

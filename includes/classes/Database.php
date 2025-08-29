@@ -10,7 +10,7 @@ namespace WP_Pulse;
 /**
  * Database class.
  */
-class DB {
+class Database {
 
 	/**
 	 * Get records.
