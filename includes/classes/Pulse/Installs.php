@@ -93,7 +93,7 @@ class Installs extends Pulse {
 			'switch_theme',
 			sprintf(
 				/* translators: %1$s: Theme name. %2$s: Theme version. */
-				__( 'Theme %1$s version %2$s switched.', 'pulse' ),
+				__( 'Theme %1$s version %2$s activated.', 'pulse' ),
 				$theme->get( 'Name' ),
 				$theme->get( 'Version' )
 			),
