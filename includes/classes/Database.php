@@ -25,23 +25,56 @@ class Database {
 		$table_name = $wpdb->prefix . 'pulse';
 
 		$defaults = [
+			'action'  => '',
+			'context' => '',
+			'ip'      => '',
 			'limit'   => 20,
 			'offset'  => 0,
 			'orderby' => 'created_at_gmt',
 			'order'   => 'DESC',
+			'pulse'   => '',
+			'search'  => '',
+			'user_id' => '',
 		];
 
 		$args = wp_parse_args( $args, $defaults );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				"SELECT pulse.*, users.display_name, users.user_email FROM {$table_name} AS pulse LEFT JOIN {$wpdb->users} AS users ON pulse.user_id = users.ID ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d",
-				$args['limit'],
-				$args['offset']
-			)
-		);
+		$query = "SELECT pulse.*, users.display_name, users.user_email FROM {$table_name} AS pulse LEFT JOIN {$wpdb->users} AS users ON pulse.user_id = users.ID";
+
+		$where_clauses = [];
+
+		if ( false === empty( $args['action'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.action = %s', $args['action'] );
+		}
+
+		if ( false === empty( $args['context'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.context = %s', $args['context'] );
+		}
+
+		if ( false === empty( $args['ip'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.ip = %s', $args['ip'] );
+		}
+
+		if ( false === empty( $args['pulse'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.pulse = %s', $args['pulse'] );
+		}
+
+		if ( false === empty( $args['search'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.description LIKE %s', '%' . $args['search'] . '%' );
+		}
+
+		if ( false === empty( $args['user_id'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.user_id = %s', $args['user_id'] );
+		}
+
+		if ( false === empty( $where_clauses ) ) {
+			$query .= ' WHERE ' . implode( ' AND ', $where_clauses );
+		}
+
+		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );
 
 		// Enrich results with user data.
 		foreach ( $results as $result ) {
@@ -50,9 +83,12 @@ class Database {
 			$result->user_roles = true === is_object( $user_info ) && true === property_exists( $user_info, 'roles' ) ? $user_info->roles : [];
 
 			// Get label for each role.
-			$result->user_roles = array_map( function( $role ) {
-				return \WP_Pulse\Helpers\Users\get_user_role_label( $role );
-			}, $result->user_roles );
+			$result->user_roles = array_map(
+				function ( $role ) {
+					return \WP_Pulse\Helpers\Users\get_user_role_label( $role );
+				},
+				$result->user_roles
+			);
 
 			// Get gravatar URL.
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
