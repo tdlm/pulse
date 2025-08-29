@@ -56,4 +56,25 @@ class DB {
 
 		return $results;
 	}
+
+	/**
+	 * Destroy the tables.
+	 *
+	 * @return void
+	 */
+	public static function destroy_tables() {
+		global $wpdb;
+
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pulse" );
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pulse_meta" );
+	}
+
+	/**
+	 * Remove the pulse version database option.
+	 *
+	 * @return void
+	 */
+	public static function remove_pulse_version_db() {
+		delete_option( 'wp_pulse_version_db' );
+	}
 }

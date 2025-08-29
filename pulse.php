@@ -63,3 +63,9 @@ register_deactivation_hook( __FILE__, [ '\WP_Pulse\Core', 'deactivate' ] );
 if ( true === is_admin() ) {
 	\WP_Pulse\Admin::instance();
 }
+
+// Load WP-CLI command.
+if ( true === defined( 'WP_CLI' ) && true === WP_CLI ) {
+	\WP_CLI::add_command( 'pulse', 'WP_Pulse\CLI' );
+	\WP_CLI::add_command( 'pulse db', 'WP_Pulse\CLI\DB' );
+}
