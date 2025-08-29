@@ -1,15 +1,53 @@
 #pulse-dashboard-container {
+
+    .pulse-expand-toggle {
+        background: none;
+        border-radius: 2px;
+        color: #666;
+        cursor: pointer;
+        font-size: 24px;
+        height: 32px;
+        margin: 0;
+        padding: 0;
+        width: 64px;
+    }
+
+    .pulse-table {
+        border-collapse: collapse;
+        max-width: 100%;
+        table-layout: auto;
+        width: auto;
+    }
+
+    .pulse-row-details {
+        max-height: 300px;
+        overflow: scroll;
+        // width: 50%;
+
+        pre {
+            box-sizing: border-box;
+            max-width: 100%;           /* stay within the cell */
+            overflow-x: auto;          /* scroll if still too wide */
+            white-space: pre-wrap;     /* allow wrapping */
+            word-break: break-word;    /* break long strings if needed */
+        }
+    }
+
     td[data-colname="User"] {
         display: flex;
         flex-direction: row;
 
         img {
-            width: 40px;
-            height: 40px;
+            width: 64px;
+            height: 64px;
             object-fit: cover;
             border-radius: 50%;
             margin-right: 10px;
         }
+    }
+
+    td[data-colname="Date"] {
+        white-space: nowrap;
     }
 
     th#summary {
@@ -17,7 +55,13 @@
     }
 
     th#user_id {
+        white-space: nowrap;
         width: 15%;
+    }
+
+    td[data-colname="Expand Toggle"],
+    th#expand-toggle {
+        width: 3%;
     }
 
     th#context,
