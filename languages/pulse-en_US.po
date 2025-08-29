@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-29T02:02:46+00:00\n"
+"POT-Creation-Date: 2025-08-29T04:16:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pulse\n"
@@ -45,23 +45,32 @@ msgid "Plugin %1$s version %2$s activated."
 msgstr ""
 
 #. translators: %1$s: Plugin name. %2$s: Plugin version.
-#: includes/classes/Pulse/Installs.php:68
+#: includes/classes/Pulse/Installs.php:69
 msgid "Plugin %1$s version %2$s deactivated."
 msgstr ""
 
 #. translators: %1$s: Theme name. %2$s: Theme version.
-#: includes/classes/Pulse/Installs.php:96
+#: includes/classes/Pulse/Installs.php:98
 msgid "Theme %1$s version %2$s activated."
 msgstr ""
 
 #. translators: %1$s: New WordPress version.
-#: includes/classes/Pulse/Installs.php:120
+#: includes/classes/Pulse/Installs.php:123
 msgid "WordPress automatically updated to version %1$s."
 msgstr ""
 
 #. translators: %1$s: New WordPress version.
-#: includes/classes/Pulse/Installs.php:123
+#: includes/classes/Pulse/Installs.php:126
 msgid "WordPress updated to version %1$s."
+msgstr ""
+
+#. translators: %1$s: Post type label. %2$s: Post title.
+#: includes/classes/Pulse/Posts.php:57
+msgid "%1$s \"%2$s\" deleted from the trash."
+msgstr ""
+
+#: includes/classes/Pulse/Posts.php:105
+msgid "(no title)"
 msgstr ""
 
 #: templates/admin/dashboard-screen-controls.php:26
