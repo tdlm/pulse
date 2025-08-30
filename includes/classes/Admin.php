@@ -133,6 +133,7 @@ class Admin extends Singleton {
 		$action  = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$context = filter_input( INPUT_GET, 'context', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$ip      = filter_input( INPUT_GET, 'ip', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$page    = filter_input( INPUT_GET, 'paged', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$pulse   = filter_input( INPUT_GET, 'pulse', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$search  = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$user_id = filter_input( INPUT_GET, 'user_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
@@ -141,12 +142,17 @@ class Admin extends Singleton {
 			$per_page = 20;
 		}
 
+		$offset = $page < 2 ? 0 : $page * $per_page;
+
+		error_log(var_export(compact('page', 'per_page', 'offset'), true));
+
 		$records = Database::get_records(
 			[
 				'action'  => $action,
 				'context' => $context,
 				'ip'      => $ip,
 				'limit'   => $per_page,
+				'offset'  => $offset,
 				'pulse'   => $pulse,
 				'search'  => $search,
 				'user_id' => $user_id,
@@ -159,7 +165,10 @@ class Admin extends Singleton {
 				[
 					'object_name' => 'PulseAdminDashboard',
 					'value'       => [
-						'records' => $records,
+						'items'   => $records['items'],
+						'objects' => intval( $records['count'] ),
+						'pages'   => intval( ceil( $records['count'] / $per_page ) ),
+						'limit'   => intval( $per_page ),
 					],
 				],
 			]

@@ -5,9 +5,8 @@ import React from "react";
  * 
  * @returns The header row.
  */
-export default function HeaderRow() {
+export default function ColumnRow() {
   return (
-    <thead>
       <tr>
         <th
           scope="col"
@@ -44,6 +43,5 @@ export default function HeaderRow() {
           Action
         </th>
       </tr>
-    </thead>
   );
 }

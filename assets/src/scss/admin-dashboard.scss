@@ -16,7 +16,11 @@
         border-collapse: collapse;
         max-width: 100%;
         table-layout: auto;
-        width: auto;
+        width: 100%;
+
+        .the-list .no-items {
+            text-align: center;
+        }
     }
 
     .pulse-row-details {

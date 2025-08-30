@@ -16,6 +16,10 @@ type Record = {
   action: string;
 };
 
-type Records = Record[];
+type Records = {
+  items: Record[];
+  count: number;
+  limit: number;
+};
 
 export type { Record, Records };

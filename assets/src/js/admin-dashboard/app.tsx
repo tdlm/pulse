@@ -3,55 +3,94 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useQueryState } from "nuqs";
 import React from "react";
 import fetchRecords from "../lib/fetchRecords";
+import ColumnRow from "./components/column-row";
 import DataRow from "./components/data-row";
-import HeaderRow from "./components/header-row";
+import Pagination from "./components/pagination";
 import { Records } from "./types";
 
 declare global {
   interface Window {
     PulseAdminDashboard: {
-      records: any[];
+      items: Records;
+      objects: number;
+      limit: number;
     };
   }
 }
 
 /**
  * Admin dashboard app.
- * 
+ *
  * @returns The admin dashboard app.
  */
 export default function AdminDashboardApp() {
   const [search, setSearch] = useQueryState("search", {
     defaultValue: "",
   });
+
   const [action, setAction] = useQueryState("action", {
     defaultValue: "",
   });
+
   const [context, setContext] = useQueryState("context", {
     defaultValue: "",
   });
+
   const [ip, setIp] = useQueryState("ip", {
     defaultValue: "",
   });
+
+  const [paged, setPaged] = useQueryState("paged", {
+    defaultValue: 1,
+    parse: (value) => Number(value),
+  });
+
   const [pulse, setPulse] = useQueryState("pulse", {
     defaultValue: "",
   });
+
   const [user_id, setUserId] = useQueryState("user_id", {
-    defaultValue: "",
+    defaultValue: null,
+    parse: (value) => Number(value),
   });
+
   const debouncedSearch = useDebounce(search, 350);
 
+  const offset =
+    Number(paged) < 2
+      ? 0
+      : (Number(paged) - 1) * window.PulseAdminDashboard.limit;
+
   const useFetchRecords = (debouncedSearch: string) => {
-    return useQuery<Records>({
-      initialData: window.PulseAdminDashboard.records,
+    return useQuery<{
+      items: Records;
+      objects: number;
+      pages: number;
+    }>({
+      initialData: {
+        ...window.PulseAdminDashboard,
+        pages: 1,
+      },
       refetchInterval: 10 * 1000, // 10 seconds.
-      queryKey: ["records", debouncedSearch],
+      queryKey: [
+        "records",
+        action,
+        context,
+        debouncedSearch,
+        ip,
+        window.PulseAdminDashboard.limit,
+        offset,
+        pulse,
+        user_id,
+      ],
       queryFn: ({ signal }) =>
         fetchRecords({
           action,
           context,
           search: debouncedSearch,
           ip,
+          limit: window.PulseAdminDashboard.limit,
+          offset,
           pulse,
           user_id,
           signal,
@@ -73,7 +112,7 @@ export default function AdminDashboardApp() {
           id="record-search-input"
           name="search"
           defaultValue={search}
-          onChange={(e) => setSearch(e.target.value)}
+          // onChange={(e) => setSearch(e.target.value)}
         />
         <input
           type="submit"
@@ -83,14 +122,52 @@ export default function AdminDashboardApp() {
           value="Search Records"
         />
       </p>
+      <div className="tablenav top">
+        <div className="alignleft actions bulkactions"></div>
+        <div className={`tablenav-pages ${Number(data?.objects) < 1 ? "no-pages" : ""}`}>
+          <span className="displaying-num">{data?.objects} items</span>
+          <Pagination
+            paged={Number(paged)}
+            setPage={setPaged}
+            totalPages={data?.pages}
+          />
+        </div>
+      </div>
       <table className="pulse-table wp-list-table widefat fixed striped">
-        <HeaderRow />
+        <thead>
+          <ColumnRow />
+        </thead>
         <tbody className="the-list">
-          {data.map((record) => (
-            <DataRow key={record.id} record={record} />
-          ))}
+          {Array.isArray(data?.items) &&
+            data.items.length > 0 &&
+            data.items.map((record) => (
+              <DataRow key={record.id} record={record} />
+            ))}
+          {Array.isArray(data?.items) && data.items.length === 0 && (
+            <tr class="no-items">
+              <td class="colspanchange" colspan="6">
+                  <p>No pulse records were found.</p>
+              </td>
+            </tr>
+          )}
         </tbody>
+        <tfoot>
+          <ColumnRow />
+        </tfoot>
       </table>
+      <div className="tablenav bottom">
+        <div className="alignleft actions recordactions">Actions</div>
+        <div className="alignleft actions"></div>
+
+        <div className={`tablenav-pages ${Number(data?.objects) < 1 ? "no-pages" : ""}`}>
+          <span className="displaying-num">{data?.objects} items</span>
+          <Pagination
+            paged={Number(paged)}
+            setPage={setPaged}
+            totalPages={data?.pages}
+          />
+        </div>
+      </div>
     </form>
   );
 }

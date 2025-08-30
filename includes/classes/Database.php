@@ -39,6 +39,8 @@ class Database {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		error_log(var_export(compact('args'), true));
+
 		$query = "SELECT pulse.*, users.display_name, users.user_email FROM {$table_name} AS pulse LEFT JOIN {$wpdb->users} AS users ON pulse.user_id = users.ID";
 
 		$where_clauses = [];
@@ -73,6 +75,10 @@ class Database {
 
 		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
 
+		$yoink = $wpdb->prepare( $query, $args['limit'], $args['offset'] );
+
+		error_log( print_r( $yoink, true ) );
+
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );
 
@@ -94,15 +100,27 @@ class Database {
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
 			$result->gravatar_url_2x = get_avatar_url( $result->user_email, [ 'size' => 160 ] );
 
-			$pulse                = Helpers\Strings\to_pascal_case( $result->pulse );
-			$labels               = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
+			$pulse  = Helpers\Strings\to_pascal_case( $result->pulse );
+			$labels = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
 
-			$result->action_label = $labels[ $result->action ];
+			$result->action_label  = $labels[ $result->action ];
 			$result->context_label = $labels[ $result->context ] ?? $result->context;
-			$result->pulse_label  = $labels[ $result->pulse ];
+			$result->pulse_label   = $labels[ $result->pulse ];
 		}
 
-		return $results;
+		$count_query = "SELECT COUNT(*) FROM {$table_name} AS pulse";
+
+		if ( false === empty( $where_clauses ) ) {
+			$count_query .= ' WHERE ' . implode( ' AND ', $where_clauses );
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$count = $wpdb->get_var( $count_query );
+
+		return [
+			'count' => $count,
+			'items' => $results,
+		];
 	}
 
 	/**

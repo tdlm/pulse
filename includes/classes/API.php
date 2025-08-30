@@ -79,6 +79,18 @@ class API extends Singleton {
 			]
 		);
 
-		return new \WP_REST_Response( $records );
+		return new \WP_REST_Response(
+			[
+				'items'  => $records['items'],
+				'count'  => $records['count'],
+				'limit'  => $args['limit'],
+				'offset' => $args['offset'],
+			],
+			200,
+			[
+				'X-WP-Total'      => $records['count'],
+				'X-WP-TotalPages' => ceil( $records['count'] / $args['limit'] ),
+			]
+		);
 	}
 }
