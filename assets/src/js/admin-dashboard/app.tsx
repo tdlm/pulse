@@ -14,6 +14,7 @@ declare global {
       items: Records;
       objects: number;
       limit: number;
+      pages: number;
     };
   }
 }
@@ -69,7 +70,6 @@ export default function AdminDashboardApp() {
     }>({
       initialData: {
         ...window.PulseAdminDashboard,
-        pages: 1,
       },
       refetchInterval: 10 * 1000, // 10 seconds.
       queryKey: [
@@ -144,8 +144,8 @@ export default function AdminDashboardApp() {
               <DataRow key={record.id} record={record} />
             ))}
           {Array.isArray(data?.items) && data.items.length === 0 && (
-            <tr class="no-items">
-              <td class="colspanchange" colspan="6">
+            <tr className="no-items">
+              <td className="colspanchange" colSpan={6}>
                   <p>No pulse records were found.</p>
               </td>
             </tr>
