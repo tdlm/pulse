@@ -1,23 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+/// <reference path="../admin-dashboard/types.d.ts" />
+
 import { useDebounce } from "@uidotdev/usehooks";
 import { useQueryState } from "nuqs";
 import React from "react";
-import fetchRecords from "../lib/fetchRecords";
+import useFetchRecords from "../lib/useFetchRecords";
 import ColumnRow from "./components/column-row";
 import DataRow from "./components/data-row";
 import Pagination from "./components/pagination";
-import { Records } from "./types";
-
-declare global {
-  interface Window {
-    PulseAdminDashboard: {
-      items: Records;
-      objects: number;
-      limit: number;
-      pages: number;
-    };
-  }
-}
 
 /**
  * Admin dashboard app.
@@ -62,43 +51,7 @@ export default function AdminDashboardApp() {
       ? 0
       : (Number(paged) - 1) * window.PulseAdminDashboard.limit;
 
-  const useFetchRecords = (debouncedSearch: string) => {
-    return useQuery<{
-      items: Records;
-      objects: number;
-      pages: number;
-    }>({
-      initialData: {
-        ...window.PulseAdminDashboard,
-      },
-      refetchInterval: 10 * 1000, // 10 seconds.
-      queryKey: [
-        "records",
-        action,
-        context,
-        debouncedSearch,
-        ip,
-        window.PulseAdminDashboard.limit,
-        offset,
-        pulse,
-        user_id,
-      ],
-      queryFn: ({ signal }) =>
-        fetchRecords({
-          action,
-          context,
-          search: debouncedSearch,
-          ip,
-          limit: window.PulseAdminDashboard.limit,
-          offset,
-          pulse,
-          user_id,
-          signal,
-        }),
-    });
-  };
-
-  const { data, isLoading, isError } = useFetchRecords(debouncedSearch);
+  const { data, isLoading, isError } = useFetchRecords(debouncedSearch, action, context, ip, offset, pulse, user_id);
 
   return (
     <form method="get" action="http://localhost:8888/wp-admin/admin.php">

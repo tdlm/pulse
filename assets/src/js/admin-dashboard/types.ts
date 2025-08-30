@@ -1,4 +1,4 @@
-type Record = {
+export type Record = {
   id: number;
   created_at: string;
   description: string;
@@ -16,10 +16,10 @@ type Record = {
   action: string;
 };
 
-type Records = {
+export type Records = {
   items: Record[];
   count: number;
   limit: number;
 };
 
-export type { Record, Records };
+export {};
