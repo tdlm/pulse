@@ -26,7 +26,6 @@ class Posts extends Pulse {
 		'deleted_post',
 	];
 
-
 	/**
 	 * Get labels.
 	 *

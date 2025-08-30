@@ -144,8 +144,6 @@ class Admin extends Singleton {
 
 		$offset = $page < 2 ? 0 : $page * $per_page;
 
-		error_log(var_export(compact('page', 'per_page', 'offset'), true));
-
 		$records = Database::get_records(
 			[
 				'action'  => $action,

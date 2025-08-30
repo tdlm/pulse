@@ -39,8 +39,6 @@ class Database {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		error_log(var_export(compact('args'), true));
-
 		$query = "SELECT pulse.*, users.display_name, users.user_email FROM {$table_name} AS pulse LEFT JOIN {$wpdb->users} AS users ON pulse.user_id = users.ID";
 
 		$where_clauses = [];
@@ -74,10 +72,6 @@ class Database {
 		}
 
 		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
-
-		$yoink = $wpdb->prepare( $query, $args['limit'], $args['offset'] );
-
-		error_log( print_r( $yoink, true ) );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );
