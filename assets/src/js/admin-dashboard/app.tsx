@@ -3,12 +3,29 @@
 /* eslint-disable camelcase */
 
 import { useDebounce } from '@uidotdev/usehooks';
+import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 import useFetchRecords from '../lib/useFetchRecords';
 import ColumnRow from './components/column-row';
 import DataRow from './components/data-row';
 import Pagination from './components/pagination';
+
+/**
+ * Get the table nav pages class.
+ *
+ * @param objects    The objects.
+ * @param totalPages The total pages.
+ * @return The table nav pages class.
+ */
+const getTableNavPagesClass = ( objects: number, totalPages: number ) => {
+	if ( objects < 1 ) {
+		return 'no-pages';
+	} else if ( 1 === totalPages ) {
+		return 'one-page';
+	}
+	return '';
+};
 
 /**
  * Admin dashboard app.
@@ -90,9 +107,10 @@ export default function AdminDashboardApp() {
 			<div className="tablenav top">
 				<div className="alignleft actions bulkactions"></div>
 				<div
-					className={ `tablenav-pages ${
-						Number( data?.objects ) < 1 ? 'no-pages' : ''
-					}` }
+					className={ clsx(
+						'tablenav-pages',
+						getTableNavPagesClass( data?.objects, data?.pages )
+					) }
 				>
 					<span className="displaying-num">
 						{ data?.objects } items
@@ -132,9 +150,10 @@ export default function AdminDashboardApp() {
 				<div className="alignleft actions"></div>
 
 				<div
-					className={ `tablenav-pages ${
-						Number( data?.objects ) < 1 ? 'no-pages' : ''
-					}` }
+					className={ clsx(
+						'tablenav-pages',
+						getTableNavPagesClass( data?.objects, data?.pages )
+					) }
 				>
 					<span className="displaying-num">
 						{ data?.objects } items
