@@ -196,10 +196,11 @@ class Admin extends Singleton {
 				[
 					'object_name' => 'PulseAdminDashboard',
 					'value'       => [
-						'items'   => $records['items'],
-						'objects' => intval( $records['count'] ),
-						'pages'   => intval( ceil( $records['count'] / $per_page ) ),
-						'limit'   => intval( $per_page ),
+						'count'  => intval( $records['count'] ),
+						'items'  => $records['items'],
+						'offset' => $offset,
+						'pages'  => intval( ceil( $records['count'] / $per_page ) ),
+						'limit'  => intval( $per_page ),
 					],
 				],
 			]

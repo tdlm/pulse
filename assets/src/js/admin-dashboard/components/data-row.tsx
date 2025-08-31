@@ -58,14 +58,18 @@ export default function DataRow( { record }: DataRowProps ) {
 				<br />
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&created_at=${ moment( record.created_at ).format( 'YYYY-MM-DD' ) }` }
+					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&created_at=${ moment(
+						record.created_at
+					).format( 'YYYY-MM-DD' ) }` }
 				>
 					<time dateTime={ record.created_at }>
 						{ moment( record.created_at ).format( 'YYYY/MM/DD' ) }
 					</time>
 				</a>
 				<br />
-				<span>{ moment( record.created_at ).format( 'hh:mm:ssA' ) }</span>
+				<span>
+					{ moment( record.created_at ).format( 'hh:mm:ssA' ) }
+				</span>
 			</td>
 			<td data-colname="Description">
 				<p>{ record.description }</p>

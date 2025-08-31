@@ -17,9 +17,11 @@ export type Record = {
 };
 
 export type Records = {
-	items: Record[];
 	count: number;
+	items: Record[];
 	limit: number;
+	offset: number;
+	pages: number;
 };
 
 export {};

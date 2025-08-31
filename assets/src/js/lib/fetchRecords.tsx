@@ -1,22 +1,22 @@
 /* eslint-disable camelcase */
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
-import { Records } from '../admin-dashboard/types';
+import { Records, Record } from '../admin-dashboard/types';
 
 /**
  * Fetch records.
  *
  * @param params
- * @param params.action  The action.
- * @param params.context The context.
+ * @param params.action     The action.
+ * @param params.context    The context.
  * @param params.created_at The created at.
- * @param params.search  The search.
- * @param params.ip      The IP.
- * @param params.limit   The limit.
- * @param params.offset  The offset.
- * @param params.pulse   The pulse.
- * @param params.user_id The user ID.
- * @param params.signal  The signal.
+ * @param params.search     The search.
+ * @param params.ip         The IP.
+ * @param params.limit      The limit.
+ * @param params.offset     The offset.
+ * @param params.pulse      The pulse.
+ * @param params.user_id    The user ID.
+ * @param params.signal     The signal.
  * @return The fetch records.
  */
 export default async function fetchRecords( params: {
@@ -30,11 +30,7 @@ export default async function fetchRecords( params: {
 	pulse?: string;
 	user_id?: number;
 	signal?: AbortSignal;
-} ): Promise< {
-	items: Records;
-	objects: number;
-	pages: number;
-} > {
+} ): Promise< Records > {
 	const {
 		action,
 		context,
@@ -67,8 +63,10 @@ export default async function fetchRecords( params: {
 	const data = await response.json();
 
 	return {
-		items: data.items as Records,
-		objects: Number( response.headers.get( 'X-WP-Total' ) ),
+		items: data.items as Record[],
+		count: Number( response.headers.get( 'X-WP-Total' ) ),
+		limit: Number( response.headers.get( 'X-WP-TotalPages' ) ),
+		offset: Number( response.headers.get( 'X-WP-TotalPages' ) ),
 		pages: Number( response.headers.get( 'X-WP-TotalPages' ) ),
 	};
 }

@@ -51,33 +51,33 @@ class API extends Singleton {
 		$args = wp_parse_args(
 			$args,
 			[
-				'action'  => '',
-				'context' => '',
+				'action'     => '',
+				'context'    => '',
 				'created_at' => '',
-				'ip'      => '',
-				'limit'   => 20,
-				'offset'  => 0,
-				'orderby' => 'created_at_gmt',
-				'order'   => 'DESC',
-				'pulse'   => '',
-				'search'  => '',
-				'user_id' => '',
+				'ip'         => '',
+				'limit'      => 20,
+				'offset'     => 0,
+				'orderby'    => 'created_at_gmt',
+				'order'      => 'DESC',
+				'pulse'      => '',
+				'search'     => '',
+				'user_id'    => '',
 			]
 		);
 
 		$records = Database::get_records(
 			[
-				'action'  => $args['action'],
-				'context' => $args['context'],
+				'action'     => $args['action'],
+				'context'    => $args['context'],
 				'created_at' => $args['created_at'],
-				'ip'      => $args['ip'],
-				'limit'   => $args['limit'],
-				'offset'  => $args['offset'],
-				'orderby' => $args['orderby'],
-				'order'   => $args['order'],
-				'pulse'   => $args['pulse'],
-				'search'  => $args['search'],
-				'user_id' => $args['user_id'],
+				'ip'         => $args['ip'],
+				'limit'      => $args['limit'],
+				'offset'     => $args['offset'],
+				'orderby'    => $args['orderby'],
+				'order'      => $args['order'],
+				'pulse'      => $args['pulse'],
+				'search'     => $args['search'],
+				'user_id'    => $args['user_id'],
 			]
 		);
 
@@ -87,6 +87,7 @@ class API extends Singleton {
 				'count'  => $records['count'],
 				'limit'  => $args['limit'],
 				'offset' => $args['offset'],
+				'pages'  => ceil( $records['count'] / $args['limit'] ),
 			],
 			200,
 			[

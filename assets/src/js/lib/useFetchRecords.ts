@@ -27,11 +27,7 @@ export default function useFetchRecords(
 	pulse: string,
 	user_id: number
 ) {
-	return useQuery< {
-		items: Records;
-		objects: number;
-		pages: number;
-	} >( {
+	return useQuery< Records >( {
 		initialData: {
 			...window.PulseAdminDashboard,
 		},

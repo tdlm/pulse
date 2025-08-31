@@ -25,17 +25,17 @@ class Database {
 		$table_name = $wpdb->prefix . 'pulse';
 
 		$defaults = [
-			'action'  => '',
-			'context' => '',
+			'action'     => '',
+			'context'    => '',
 			'created_at' => '',
-			'ip'      => '',
-			'limit'   => 20,
-			'offset'  => 0,
-			'orderby' => 'created_at_gmt',
-			'order'   => 'DESC',
-			'pulse'   => '',
-			'search'  => '',
-			'user_id' => '',
+			'ip'         => '',
+			'limit'      => 20,
+			'offset'     => 0,
+			'orderby'    => 'created_at_gmt',
+			'order'      => 'DESC',
+			'pulse'      => '',
+			'search'     => '',
+			'user_id'    => '',
 		];
 
 		$args = wp_parse_args( $args, $defaults );
