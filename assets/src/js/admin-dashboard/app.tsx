@@ -5,7 +5,7 @@
 import { useDebounce } from '@uidotdev/usehooks';
 import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
-import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 import useFetchRecords from '../lib/useFetchRecords';
 import ColumnRow from './components/column-row';
 import DataRow from './components/data-row';
@@ -33,6 +33,7 @@ const getTableNavPagesClass = ( objects: number, totalPages: number ) => {
  * @return The admin dashboard app.
  */
 export default function AdminDashboardApp() {
+	const [ hasFilters, setHasFilters ] = useState( false );
 	const [ search, setSearch ] = useQueryState( 'search', {
 		defaultValue: '',
 	} );
@@ -70,6 +71,7 @@ export default function AdminDashboardApp() {
 			? 0
 			: ( Number( paged ) - 1 ) * window.PulseAdminDashboard.limit;
 
+	
 	const { data, isLoading, isError } = useFetchRecords(
 		debouncedSearch,
 		action,
@@ -79,6 +81,11 @@ export default function AdminDashboardApp() {
 		pulse,
 		user_id
 	);
+
+	useEffect(() => {
+		setHasFilters( Boolean( search || action || context || ip || pulse || user_id ) );
+	}, [ search, action, context, ip, pulse, user_id ]);
+	
 
 	return (
 		<form method="get" action="http://localhost:8888/wp-admin/admin.php">
@@ -105,7 +112,12 @@ export default function AdminDashboardApp() {
 				/>
 			</p>
 			<div className="tablenav top">
-				<div className="alignleft actions bulkactions"></div>
+				<div className="alignleft actions">
+					{hasFilters && (<a href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse" id="record-query-reset">
+						<span className="dashicons dashicons-dismiss"></span>
+						<span className="record-query-reset-text">Reset filters</span>
+					</a>)}
+				</div>
 				<div
 					className={ clsx(
 						'tablenav-pages',

@@ -90,6 +90,31 @@
         width: 10%;
     }
 
+    .tablenav.top {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #record-query-reset {
+        align-items: center;
+        display: inline-flex;
+        text-decoration: none;
+        gap: 4px;
+
+        &:hover {
+            font-weight: bold;
+        }
+
+        .dashicons-dismiss {
+            align-items: center;
+            display: flex;
+            font-size: 16px;
+            height: 16px;
+            width: 16px;
+        }
+    }
+
     @media (max-width: 900px) {
 
         th#date {
