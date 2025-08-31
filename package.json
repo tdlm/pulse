@@ -36,6 +36,7 @@
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.83.1",
     "@tanstack/react-query-devtools": "^5.85.5",
+    "@types/moment": "^2.11.29",
     "@types/wordpress__api-fetch": "^3.2.4",
     "@types/wordpress__url": "^2.3.0",
     "@wordpress/env": "^10.29.0",
