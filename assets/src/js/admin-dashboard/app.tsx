@@ -163,7 +163,17 @@ export default function AdminDashboardApp() {
 					{ Array.isArray( data?.items ) &&
 						data.items.length > 0 &&
 						data.items.map( ( record ) => (
-							<DataRow key={ record.id } record={ record } />
+							<DataRow
+								key={ record.id }
+								record={ record }
+								setAction={ setAction }
+								setContext={ setContext }
+								setCreatedAt={ setCreatedAt }
+								setIp={ setIp }
+								setPaged={ setPaged }
+								setPulse={ setPulse }
+								setUserId={ setUserId }
+							/>
 						) ) }
 					{ Array.isArray( data?.items ) &&
 						data.items.length === 0 && (
