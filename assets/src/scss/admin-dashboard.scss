@@ -1,5 +1,18 @@
 #pulse-dashboard-container {
 
+    .tablenav-pages {
+        display: flex;
+        align-items: center;
+
+        .pagination-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+        }
+    }
+
     .pulse-expand-toggle {
         background: none;
         border-radius: 2px;
@@ -26,7 +39,6 @@
     .pulse-row-details {
         max-height: 300px;
         overflow: scroll;
-        // width: 50%;
 
         pre {
             box-sizing: border-box;
