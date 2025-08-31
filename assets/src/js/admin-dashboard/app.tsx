@@ -189,8 +189,14 @@ export default function AdminDashboardApp() {
 				</tfoot>
 			</table>
 			<div className="tablenav bottom">
-				<div className="alignleft actions recordactions">Actions</div>
-				<div className="alignleft actions"></div>
+				<div className="alignleft actions hidden">
+					<select name="action2" id="bulk-action-selector-bottom">
+						<option value="-1">Export Actions</option>
+						<option value="csv">Download CSV</option>
+						<option value="json">Download JSON</option>
+					</select>
+					<input type="submit" name="bulk_action" id="doaction2" class="button action" value="Apply" />
+				</div>
 
 				<div
 					className={ clsx(
