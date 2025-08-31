@@ -21,5 +21,5 @@ $props = wp_parse_args(
 );
 ?>
 <div class="notice notice-<?php echo esc_attr( $props['type'] ); ?> is-dismissible">
-	<p><?php echo esc_html( $props['message'] ); ?></p>
+	<p><?php echo wp_kses_post( $props['message'] ); ?></p>
 </div>

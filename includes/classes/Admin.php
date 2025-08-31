@@ -22,22 +22,46 @@ class Admin extends Singleton {
 	public static $notices = [];
 
 	/**
+	 * The menu slug.
+	 *
+	 * @var string
+	 */
+	public $menu_slug = 'wp-pulse-settings';
+
+	/**
+	 * The option key.
+	 *
+	 * @var string
+	 */
+	public $option_key = 'wp-pulse';
+
+	/**
 	 * Add the menu page.
 	 *
 	 * @action admin_menu
 	 */
-	public static function add_menu_page() {
+	public function add_menu_page() {
 		$hook = add_menu_page(
 			'Pulse',
 			'Pulse',
 			'manage_options',
 			'wp-pulse',
-			[ self::class, 'render_page' ],
+			[ $this, 'render_pulse_page' ],
 			'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTkgMkM5LjQzMDQzIDIgOS44MTI1NyAyLjI3NTQzIDkuOTQ4NjggMi42ODM3N0wxNSAxNy44Mzc3TDE3LjA1MTMgMTEuNjgzOEMxNy4xODc0IDExLjI3NTQgMTcuNTY5NiAxMSAxOCAxMUgyMkMyMi41NTIzIDExIDIzIDExLjQ0NzcgMjMgMTJDMjMgMTIuNTUyMyAyMi41NTIzIDEzIDIyIDEzSDE4LjcyMDhMMTUuOTQ4NyAyMS4zMTYyQzE1LjgxMjYgMjEuNzI0NiAxNS40MzA0IDIyIDE1IDIyQzE0LjU2OTYgMjIgMTQuMTg3NCAyMS43MjQ2IDE0LjA1MTMgMjEuMzE2Mkw5IDYuMTYyMjhMNi45NDg2OCAxMi4zMTYyQzYuODEyNTcgMTIuNzI0NiA2LjQzMDQzIDEzIDYgMTNIMkMxLjQ0NzcyIDEzIDEgMTIuNTUyMyAxIDEyQzEgMTEuNDQ3NyAxLjQ0NzcyIDExIDIgMTFINS4yNzkyNEw4LjA1MTMyIDIuNjgzNzdDOC4xODc0MyAyLjI3NTQzIDguNTY5NTcgMiA5IDJaIiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPg==',
 			2.75
 		);
 
-		add_action( "load-$hook", [ self::class, 'add_screen_options' ] );
+		add_action( "load-$hook", [ $this, 'add_screen_options' ] );
+
+		add_submenu_page(
+			'wp-pulse',
+			'Pulse Settings',
+			'Settings',
+			'manage_options',
+			$this->menu_slug,
+			[ $this, 'render_settings_page' ],
+			2.75
+		);
 	}
 
 	/**
@@ -45,7 +69,7 @@ class Admin extends Singleton {
 	 *
 	 * @return void
 	 */
-	public static function add_screen_options() {
+	public function add_screen_options() {
 		add_screen_option(
 			'per_page',
 			[
@@ -157,7 +181,7 @@ class Admin extends Singleton {
 	 *
 	 * @return void
 	 */
-	public static function render_page() {
+	public static function render_pulse_page() {
 		$user_id  = get_current_user_id();
 		$per_page = get_user_option( 'pulse_per_page', $user_id );
 
@@ -208,6 +232,341 @@ class Admin extends Singleton {
 		Helpers\Media\enqueue_style( 'pulse/admin-dashboard' );
 
 		View::include_template( 'admin/dashboard' );
+	}
+
+	/**
+	 * Render the settings page.
+	 *
+	 * @return void
+	 */
+	public function render_settings_page() {
+		if ( false === current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$schema      = self::get_settings_schema();
+		$current_tab = self::get_current_tab();
+
+		$tabs = $schema['tabs'];
+
+		View::include_template(
+			'admin/settings',
+			compact(
+				'current_tab',
+				'tabs'
+			)
+		);
+	}
+
+	/**
+	 * Display the admin help notice.
+	 *
+	 * @action admin_notices
+	 */
+	public function display_admin_help_notice() {
+		$screen = get_current_screen();
+
+		if ( false === $screen instanceof \WP_Screen ) {
+			return;
+		}
+
+		if ( false === in_array( $screen->id, [ 'pulse_page_wp-pulse-settings' ], true ) ) {
+			return;
+		}
+
+		self::notice(
+			'Let me know if you have any feedback or suggestions. <a href="https://github.com/tdlm/pulse/issues/new" target="_blank">Create an issue</a>',
+			'info'
+		);
+	}
+
+	/**
+	 * Get the current tab.
+	 *
+	 * @return string
+	 */
+	public static function get_current_tab() {
+		$tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		if ( false === isset( $tab ) ) {
+			$tab = 'general';
+		}
+
+		return $tab;
+	}
+
+	/**
+	 * Get the settings schema.
+	 *
+	 * @return array{tabs: array}
+	 */
+	public static function get_settings_schema() {
+		return [
+			'tabs' => [
+				'general'  => [
+					'title'  => 'General',
+					'fields' => [
+						[
+							'id'      => 'enable_logging',
+							'label'   => 'Enable logging',
+							'type'    => 'checkbox',
+							'default' => false,
+							'desc'    => 'Write basic logs for debugging.',
+						],
+						[
+							'id'      => 'heartbeat_seconds',
+							'label'   => 'Heartbeat (seconds)',
+							'type'    => 'number',
+							'min'     => 10,
+							'max'     => 600,
+							'step'    => 10,
+							'default' => 120,
+							'desc'    => 'How often to refresh data.',
+						],
+					],
+				],
+				'advanced' => [
+					'title'  => 'Advanced',
+					'fields' => [
+						[
+							'id'      => 'log_level',
+							'label'   => 'Log level',
+							'type'    => 'select',
+							'choices' => [
+								'error' => 'Error',
+								'warn'  => 'Warn',
+								'info'  => 'Info',
+								'debug' => 'Debug',
+							],
+							'default' => 'warn',
+							'desc'    => 'Choose the minimum log level.',
+						],
+						[
+							'id'      => 'custom_note',
+							'label'   => 'Custom note',
+							'type'    => 'textarea',
+							'default' => '',
+							'desc'    => 'Optional free-form text.',
+						],
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * Register the settings.
+	 *
+	 * @action admin_init
+	 *
+	 * @return void
+	 */
+	public function register_settings() {
+		register_setting(
+			'pulse_settings_group',
+			$this->option_key,
+			[
+				'type'              => 'array',
+				'sanitize_callback' => [ $this, 'sanitize_pulse_options' ],
+			]
+		);
+
+		$settings = self::get_settings_schema();
+
+		foreach ( $settings['tabs'] as $tab_key => $tab_settings ) {
+			add_settings_section(
+				"pulse_section_{$tab_key}",
+				$tab_settings['title'],
+				function () {},
+				"pulse_settings_{$tab_key}"
+			);
+
+			foreach ( $tab_settings['fields'] as $field ) {
+				add_settings_field(
+					$field['id'],
+					$field['label'],
+					[ $this, 'render_field' ],
+					"pulse_settings_{$tab_key}",
+					"pulse_section_{$tab_key}",
+					[
+						'tab'   => $tab_key,
+						'field' => $field,
+					]
+				);
+			}
+		}
+
+		$options = get_option( $this->option_key );
+
+		if ( false === $options ) {
+			$defaults = [];
+
+			foreach ( $settings['tabs'] as $tab_key => $tab ) {
+				foreach ( $tab['fields'] as $field ) {
+					if ( false === isset( $defaults[ $tab_key ] ) ) {
+						$defaults[ $tab_key ] = [];
+					}
+
+					$defaults[ $tab_key ][ $field['id'] ] = $field['default'] ?? '';
+				}
+			}
+
+			update_option( $this->option_key, $defaults );
+		}
+	}
+
+	/**
+	 * Render a field.
+	 *
+	 * @param array $args The arguments.
+	 *
+	 * @return void
+	 */
+	public function render_field( array $args ) {
+		$field = $args['field'];
+		$id    = $field['id'];
+		$type  = $field['type'] ?? 'text';
+		$opts  = get_option( $this->option_key, [] );
+		$tab   = $args['tab'];
+
+		$value = true === isset( $opts[ $tab ][ $id ] ) ? $opts[ $tab ][ $id ] : ( $field['default'] ?? '' );
+		$name  = $this->option_key . '[' . $tab . '][' . $id . ']';
+
+		switch ( $type ) {
+			case 'checkbox':
+				echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="0" />';
+				printf(
+					'<label><input type="checkbox" name="%s" value="1" %s /> %s</label>',
+					esc_attr( $name ),
+					checked( (bool) $value, true, false ),
+					isset( $field['desc'] ) ? esc_html( $field['desc'] ) : ''
+				);
+				break;
+
+			case 'number':
+				printf(
+					'<input type="number" name="%s" value="%s" min="%s" max="%s" step="%s" class="small-text" />',
+					esc_attr( $name ),
+					esc_attr( $value ),
+					isset( $field['min'] ) ? esc_attr( $field['min'] ) : '',
+					isset( $field['max'] ) ? esc_attr( $field['max'] ) : '',
+					isset( $field['step'] ) ? esc_attr( $field['step'] ) : '1'
+				);
+				if ( ! empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+
+			case 'select':
+				echo '<select name="' . esc_attr( $name ) . '">';
+				foreach ( $field['choices'] as $k => $label ) {
+					printf( '<option value="%s" %s>%s</option>', esc_attr( $k ), selected( $value, $k, false ), esc_html( $label ) );
+				}
+				echo '</select>';
+				if ( false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+
+			case 'textarea':
+				printf(
+					'<textarea name="%s" rows="5" class="large-text">%s</textarea>',
+					esc_attr( $name ),
+					esc_textarea( $value )
+				);
+				if ( false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+
+			default:
+				printf(
+					'<input type="text" name="%s" value="%s" class="regular-text" />',
+					esc_attr( $name ),
+					esc_attr( $value )
+				);
+				if ( false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+		}
+	}
+
+	/**
+	 * Sanitize the options.
+	 *
+	 * @param array $input The input.
+	 *
+	 * @return array
+	 */
+	public function sanitize_pulse_options( $input ) {
+		if ( false === is_array( $input ) ) {
+			$input = [];
+		}
+
+		$schema = self::get_settings_schema();
+
+		// Start from existing so other-tab values aren't wiped.
+		$out = get_option( $this->option_key, [] );
+
+		// Merge the input with the existing options.
+		$merged = array_merge( $out, $input );
+
+		// Sanitize the merged options.
+		foreach ( $schema['tabs'] as $tab_key => $tab ) {
+			foreach ( $tab['fields'] as $f ) {
+				$id = $f['id'];
+
+				if ( false === isset( $merged[ $tab_key ] ) ) {
+					$merged[ $tab_key ] = [];
+				}
+
+				if ( false === isset( $merged[ $tab_key ][ $id ] ) ) {
+					$merged[ $tab_key ][ $id ] = '';
+				}
+
+				$val  = $merged[ $tab_key ][ $id ];
+				$type = $f['type'] ?? 'text';
+
+				switch ( $type ) {
+					case 'checkbox':
+						if ( false === isset( $merged[ $tab_key ] ) ) {
+							$merged[ $tab_key ] = [];
+						}
+
+						if ( false === isset( $merged[ $tab_key ][ $id ] ) ) {
+							$merged[ $tab_key ][ $id ] = '';
+						}
+
+						$merged[ $tab_key ][ $id ] = $val ? 1 : 0;
+						break;
+
+					case 'number':
+						$num = true === is_numeric( $val ) ? 0 + $val : ( $f['default'] ?? 0 );
+						if ( true === isset( $f['min'] ) ) {
+							$num = max( $num, (float) $f['min'] ); }
+						if ( true === isset( $f['max'] ) ) {
+							$num = min( $num, (float) $f['max'] ); }
+						$merged[ $tab_key ][ $id ] = $num;
+						break;
+
+					case 'select':
+						$allowed                   = array_keys( $f['choices'] ?? [] );
+						$merged[ $tab_key ][ $id ] = true === in_array( (string) $val, $allowed, true )
+						? (string) $val
+						: ( $f['default'] ?? '' );
+						break;
+
+					case 'textarea':
+						$merged[ $tab_key ][ $id ] = wp_kses_post( true === is_scalar( $val ) ? (string) $val : '' );
+						break;
+
+					default:
+						$merged[ $tab_key ][ $id ] = sanitize_text_field( true === is_scalar( $val ) ? (string) $val : '' );
+				}
+			}
+		}
+
+		return $merged;
 	}
 
 	/**
