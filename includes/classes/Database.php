@@ -94,12 +94,17 @@ class Database {
 			$result->gravatar_url    = get_avatar_url( $result->user_email, [ 'size' => 80 ] );
 			$result->gravatar_url_2x = get_avatar_url( $result->user_email, [ 'size' => 160 ] );
 
-			$pulse  = Helpers\Strings\to_pascal_case( $result->pulse );
-			$labels = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
+			$pulse = Helpers\Strings\to_pascal_case( $result->pulse );
 
-			$result->action_label  = $labels[ $result->action ];
-			$result->context_label = $labels[ $result->context ] ?? $result->context;
-			$result->pulse_label   = $labels[ $result->pulse ];
+			if ( true === method_exists( 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ) ) {
+				$labels = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
+			} else {
+				$labels = [];
+			}
+
+			$result->action_label  = true === isset( $labels[ $result->action ] ) ? $labels[ $result->action ] : $result->action;
+			$result->context_label = true === isset( $labels[ $result->context ] ) ? $labels[ $result->context ] : $result->context;
+			$result->pulse_label   = true === isset( $labels[ $result->pulse ] ) ? $labels[ $result->pulse ] : $result->pulse;
 		}
 
 		$count_query = "SELECT COUNT(*) FROM {$table_name} AS pulse";

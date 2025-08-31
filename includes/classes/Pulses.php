@@ -38,24 +38,12 @@ class Pulses {
 
 				// Make sure get_labels() is defined on the class.
 				if ( false === method_exists( $pulse_class, 'get_labels' ) ) {
-					throw new \Exception(
-						sprintf(
-							/* translators: %s: Pulse class name. */
-							esc_html__( 'Class %s must define a get_labels() method', 'pulse' ),
-							esc_html( $pulse_class )
-						)
-					);
+					Admin::notice( sprintf( 'Class %s must define a get_labels() method', $pulse_class ), 'error' );
 				}
 
 				// Make sure the register() method is defined on the class.
 				if ( false === method_exists( $pulse_class, 'register' ) ) {
-					throw new \Exception(
-						sprintf(
-							/* translators: %s: Pulse class name. */
-							esc_html__( 'Class %s must define a register() method', 'pulse' ),
-							esc_html( $pulse_class )
-						)
-					);
+					Admin::notice( sprintf( 'Class %s must define a register() method', $pulse_class ), 'error' );
 				}
 
 				$pulse->register();

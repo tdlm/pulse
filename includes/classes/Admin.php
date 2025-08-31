@@ -15,6 +15,13 @@ namespace WP_Pulse;
 class Admin extends Singleton {
 
 	/**
+	 * Notices array.
+	 *
+	 * @var array
+	 */
+	public static $notices = [];
+
+	/**
 	 * Add the menu page.
 	 *
 	 * @action admin_menu
@@ -174,5 +181,30 @@ class Admin extends Singleton {
 		Helpers\Media\enqueue_style( 'pulse/admin-dashboard' );
 
 		View::include_template( 'admin/dashboard' );
+	}
+
+	/**
+	 * Add a notice.
+	 *
+	 * @param string $message The message.
+	 * @param string $type    The type.
+	 *
+	 * @return void
+	 */
+	public static function notice( $message, $type = 'success' ) {
+		self::$notices[] = compact( 'message', 'type' );
+	}
+
+	/**
+	 * Render the notices.
+	 *
+	 * @action shutdown
+	 *
+	 * @return void
+	 */
+	public function render_notices() {
+		foreach ( self::$notices as $notice ) {
+			View::include_template( 'admin/notice', $notice );
+		}
 	}
 }
