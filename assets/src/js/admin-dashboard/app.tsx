@@ -195,7 +195,7 @@ export default function AdminDashboardApp() {
 						<option value="csv">Download CSV</option>
 						<option value="json">Download JSON</option>
 					</select>
-					<input type="submit" name="bulk_action" id="doaction2" class="button action" value="Apply" />
+					<input type="submit" name="bulk_action" id="doaction2" className="button action" value="Apply" />
 				</div>
 
 				<div
