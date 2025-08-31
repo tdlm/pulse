@@ -91,6 +91,7 @@ export default function AdminDashboardApp() {
 			Boolean(
 				search ||
 					action ||
+					created_at ||
 					context ||
 					ip ||
 					pulse ||
@@ -98,7 +99,7 @@ export default function AdminDashboardApp() {
 					created_at
 			)
 		);
-	}, [ search, action, context, ip, pulse, user_id ] );
+	}, [ search, action, context, created_at, ip, pulse, user_id ] );
 
 	return (
 		<form method="get" action="http://localhost:8888/wp-admin/admin.php">
