@@ -33,7 +33,7 @@ class Admin extends Singleton {
 			'manage_options',
 			'wp-pulse',
 			[ self::class, 'render_page' ],
-			'dashicons-visibility',
+			'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTkgMkM5LjQzMDQzIDIgOS44MTI1NyAyLjI3NTQzIDkuOTQ4NjggMi42ODM3N0wxNSAxNy44Mzc3TDE3LjA1MTMgMTEuNjgzOEMxNy4xODc0IDExLjI3NTQgMTcuNTY5NiAxMSAxOCAxMUgyMkMyMi41NTIzIDExIDIzIDExLjQ0NzcgMjMgMTJDMjMgMTIuNTUyMyAyMi41NTIzIDEzIDIyIDEzSDE4LjcyMDhMMTUuOTQ4NyAyMS4zMTYyQzE1LjgxMjYgMjEuNzI0NiAxNS40MzA0IDIyIDE1IDIyQzE0LjU2OTYgMjIgMTQuMTg3NCAyMS43MjQ2IDE0LjA1MTMgMjEuMzE2Mkw5IDYuMTYyMjhMNi45NDg2OCAxMi4zMTYyQzYuODEyNTcgMTIuNzI0NiA2LjQzMDQzIDEzIDYgMTNIMkMxLjQ0NzcyIDEzIDEgMTIuNTUyMyAxIDEyQzEgMTEuNDQ3NyAxLjQ0NzcyIDExIDIgMTFINS4yNzkyNEw4LjA1MTMyIDIuNjgzNzdDOC4xODc0MyAyLjI3NTQzIDguNTY5NTcgMiA5IDJaIiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPg==',
 			2.75
 		);
 
@@ -97,6 +97,30 @@ class Admin extends Singleton {
 				true
 			);
 		}
+	}
+
+	/**
+	 * Add a body class.
+	 *
+	 * @param mixed $classes Classes.
+	 * 
+	 * @action admin_body_class
+	 *
+	 * @return mixed
+	 */
+	public function admin_body_class( $classes ) {
+		$pulse_classes = [];
+
+		$page = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		if ( 'wp-pulse' === $page ) {
+			$pulse_classes[] = 'wp-pulse';
+		}
+
+		$pulse_classes = apply_filters( 'wp_pulse_admin_body_classes', $pulse_classes );
+		$pulse_classes = implode( ' ', array_filter( $pulse_classes ) );
+
+		return $classes . ' ' . $pulse_classes;
 	}
 
 	/**
