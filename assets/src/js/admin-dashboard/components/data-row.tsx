@@ -2,6 +2,7 @@
 /* eslint-disable import/no-unresolved */
 
 import React, { useState } from 'react';
+import moment from 'moment';
 import TimeAgo from 'react-timeago';
 import { makeIntlFormatter } from 'react-timeago/defaultFormatter';
 import { Record } from '../types';
@@ -57,18 +58,19 @@ export default function DataRow( { record }: DataRowProps ) {
 				<br />
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&date=${ record.created_at }` }
+					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&created_at=${ moment( record.created_at ).format( 'YYYY-MM-DD' ) }` }
 				>
 					<time dateTime={ record.created_at }>
-						{ record.created_at }
+						{ moment( record.created_at ).format( 'YYYY/MM/DD' ) }
 					</time>
 				</a>
+				<br />
+				<span>{ moment( record.created_at ).format( 'hh:mm:ssA' ) }</span>
 			</td>
 			<td data-colname="Description">
-				{ record.description }
+				<p>{ record.description }</p>
 				{ isExpanded && (
 					<div className="pulse-row-details">
-						<h3>Details</h3>
 						<pre>{ JSON.stringify( record, null, 2 ) }</pre>
 					</div>
 				) }

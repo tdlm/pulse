@@ -53,6 +53,7 @@ class API extends Singleton {
 			[
 				'action'  => '',
 				'context' => '',
+				'created_at' => '',
 				'ip'      => '',
 				'limit'   => 20,
 				'offset'  => 0,
@@ -68,6 +69,7 @@ class API extends Singleton {
 			[
 				'action'  => $args['action'],
 				'context' => $args['context'],
+				'created_at' => $args['created_at'],
 				'ip'      => $args['ip'],
 				'limit'   => $args['limit'],
 				'offset'  => $args['offset'],

@@ -46,6 +46,10 @@ export default function AdminDashboardApp() {
 		defaultValue: '',
 	} );
 
+	const [ created_at, setCreatedAt ] = useQueryState( 'created_at', {
+		defaultValue: '',
+	} );
+
 	const [ ip, setIp ] = useQueryState( 'ip', {
 		defaultValue: '',
 	} );
@@ -76,6 +80,7 @@ export default function AdminDashboardApp() {
 		debouncedSearch,
 		action,
 		context,
+		created_at,
 		ip,
 		offset,
 		pulse,
@@ -83,9 +88,8 @@ export default function AdminDashboardApp() {
 	);
 
 	useEffect(() => {
-		setHasFilters( Boolean( search || action || context || ip || pulse || user_id ) );
+		setHasFilters( Boolean( search || action || context || ip || pulse || user_id || created_at ) );
 	}, [ search, action, context, ip, pulse, user_id ]);
-	
 
 	return (
 		<form method="get" action="http://localhost:8888/wp-admin/admin.php">

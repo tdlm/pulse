@@ -59,12 +59,17 @@ body.wp-pulse .wrap h1 {
     }
 
     .pulse-row-details {
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
         max-height: 300px;
         overflow: scroll;
 
         pre {
             box-sizing: border-box;
+            margin: 0;
             max-width: 100%;           /* stay within the cell */
+            padding: 10px;
             overflow-x: auto;          /* scroll if still too wide */
             white-space: pre-wrap;     /* allow wrapping */
             word-break: break-word;    /* break long strings if needed */

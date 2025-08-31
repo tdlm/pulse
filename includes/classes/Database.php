@@ -27,6 +27,7 @@ class Database {
 		$defaults = [
 			'action'  => '',
 			'context' => '',
+			'created_at' => '',
 			'ip'      => '',
 			'limit'   => 20,
 			'offset'  => 0,
@@ -49,6 +50,10 @@ class Database {
 
 		if ( false === empty( $args['context'] ) ) {
 			$where_clauses[] = $wpdb->prepare( 'pulse.context = %s', $args['context'] );
+		}
+
+		if ( false === empty( $args['created_at'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'DATE(pulse.created_at) = %s', $args['created_at'] );
 		}
 
 		if ( false === empty( $args['ip'] ) ) {

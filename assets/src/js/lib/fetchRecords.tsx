@@ -9,6 +9,7 @@ import { Records } from '../admin-dashboard/types';
  * @param params
  * @param params.action  The action.
  * @param params.context The context.
+ * @param params.created_at The created at.
  * @param params.search  The search.
  * @param params.ip      The IP.
  * @param params.limit   The limit.
@@ -21,6 +22,7 @@ import { Records } from '../admin-dashboard/types';
 export default async function fetchRecords( params: {
 	action?: string;
 	context?: string;
+	created_at?: string;
 	search?: string;
 	ip?: string;
 	limit?: number;
@@ -36,6 +38,7 @@ export default async function fetchRecords( params: {
 	const {
 		action,
 		context,
+		created_at,
 		search,
 		ip,
 		pulse,
@@ -48,6 +51,7 @@ export default async function fetchRecords( params: {
 		path: addQueryArgs( '/wp-pulse/v1/records', {
 			action,
 			context,
+			created_at,
 			ip,
 			limit,
 			offset,

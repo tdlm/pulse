@@ -103,7 +103,7 @@ class Admin extends Singleton {
 	 * Add a body class.
 	 *
 	 * @param mixed $classes Classes.
-	 * 
+	 *
 	 * @action admin_body_class
 	 *
 	 * @return mixed
@@ -161,13 +161,14 @@ class Admin extends Singleton {
 		$user_id  = get_current_user_id();
 		$per_page = get_user_option( 'pulse_per_page', $user_id );
 
-		$action  = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$context = filter_input( INPUT_GET, 'context', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$ip      = filter_input( INPUT_GET, 'ip', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$page    = filter_input( INPUT_GET, 'paged', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$pulse   = filter_input( INPUT_GET, 'pulse', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$search  = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$user_id = filter_input( INPUT_GET, 'user_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$action     = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$context    = filter_input( INPUT_GET, 'context', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$created_at = filter_input( INPUT_GET, 'created_at', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$ip         = filter_input( INPUT_GET, 'ip', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$page       = filter_input( INPUT_GET, 'paged', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$pulse      = filter_input( INPUT_GET, 'pulse', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$search     = filter_input( INPUT_GET, 'search', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$user_id    = filter_input( INPUT_GET, 'user_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( false === is_numeric( $per_page ) ) {
 			$per_page = 20;
@@ -177,14 +178,15 @@ class Admin extends Singleton {
 
 		$records = Database::get_records(
 			[
-				'action'  => $action,
-				'context' => $context,
-				'ip'      => $ip,
-				'limit'   => $per_page,
-				'offset'  => $offset,
-				'pulse'   => $pulse,
-				'search'  => $search,
-				'user_id' => $user_id,
+				'action'     => $action,
+				'context'    => $context,
+				'created_at' => $created_at,
+				'ip'         => $ip,
+				'limit'      => $per_page,
+				'offset'     => $offset,
+				'pulse'      => $pulse,
+				'search'     => $search,
+				'user_id'    => $user_id,
 			]
 		);
 
