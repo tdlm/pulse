@@ -23,66 +23,70 @@ function get_date_range_value( $date_range = 'today', $range_value = 'start' ) {
 		return new \WP_Error( 'invalid_range_value', 'Invalid range value.' );
 	}
 
+    $time_zone   = wp_timezone();
+    $now  = new \DateTimeImmutable('now', $time_zone);
+
+
 	switch ( $date_range ) {
 		default:
 		case 'today':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'today' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('today')->format('Y-m-d'),
+				'end'   => $now->modify('today')->format('Y-m-d'),
 			];
 			break;
 		case 'yesterday':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'yesterday' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'yesterday' ) ),
+				'start' => $now->modify('yesterday')->format('Y-m-d'),
+				'end'   => $now->modify('yesterday')->format('Y-m-d'),
 			];
 			break;
 		case 'last_7_days':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( '-7 days' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('-7 days')->format('Y-m-d'),
+				'end'   => $now->modify('today')->format('Y-m-d'),
 			];
 			break;
 		case 'last_30_days':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( '-30 days' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('-30 days')->format('Y-m-d'),
+				'end'   => $now->modify('today')->format('Y-m-d'),
 			];
 			break;
 		case 'this_month':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'this month' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('first day of this month')->format('Y-m-d'),
+				'end'   => $now->modify('last day of this month')->format('Y-m-d'),
 			];
 			break;
 		case 'last_month':
-			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'last month' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
-			];
+            $matched_range_value = [
+                'start' => $now->modify('first day of previous month')->format('Y-m-d'),
+                'end'   => $now->modify('last day of previous month')->format('Y-m-d'),
+            ];
 			break;
 		case 'last_6_months':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( '-6 months' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('-6 months')->format('Y-m-d'),
+				'end'   => $now->modify('today')->format('Y-m-d'),
 			];
 			break;
 		case 'last_12_months':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( '-12 months' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'today' ) ),
+				'start' => $now->modify('-12 months')->format('Y-m-d'),
+				'end'   => $now->modify('today')->format('Y-m-d'),
 			];
 			break;
 		case 'this_year':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'first day of january this year' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'last day of december this year' ) ),
+				'start' => $now->modify('first day of january this year')->format('Y-m-d'),
+				'end'   => $now->modify('last day of december this year')->format('Y-m-d'),
 			];
 			break;
 		case 'last_year':
 			$matched_range_value = [
-				'start' => wp_date( 'Y-m-d', strtotime( 'first day of january last year' ) ),
-				'end'   => wp_date( 'Y-m-d', strtotime( 'last day of december last year' ) ),
+				'start' => $now->modify('first day of january last year')->format('Y-m-d'),
+				'end'   => $now->modify('last day of december last year')->format('Y-m-d'),
 			];
 			break;
 	}
