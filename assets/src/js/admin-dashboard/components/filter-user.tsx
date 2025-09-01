@@ -5,23 +5,11 @@ import React from 'react';
 import Select from 'react-select';
 import { UserOption } from '../types';
 
-const userOptions: UserOption[] = [
-	{
-		value: '1',
-		label: 'Scott Weaver',
-		image: 'https://www.gravatar.com/avatar/1?d=mm',
-	},
-	{
-		value: '2',
-		label: 'Scott Adrian',
-		image: 'https://www.gravatar.com/avatar/2?d=mm',
-	},
-];
-
 type FilterUserProps = {
 	userId: number | null;
 	setUserId: ( userId: number | null ) => void;
 	setPaged: ( paged: number ) => void;
+	users: UserOption[];
 };
 
 /**
@@ -31,32 +19,34 @@ type FilterUserProps = {
  * @param root0.userId    The user ID.
  * @param root0.setUserId The function to set the user ID.
  * @param root0.setPaged  The function to set the page.
+ * @param root0.users     The users.
  * @return The filter user.
  */
 export default function FilterUser( {
 	userId,
 	setUserId,
 	setPaged,
+	users,
 }: FilterUserProps ) {
 	return (
 		<Select
 			className="user-filter"
-			defaultValue={ userOptions.find(
-				( option ) => option.value === userId?.toString()
+			defaultValue={ users?.find(
+				( option ) => Number( option.id ) === Number( userId )
 			) }
 			formatOptionLabel={ ( option: UserOption ) => (
 				<div className="user-option">
-					<img src={ option.image } alt="" />
-					<span>{ option.label }</span>
+					<img src={ option.gravatar_url } alt="" />
+					<span>{ option.name }</span>
 				</div>
 			) }
 			isClearable
 			isSearchable={ false }
 			onChange={ ( option ) => {
-				setUserId( null === option ? null : Number( option?.value ) );
+				setUserId( null === option ? null : Number( option?.id ) );
 				setPaged( 1 );
 			} }
-			options={ userOptions }
+			options={ users }
 			placeholder="All users"
 		/>
 	);

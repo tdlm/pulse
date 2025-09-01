@@ -85,11 +85,12 @@ class API extends Singleton {
 
 		return new \WP_REST_Response(
 			[
-				'items'  => $records['items'],
 				'count'  => $records['count'],
+				'items'  => $records['items'],
 				'limit'  => $args['limit'],
 				'offset' => $args['offset'],
 				'pages'  => ceil( $records['count'] / $args['limit'] ),
+				'users'  => $records['users'],
 			],
 			200,
 			[

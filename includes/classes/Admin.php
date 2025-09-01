@@ -225,6 +225,7 @@ class Admin extends Singleton {
 						'offset' => $offset,
 						'pages'  => intval( ceil( $records['count'] / $per_page ) ),
 						'limit'  => intval( $per_page ),
+						'users'  => $records['users'],
 					],
 				],
 			]

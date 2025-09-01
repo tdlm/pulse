@@ -130,9 +130,27 @@ class Database {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$count = $wpdb->get_var( $count_query );
 
+		$users_query = "SELECT DISTINCT user_id FROM {$table_name} AS pulse";
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$user_results = $wpdb->get_col( $users_query );
+
+		$users = [];
+
+		foreach ( $user_results as $user_id ) {
+			$user_info = get_userdata( $user_id );
+			$users[]   = [
+				'id'           => $user_id,
+				'name'         => $user_info->display_name,
+				'email'        => $user_info->user_email,
+				'gravatar_url' => get_avatar_url( $user_info->user_email, [ 'size' => 80 ] ),
+			];
+		}
+
 		return [
 			'count' => $count,
 			'items' => $results,
+			'users' => $users,
 		];
 	}
 

@@ -22,6 +22,7 @@ export type Records = {
 	limit: number;
 	offset: number;
 	pages: number;
+	users: UserOption[];
 };
 
 export type Option = {
@@ -30,7 +31,10 @@ export type Option = {
 };
 
 export type UserOption = Option & {
-	image: string;
+	id: number;
+	email: string;
+	gravatar_url: string;
+	name: string;
 };
 
 export {};

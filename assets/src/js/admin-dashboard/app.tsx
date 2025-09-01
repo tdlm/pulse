@@ -154,6 +154,7 @@ export default function AdminDashboardApp() {
 							userId={ user_id }
 							setUserId={ setUserId }
 							setPaged={ setPaged }
+							users={ data?.users }
 						/>
 						{ hasFilters && (
 							<a

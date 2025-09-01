@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
-import { Records, Record } from '../admin-dashboard/types';
+import { Records, Record, UserOption } from '../admin-dashboard/types';
 
 /**
  * Fetch records.
@@ -68,9 +68,10 @@ export default async function fetchRecords( params: {
 
 	return {
 		items: data.items as Record[],
-		count: Number( response.headers.get( 'X-WP-Total' ) ),
-		limit: Number( response.headers.get( 'X-WP-TotalPages' ) ),
-		offset: Number( response.headers.get( 'X-WP-TotalPages' ) ),
-		pages: Number( response.headers.get( 'X-WP-TotalPages' ) ),
+		count: data.count,
+		limit: data.limit,
+		offset: data.offset,
+		pages: data.pages,
+		users: data.users as UserOption[],
 	};
 }
