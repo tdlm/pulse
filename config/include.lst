@@ -1,0 +1,6 @@
+assets/build/*
+includes/*
+languages/*
+LICENSE
+pulse.php
+readme.txt
