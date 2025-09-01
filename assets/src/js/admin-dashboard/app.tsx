@@ -107,7 +107,16 @@ export default function AdminDashboardApp() {
 					created_at
 			)
 		);
-	}, [ search, action, context, created_at, ip, pulse, user_id ] );
+	}, [
+		search,
+		action,
+		context,
+		created_at,
+		date_range,
+		ip,
+		pulse,
+		user_id,
+	] );
 
 	return (
 		<form method="get" action="http://localhost:8888/wp-admin/admin.php">
@@ -137,12 +146,12 @@ export default function AdminDashboardApp() {
 				<div className="alignleft actions">
 					<div className="pulse-filters">
 						<FilterDate
-							date_range={ date_range }
+							dateRange={ date_range }
 							setDateRange={ setDateRange }
 							setPaged={ setPaged }
 						/>
 						<FilterUser
-							user_id={ user_id }
+							userId={ user_id }
 							setUserId={ setUserId }
 							setPaged={ setPaged }
 						/>

@@ -1,3 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-unresolved */
+
 import React from 'react';
 import Select from 'react-select';
 import { Option } from '../types';
@@ -16,7 +19,7 @@ const options: Option[] = [
 ];
 
 type FilterDateProps = {
-	date_range: string;
+	dateRange: string;
 	setDateRange: ( date_range: string ) => void;
 	setPaged: ( paged: number ) => void;
 };
@@ -24,32 +27,30 @@ type FilterDateProps = {
 /**
  * Filter date.
  *
- * @param date_range.date_range
- * @param date_range              The date range.
- * @param setDateRange            The function to set the date range.
- * @param setPaged                The function to set the page.
- * @param date_range.setDateRange
- * @param date_range.setPaged
+ * @param root0
+ * @param root0.dateRange    The date range.
+ * @param root0.setDateRange The function to set the date range.
+ * @param root0.setPaged     The function to set the page.
  * @return The filter date.
  */
 export default function FilterDate( {
-	date_range,
+	dateRange,
 	setDateRange,
 	setPaged,
 }: FilterDateProps ) {
 	return (
 		<Select
 			defaultValue={ options.find(
-				( option ) => option.value === date_range
+				( option ) => option.value === dateRange
 			) }
 			isClearable
-            isSearchable={ false }
+			isSearchable={ false }
 			onChange={ ( option ) => {
 				setDateRange( option?.value ?? '' );
 				setPaged( 1 );
 			} }
 			options={ options }
-            placeholder="All dates"
+			placeholder="All dates"
 		/>
 	);
 }
