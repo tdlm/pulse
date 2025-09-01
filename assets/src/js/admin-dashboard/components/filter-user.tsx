@@ -39,14 +39,17 @@ export default function FilterUser( {
 }: FilterUserProps ) {
 	return (
 		<Select
-			isClearable
+            defaultValue={ userOptions.find(
+                ( option ) => option.value === user_id?.toString()
+            ) }
 			formatOptionLabel={ ( option: UserOption ) => (
 				<div className="user-option">
 					<img src={ option.image } />
 					<span>{ option.label }</span>
 				</div>
 			) }
-			placeholder="All users"
+			isClearable
+            isSearchable={ false }
 			onChange={ ( option ) => {
 				null === option
 					? setUserId( null )
@@ -54,9 +57,7 @@ export default function FilterUser( {
 				setPaged( 1 );
 			} }
 			options={ userOptions }
-			defaultValue={ userOptions.find(
-				( option ) => option.value === user_id?.toString()
-			) }
+            placeholder="All users"
 		/>
 	);
 }

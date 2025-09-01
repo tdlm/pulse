@@ -87,8 +87,6 @@ class Database {
 
 		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
 
-		error_log( $query );
-
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );
 

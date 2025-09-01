@@ -43,12 +43,13 @@ export default function FilterDate( {
 				( option ) => option.value === date_range
 			) }
 			isClearable
-			placeholder="All dates"
+            isSearchable={ false }
 			onChange={ ( option ) => {
 				setDateRange( option?.value ?? '' );
 				setPaged( 1 );
 			} }
 			options={ options }
+            placeholder="All dates"
 		/>
 	);
 }
