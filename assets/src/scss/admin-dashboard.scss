@@ -17,14 +17,24 @@ body.wp-pulse .wrap h1 {
     }
 }
 
+.date-filter,
+.user-filter {
+    min-width: 200px;
+}
+
 .user-option {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    width: fit-content;
 
     img {
         width: 20px;
         height: 20px;
+    }
+
+    span {
+        white-space: nowrap;
     }
 }
 

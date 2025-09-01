@@ -40,6 +40,7 @@ export default function FilterUser( {
 }: FilterUserProps ) {
 	return (
 		<Select
+			className="user-filter"
 			defaultValue={ userOptions.find(
 				( option ) => option.value === userId?.toString()
 			) }

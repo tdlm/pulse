@@ -40,6 +40,7 @@ export default function FilterDate( {
 }: FilterDateProps ) {
 	return (
 		<Select
+			className="date-filter"
 			defaultValue={ options.find(
 				( option ) => option.value === dateRange
 			) }
