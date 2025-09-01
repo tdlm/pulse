@@ -28,6 +28,7 @@ class Database {
 			'action'     => '',
 			'context'    => '',
 			'created_at' => '',
+			'date_range' => '',
 			'ip'         => '',
 			'limit'      => 20,
 			'offset'     => 0,
@@ -56,6 +57,14 @@ class Database {
 			$where_clauses[] = $wpdb->prepare( 'DATE(pulse.created_at) = %s', $args['created_at'] );
 		}
 
+		if ( false === empty( $args['date_range'] ) ) {
+			$where_clauses[] = $wpdb->prepare(
+				'DATE(pulse.created_at) BETWEEN %s AND %s',
+				\WP_Pulse\Helpers\Date\get_date_range_value( $args['date_range'], 'start' ),
+				\WP_Pulse\Helpers\Date\get_date_range_value( $args['date_range'], 'end' )
+			);
+		}
+
 		if ( false === empty( $args['ip'] ) ) {
 			$where_clauses[] = $wpdb->prepare( 'pulse.ip = %s', $args['ip'] );
 		}
@@ -77,6 +86,8 @@ class Database {
 		}
 
 		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
+
+		error_log( $query );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );

@@ -17,6 +17,17 @@ body.wp-pulse .wrap h1 {
     }
 }
 
+.user-option {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 #pulse-dashboard-container {
     .tablenav-pages {
         display: flex;
@@ -56,6 +67,13 @@ body.wp-pulse .wrap h1 {
         .the-list .no-items {
             text-align: center;
         }
+    }
+
+    .pulse-filters {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 
     .pulse-row-details {

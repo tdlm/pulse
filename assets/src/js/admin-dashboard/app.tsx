@@ -9,6 +9,8 @@ import React, { useEffect, useState } from 'react'; // eslint-disable-line impor
 import useFetchRecords from '../lib/useFetchRecords';
 import ColumnRow from './components/column-row';
 import DataRow from './components/data-row';
+import FilterDate from './components/filter-date';
+import FilterUser from './components/filter-user';
 import Pagination from './components/pagination';
 
 /**
@@ -50,6 +52,10 @@ export default function AdminDashboardApp() {
 		defaultValue: '',
 	} );
 
+	const [ date_range, setDateRange ] = useQueryState( 'date_range', {
+		defaultValue: '',
+	} );
+
 	const [ ip, setIp ] = useQueryState( 'ip', {
 		defaultValue: '',
 	} );
@@ -63,7 +69,7 @@ export default function AdminDashboardApp() {
 		defaultValue: '',
 	} );
 
-	const [ user_id, setUserId ] = useQueryState( 'user_id', {
+	const [ user_id, setUserId ] = useQueryState< number | null >( 'user_id', {
 		defaultValue: null,
 		parse: ( value ) => Number( value ),
 	} );
@@ -80,6 +86,7 @@ export default function AdminDashboardApp() {
 		action,
 		context,
 		created_at,
+		date_range,
 		ip,
 		offset,
 		pulse,
@@ -93,6 +100,7 @@ export default function AdminDashboardApp() {
 					action ||
 					created_at ||
 					context ||
+					date_range ||
 					ip ||
 					pulse ||
 					user_id ||
@@ -127,17 +135,29 @@ export default function AdminDashboardApp() {
 			</p>
 			<div className="tablenav top">
 				<div className="alignleft actions">
-					{ hasFilters && (
-						<a
-							href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse"
-							id="record-query-reset"
-						>
-							<span className="dashicons dashicons-dismiss"></span>
-							<span className="record-query-reset-text">
-								Reset filters
-							</span>
-						</a>
-					) }
+					<div className="pulse-filters">
+						<FilterDate
+							date_range={ date_range }
+							setDateRange={ setDateRange }
+							setPaged={ setPaged }
+						/>
+						<FilterUser
+							user_id={ user_id }
+							setUserId={ setUserId }
+							setPaged={ setPaged }
+						/>
+						{ hasFilters && (
+							<a
+								href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse"
+								id="record-query-reset"
+							>
+								<span className="dashicons dashicons-dismiss"></span>
+								<span className="record-query-reset-text">
+									Reset filters
+								</span>
+							</a>
+						) }
+					</div>
 				</div>
 				<div
 					className={ clsx(
@@ -195,7 +215,13 @@ export default function AdminDashboardApp() {
 						<option value="csv">Download CSV</option>
 						<option value="json">Download JSON</option>
 					</select>
-					<input type="submit" name="bulk_action" id="doaction2" className="button action" value="Apply" />
+					<input
+						type="submit"
+						name="bulk_action"
+						id="doaction2"
+						className="button action"
+						value="Apply"
+					/>
 				</div>
 
 				<div

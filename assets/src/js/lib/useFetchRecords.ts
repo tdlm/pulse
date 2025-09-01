@@ -11,6 +11,7 @@ import { Records } from '../admin-dashboard/types';
  * @param action          The action.
  * @param context         The context.
  * @param created_at      The created at.
+ * @param date_range      The date range.
  * @param ip              The IP.
  * @param offset          The offset.
  * @param pulse           The pulse.
@@ -22,6 +23,7 @@ export default function useFetchRecords(
 	action: string,
 	context: string,
 	created_at: string,
+	date_range: string,
 	ip: string,
 	offset: number,
 	pulse: string,
@@ -37,6 +39,7 @@ export default function useFetchRecords(
 			action,
 			context,
 			created_at,
+			date_range,
 			debouncedSearch,
 			ip,
 			window.PulseAdminDashboard.limit,
@@ -49,6 +52,7 @@ export default function useFetchRecords(
 				action,
 				context,
 				created_at,
+				date_range,
 				search: debouncedSearch,
 				ip,
 				limit: window.PulseAdminDashboard.limit,

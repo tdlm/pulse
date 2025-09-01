@@ -10,6 +10,7 @@ import { Records, Record } from '../admin-dashboard/types';
  * @param params.action     The action.
  * @param params.context    The context.
  * @param params.created_at The created at.
+ * @param params.date_range The date range.
  * @param params.search     The search.
  * @param params.ip         The IP.
  * @param params.limit      The limit.
@@ -23,6 +24,7 @@ export default async function fetchRecords( params: {
 	action?: string;
 	context?: string;
 	created_at?: string;
+	date_range?: string;
 	search?: string;
 	ip?: string;
 	limit?: number;
@@ -35,6 +37,7 @@ export default async function fetchRecords( params: {
 		action,
 		context,
 		created_at,
+		date_range,
 		search,
 		ip,
 		pulse,
@@ -48,6 +51,7 @@ export default async function fetchRecords( params: {
 			action,
 			context,
 			created_at,
+			date_range,
 			ip,
 			limit,
 			offset,

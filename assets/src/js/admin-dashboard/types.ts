@@ -24,4 +24,13 @@ export type Records = {
 	pages: number;
 };
 
+export type Option = {
+	value: string;
+	label: string;
+};
+
+export type UserOption = Option & {
+	image: string;
+};
+
 export {};
