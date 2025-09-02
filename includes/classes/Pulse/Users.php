@@ -38,9 +38,9 @@ class Users extends Pulse {
 			'user-created' => __( 'Created', 'pulse' ),
 			'user-log-in'  => __( 'Log in', 'pulse' ),
 			'user-log-out' => __( 'Log out', 'pulse' ),
-			'users'   => __( 'Users', 'pulse' ),
-			'user'    => __( 'User', 'pulse' ),
-			'session' => __( 'Session', 'pulse' ),
+			'users'        => __( 'Users', 'pulse' ),
+			'user'         => __( 'User', 'pulse' ),
+			'session'      => __( 'Session', 'pulse' ),
 		];
 	}
 
@@ -120,11 +120,12 @@ class Users extends Pulse {
 	 * @return void
 	 */
 	public function callback_user_register( $user_id ) {
-		$current_user = wp_get_current_user();
-		$register_user = get_user_by( 'ID', $user_id );		
+		$current_user  = wp_get_current_user();
+		$register_user = get_user_by( 'ID', $user_id );
 
-		if (false === $current_user instanceof \WP_User) {
+		if ( false === $current_user instanceof \WP_User ) {
 			$message = sprintf(
+				/* translators: %s: User display name. */
 				__( 'New user registered: %s', 'pulse' ),
 				$register_user->display_name
 			);
@@ -132,6 +133,7 @@ class Users extends Pulse {
 			$user_object_id = $register_user->ID;
 		} else {
 			$message = sprintf(
+				/* translators: %s: User display name. */
 				__( 'New account registered: %s', 'pulse' ),
 				$register_user->display_name
 			);
