@@ -26,6 +26,7 @@ class Pulses {
 			[
 				'Installs',
 				'Posts',
+				'Users',
 				'UserSwitching',
 			]
 		);
