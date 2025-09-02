@@ -139,12 +139,24 @@ class Database {
 
 		foreach ( $user_results as $user_id ) {
 			$user_info = get_userdata( $user_id );
-			$users[]   = [
-				'id'           => $user_id,
-				'name'         => $user_info->display_name,
-				'email'        => $user_info->user_email,
-				'gravatar_url' => get_avatar_url( $user_info->user_email, [ 'size' => 80 ] ),
+
+			$user_object = [
+				'id'           => null,
+				'name'         => null,
+				'email'        => null,
+				'gravatar_url' => null,
 			];
+
+			if ( false !== $user_info && true === $user_info instanceof \WP_User ) {
+				$user_object = [
+					'id'           => $user_id,
+					'name'         => $user_info->display_name,
+					'email'        => $user_info->user_email,
+					'gravatar_url' => true === isset( $user_info->user_email ) ? get_avatar_url( $user_info->user_email, [ 'size' => 80 ] ) : '',
+				];
+			}
+
+			$users[] = $user_object;
 		}
 
 		return [
