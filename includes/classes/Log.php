@@ -34,6 +34,12 @@ class Log {
 			$user_id = get_current_user_id();
 		}
 
+		$ip = filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP );
+
+		if ( false === $ip ) {
+			$ip = '127.0.0.1';
+		}
+
 		$pulse = [
 			'action'         => wp_strip_all_tags( $action ),
 			'description'    => wp_strip_all_tags( $description ),
@@ -41,7 +47,7 @@ class Log {
 			'context'        => wp_strip_all_tags( $context ),
 			'user_id'        => $user_id,
 			'object_id'      => $object_id,
-			'ip'             => filter_var( filter_input( INPUT_SERVER, 'REMOTE_ADDR' ), FILTER_VALIDATE_IP ),
+			'ip'             => $ip,
 			'created_at'     => current_time( 'mysql' ), // Local time.
 			'created_at_gmt' => current_time( 'mysql', true ),
 		];
