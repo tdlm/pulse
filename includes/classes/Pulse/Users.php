@@ -102,10 +102,10 @@ class Users extends Pulse {
 	 * @return void
 	 */
 	public function callback_deleted_user( $user_id ) {
-		$user = wp_get_current_user();
+		$user                   = wp_get_current_user();
 		$user_ids_before_delete = Registry::get( 'user_ids_before_delete', [] );
-		
-		if (true === isset( $user_ids_before_delete[ $user_id ] ) ) {
+
+		if ( true === isset( $user_ids_before_delete[ $user_id ] ) ) {
 			$message = sprintf(
 				/* translators: %s: User display name. */
 				__( 'User %s deleted.', 'pulse' ),
@@ -122,7 +122,7 @@ class Users extends Pulse {
 		Log::log(
 			'user-deleted',
 			$message,
-			'user',
+			'users',
 			'user',
 			$user->ID,
 			$user_id,
