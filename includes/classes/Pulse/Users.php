@@ -11,6 +11,7 @@ namespace WP_Pulse\Pulse;
 
 use WP_Pulse\Pulse;
 use WP_Pulse\Log;
+use WP_Pulse\Registry;
 
 /**
  * Users class.
@@ -24,6 +25,8 @@ class Users extends Pulse {
 	 */
 	public $actions = [
 		'clear_auth_cookie',
+		'delete_user',
+		'deleted_user',
 		'set_logged_in_cookie',
 		'user_register',
 	];
@@ -36,6 +39,7 @@ class Users extends Pulse {
 	public static function get_labels() {
 		return [
 			'user-created' => __( 'Created', 'pulse' ),
+			'user-deleted' => __( 'Deleted', 'pulse' ),
 			'user-log-in'  => __( 'Log in', 'pulse' ),
 			'user-log-out' => __( 'Log out', 'pulse' ),
 			'users'        => __( 'Users', 'pulse' ),
@@ -72,6 +76,56 @@ class Users extends Pulse {
 			'user',
 			$user->ID,
 			$user->ID,
+			[]
+		);
+	}
+
+	/**
+	 * Callback for delete_user.
+	 *
+	 * @param int $user_id The user ID.
+	 * @return void
+	 */
+	public function callback_delete_user( $user_id ) {
+		$user_ids_before_delete = Registry::get( 'user_ids_before_delete', [] );
+
+		if ( false === isset( $user_ids_before_delete[ $user_id ] ) ) {
+			$user_ids_before_delete[ $user_id ] = get_user_by( 'id', $user_id );
+			Registry::set( 'user_ids_before_delete', $user_ids_before_delete );
+		}
+	}
+
+	/**
+	 * Callback for deleted_user.
+	 *
+	 * @param int $user_id The user ID.
+	 * @return void
+	 */
+	public function callback_deleted_user( $user_id ) {
+		$user = wp_get_current_user();
+		$user_ids_before_delete = Registry::get( 'user_ids_before_delete', [] );
+		
+		if (true === isset( $user_ids_before_delete[ $user_id ] ) ) {
+			$message = sprintf(
+				/* translators: %s: User display name. */
+				__( 'User %s deleted.', 'pulse' ),
+				$user_ids_before_delete[ $user_id ]->display_name
+			);
+		} else {
+			$message = sprintf(
+				/* translators: %s: User display name. */
+				__( 'User %s deleted.', 'pulse' ),
+				$user_id
+			);
+		}
+
+		Log::log(
+			'user-deleted',
+			$message,
+			'user',
+			'user',
+			$user->ID,
+			$user_id,
 			[]
 		);
 	}
@@ -144,8 +198,8 @@ class Users extends Pulse {
 		Log::log(
 			'user-created',
 			$message,
+			'users',
 			'user',
-			'session',
 			$user_object_id,
 			$register_user->ID,
 			[]
