@@ -25,6 +25,7 @@ class Users extends Pulse {
 	public $actions = [
 		'clear_auth_cookie',
 		'set_logged_in_cookie',
+		'user_register',
 	];
 
 	/**
@@ -34,8 +35,9 @@ class Users extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
-			'log-in'  => __( 'Log in', 'pulse' ),
-			'log-out' => __( 'Log out', 'pulse' ),
+			'user-log-in'  => __( 'Log in', 'pulse' ),
+			'user-log-out' => __( 'Log out', 'pulse' ),
+			'user-register' => __( 'Register', 'pulse' ),
 			'users'   => __( 'Users', 'pulse' ),
 			'session' => __( 'Session', 'pulse' ),
 		];
@@ -59,7 +61,7 @@ class Users extends Pulse {
 		}
 
 		Log::log(
-			'log-out',
+			'user-log-out',
 			sprintf(
 				/* translators: %s: User display name. */
 				__( '%s logged out', 'pulse' ),
@@ -96,7 +98,7 @@ class Users extends Pulse {
 		}
 
 		Log::log(
-			'log-in',
+			'user-log-in',
 			sprintf(
 				/* translators: %s: User display name. */
 				__( 'User %s logged in.', 'pulse' ),
@@ -106,6 +108,43 @@ class Users extends Pulse {
 			'session',
 			$user_id,
 			$user_id,
+			[]
+		);
+	}
+
+	/**
+	 * Callback for user_register.
+	 *
+	 * @param int $user_id The user ID.
+	 * @return void
+	 */
+	public function callback_user_register( $user_id ) {
+		$current_user = wp_get_current_user();
+		$register_user = get_user_by( 'ID', $user_id );		
+
+		if (false === $current_user instanceof \WP_User) {
+			$message = sprintf(
+				__( 'New user registered: %s', 'pulse' ),
+				$register_user->display_name
+			);
+
+			$user_object_id = $register_user->ID;
+		} else {
+			$message = sprintf(
+				__( 'New account registered: %s', 'pulse' ),
+				$register_user->display_name
+			);
+
+			$user_object_id = $current_user->ID;
+		}
+
+		Log::log(
+			'user-register',
+			$message,
+			'users',
+			'session',
+			$user_object_id,
+			$register_user->ID,
 			[]
 		);
 	}
