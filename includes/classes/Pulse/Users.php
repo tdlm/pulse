@@ -35,10 +35,11 @@ class Users extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
+			'user-created' => __( 'Created', 'pulse' ),
 			'user-log-in'  => __( 'Log in', 'pulse' ),
 			'user-log-out' => __( 'Log out', 'pulse' ),
-			'user-register' => __( 'Register', 'pulse' ),
 			'users'   => __( 'Users', 'pulse' ),
+			'user'    => __( 'User', 'pulse' ),
 			'session' => __( 'Session', 'pulse' ),
 		];
 	}
@@ -68,7 +69,7 @@ class Users extends Pulse {
 				$user->display_name
 			),
 			'users',
-			'session',
+			'user',
 			$user->ID,
 			$user->ID,
 			[]
@@ -105,7 +106,7 @@ class Users extends Pulse {
 				$user->display_name
 			),
 			'users',
-			'session',
+			'user',
 			$user_id,
 			$user_id,
 			[]
@@ -139,9 +140,9 @@ class Users extends Pulse {
 		}
 
 		Log::log(
-			'user-register',
+			'user-created',
 			$message,
-			'users',
+			'user',
 			'session',
 			$user_object_id,
 			$register_user->ID,
