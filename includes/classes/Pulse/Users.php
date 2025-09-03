@@ -55,6 +55,7 @@ class Users extends Pulse {
 			'user-log-out'                => __( 'Log out', 'pulse' ),
 			'user-password-request-reset' => __( 'Reset', 'pulse' ),
 			'user-profile-updated'        => __( 'Updated', 'pulse' ),
+			'user-role-changed'           => __( 'Role Changed', 'pulse' ),
 			'users'                       => __( 'Users', 'pulse' ),
 			'user'                        => __( 'User', 'pulse' ),
 			'session'                     => __( 'Session', 'pulse' ),
