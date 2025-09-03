@@ -33,6 +33,8 @@ class Media extends Pulse {
 		'add_attachment',
 		'edit_attachment',
 		'delete_attachment',
+		'wp_save_image_editor_file',
+		'wp_save_image_file',
 	];
 
 	/**
@@ -46,6 +48,7 @@ class Media extends Pulse {
 			'media-attached' => __( 'Attached', 'pulse' ),
 			'media-deleted'  => __( 'Deleted', 'pulse' ),
 			'media-edited'   => __( 'Edited', 'pulse' ),
+			'media-updated'  => __( 'Updated', 'pulse' ),
 			'media-uploaded' => __( 'Uploaded', 'pulse' ),
 			'media'          => __( 'Media', 'pulse' ),
 			'archive'        => __( 'Archive', 'pulse' ),
@@ -121,10 +124,10 @@ class Media extends Pulse {
 		$attachment_type = \WP_Pulse\Helpers\Media\get_attachment_type_by_file_uri( $attachment->guid );
 
 		Log::log(
-			'media-edited',
+			'media-updated',
 			sprintf(
 				/* translators: %s: Attachment title. */
-				__( 'Edited "%s" attachment.', 'pulse' ),
+				__( 'Updated "%s" attachment.', 'pulse' ),
 				$attachment->post_title
 			),
 			$this->pulse_slug,
@@ -162,5 +165,53 @@ class Media extends Pulse {
 			$post_id,
 			$attachment
 		);
+	}
+
+	/**
+	 * Save image editor file callback.
+	 *
+	 * @param bool   $override Whether to override the file.
+	 * @param string $filename The filename.
+	 * @param string $image The image.
+	 * @param string $mime_type The mime type.
+	 * @param int    $post_id The post ID.
+	 *
+	 * @return void
+	 */
+	public function callback_wp_save_image_editor_file( $override, $filename, $image, $mime_type, $post_id ) {
+		$current_user = wp_get_current_user();
+
+		$attachment = get_post( $post_id );
+
+		$attachment_type = \WP_Pulse\Helpers\Media\get_attachment_type_by_file_uri( $attachment->guid );
+
+		$file_name = basename( $filename );
+
+		Log::log(
+			'media-edited',
+			sprintf(
+				/* translators: %s: Attachment title. */
+				__( 'Edited "%s" image.', 'pulse' ),
+				$file_name
+			),
+			$this->pulse_slug,
+			$attachment_type,
+			$current_user->ID,
+			$post_id,
+			$attachment
+		);
+	}
+
+	/**
+	 * Save image file callback.
+	 *
+	 * @param bool   $override Whether to override the file.
+	 * @param string $filename The filename.
+	 * @param string $image The image.
+	 * @param string $mime_type The mime type.
+	 * @param int    $post_id The post ID.
+	 */
+	public function callback_wp_save_image_file( $override, $filename, $image, $mime_type, $post_id ) {
+		$this->callback_wp_save_image_editor_file( $override, $filename, $image, $mime_type, $post_id );
 	}
 }
