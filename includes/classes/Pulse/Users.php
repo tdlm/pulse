@@ -193,7 +193,6 @@ class Users extends Pulse {
 		);
 	}
 
-
 	/**
 	 * Callback for retrieve_password.
 	 *
