@@ -46,13 +46,14 @@ class Users extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
-			'user-created' => __( 'Created', 'pulse' ),
-			'user-deleted' => __( 'Deleted', 'pulse' ),
-			'user-log-in'  => __( 'Log in', 'pulse' ),
-			'user-log-out' => __( 'Log out', 'pulse' ),
-			'users'        => __( 'Users', 'pulse' ),
-			'user'         => __( 'User', 'pulse' ),
-			'session'      => __( 'Session', 'pulse' ),
+			'user-created'         => __( 'Created', 'pulse' ),
+			'user-deleted'         => __( 'Deleted', 'pulse' ),
+			'user-log-in'          => __( 'Log in', 'pulse' ),
+			'user-log-out'         => __( 'Log out', 'pulse' ),
+			'user-profile-updated' => __( 'Profile updated', 'pulse' ),
+			'users'                => __( 'Users', 'pulse' ),
+			'user'                 => __( 'User', 'pulse' ),
+			'session'              => __( 'Session', 'pulse' ),
 		];
 	}
 
@@ -141,22 +142,24 @@ class Users extends Pulse {
 	/**
 	 * Callback for profile_update.
 	 *
-	 * @param int $user_id The user ID.
+	 * @param int      $user_id The user ID.
+	 * @param \WP_User $user The user object.
+	 *
 	 * @return void
 	 */
-	public function callback_profile_update( $user_id ) {
-		$user = wp_get_current_user();
+	public function callback_profile_update( $user_id, $user ) {
+		$current_user = wp_get_current_user();
 
 		Log::log(
 			'user-profile-updated',
 			sprintf(
 				/* translators: %s: User display name. */
-				__( 'User %s profile updated.', 'pulse' ),
+				__( 'User %s\'s profile updated.', 'pulse' ),
 				$user->display_name
 			),
 			$this->pulse_slug,
 			'user',
-			$user->ID,
+			$current_user->ID,
 			$user_id,
 			[]
 		);
