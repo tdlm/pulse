@@ -130,7 +130,7 @@ class Database {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$count = $wpdb->get_var( $count_query );
 
-		$users_query = "SELECT DISTINCT user_id FROM {$table_name} AS pulse";
+		$users_query = "SELECT DISTINCT user_id FROM {$table_name} AS pulse WHERE (user_id > 0)";
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$user_results = $wpdb->get_col( $users_query );
