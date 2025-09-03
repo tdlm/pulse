@@ -78,3 +78,24 @@ function enqueue_style(
 ) {
 	wp_enqueue_style( $handle, $src, $dependencies, $version, $media );
 }
+
+/**
+ * Get attachment type by file URI.
+ *
+ * @since 1.0.0
+ *
+ * @param string $file_uri The file URI.
+ *
+ * @return string The attachment type.
+ */
+function get_attachment_type_by_file_uri( string $file_uri ): string {
+	$extension = pathinfo( $file_uri, PATHINFO_EXTENSION );
+
+	$extension_type = wp_ext2type( $extension );
+
+	if ( true === empty( $extension_type ) ) {
+		$extension_type = 'document';
+	}
+
+	return $extension_type;
+}

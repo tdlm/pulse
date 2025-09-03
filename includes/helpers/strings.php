@@ -12,7 +12,10 @@ namespace WP_Pulse\Helpers\Strings;
 /**
  * Convert a string to snake case.
  *
+ * @since 1.0.0
+ *
  * @param string $str The string to convert.
+ *
  * @return string The snake case string.
  */
 function to_snake_case( string $str ): string {
@@ -22,7 +25,10 @@ function to_snake_case( string $str ): string {
 /**
  * Convert a string to camel case.
  *
+ * @since 1.0.0
+ *
  * @param string $str The string to convert.
+ *
  * @return string The camel case string.
  */
 function to_camel_case( string $str ): string {
@@ -32,7 +38,10 @@ function to_camel_case( string $str ): string {
 /**
  * Convert a string to pascal case.
  *
+ * @since 1.0.0
+ *
  * @param string $str The string to convert.
+ *
  * @return string The pascal case string.
  */
 function to_pascal_case( string $str ): string {

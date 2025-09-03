@@ -12,8 +12,11 @@ namespace WP_Pulse\Helpers\Date;
 /**
  * Get the date range value.
  *
+ * @since 1.0.0
+ *
  * @param string $date_range The date range.
  * @param string $range_value The range value.
+ *
  * @return string|\WP_Error The date range value.
  */
 function get_date_range_value( $date_range = 'today', $range_value = 'start' ) {

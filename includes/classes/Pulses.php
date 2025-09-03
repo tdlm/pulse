@@ -25,6 +25,7 @@ class Pulses {
 			'wp_pulse_pulses',
 			[
 				'Installs',
+				'Media',
 				'Posts',
 				'Users',
 				'UserSwitching',
