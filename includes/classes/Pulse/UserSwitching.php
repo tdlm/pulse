@@ -42,11 +42,11 @@ class UserSwitching extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
-			'session'          => __( 'Session', 'pulse' ),
-			'switch_back_user' => __( 'Switched Back', 'pulse' ),
-			'switch_off_user'  => __( 'Switched Off', 'pulse' ),
-			'switch_to_user'   => __( 'Switched To', 'pulse' ),
-			'user_switching'   => __( 'User Switching', 'pulse' ),
+			'session'            => __( 'Session', 'pulse' ),
+			'user-switched-back' => __( 'Switched Back', 'pulse' ),
+			'user-switched-off'  => __( 'Switched Off', 'pulse' ),
+			'user-switched-to'   => __( 'Switched To', 'pulse' ),
+			'user_switching'     => __( 'User Switching', 'pulse' ),
 		];
 	}
 
@@ -75,7 +75,7 @@ class UserSwitching extends Pulse {
 		];
 
 		Log::log(
-			'switch_back_user',
+			'user-switched-back',
 			sprintf(
 				/* translators: %1$s: Current user display name. %2$s: Previous user display name. */
 				__( 'Switched back to %1$s from %2$s.', 'pulse' ),
@@ -108,7 +108,7 @@ class UserSwitching extends Pulse {
 		];
 
 		Log::log(
-			'switch_off_user',
+			'user-switched-off',
 			sprintf(
 				/* translators: %1$s: User display name. */
 				__( 'Switched off %1$s.', 'pulse' ),
@@ -147,7 +147,7 @@ class UserSwitching extends Pulse {
 		];
 
 		Log::log(
-			'switch_to_user',
+			'user-switched-to',
 			sprintf(
 				/* translators: %1$s: Current user display name. %2$s: Previous user display name. */
 				__( 'Switched to %1$s from %2$s.', 'pulse' ),

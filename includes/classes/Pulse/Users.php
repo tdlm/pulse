@@ -78,7 +78,7 @@ class Users extends Pulse {
 			'user-log-out',
 			sprintf(
 				/* translators: %s: User display name. */
-				__( '%s logged out', 'pulse' ),
+				__( 'User %s logged out', 'pulse' ),
 				$user->display_name
 			),
 			$this->pulse_slug,
