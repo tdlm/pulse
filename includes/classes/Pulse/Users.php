@@ -38,6 +38,7 @@ class Users extends Pulse {
 		'profile_update',
 		'retrieve_password',
 		'set_logged_in_cookie',
+		'set_user_role',
 		'user_register',
 	];
 
@@ -196,12 +197,13 @@ class Users extends Pulse {
 	/**
 	 * Callback for retrieve_password.
 	 *
-	 * @param int $user_id The user ID.
+	 * @param string $user_login The user login.
 	 * @return void
 	 */
 	public function callback_retrieve_password( $user_login ) {
 		$current_user = get_current_user();
-		$email        = filter_var( $user_login, FILTER_VALIDATE_EMAIL );
+
+		$email = filter_var( $user_login, FILTER_VALIDATE_EMAIL );
 
 		if ( false === empty( $email ) ) {
 			$user = get_user_by( 'email', $email );
@@ -220,6 +222,46 @@ class Users extends Pulse {
 			'user',
 			$current_user->ID,
 			$user->ID,
+			[]
+		);
+	}
+
+	/**
+	 * Summary of callback_set_user_role
+	 *
+	 * @param int      $user_id The user ID.
+	 * @param string   $new_role The new role.
+	 * @param string[] $old_roles The old roles.
+	 * @return void
+	 */
+	public function callback_set_user_role( $user_id, $new_role, $old_roles ) {
+		$current_user = wp_get_current_user();
+
+		$user = get_user_by( 'ID', $user_id );
+
+		if ( false === $user instanceof \WP_User ) {
+			$display_name = $user_id;
+		} else {
+			$display_name = $user->display_name;
+		}
+
+		$old_role       = current( $old_roles );
+		$old_role_label = \WP_Pulse\Helpers\Users\get_user_role_label( $old_role );
+		$new_role_label = \WP_Pulse\Helpers\Users\get_user_role_label( $new_role );
+
+		Log::log(
+			'user-role-changed',
+			sprintf(
+				/* translators: %s: User display name. */
+				__( 'User %1$s\'s role changed from %2$s to %3$s.', 'pulse' ),
+				$display_name,
+				$old_role_label,
+				$new_role_label
+			),
+			$this->pulse_slug,
+			'user',
+			$current_user->ID,
+			$user_id,
 			[]
 		);
 	}
