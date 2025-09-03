@@ -77,7 +77,7 @@ class Posts extends Pulse {
 				$post_details['post_type_label'],
 				$post_details['post_title']
 			),
-			'posts',
+			$this->pulse_slug,
 			$post_details['post_type'],
 			null,
 			$post_id,
