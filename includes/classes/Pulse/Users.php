@@ -83,7 +83,7 @@ class Users extends Pulse {
 			'user-log-out',
 			sprintf(
 				/* translators: %s: User display name. */
-				__( 'User %s logged out', 'pulse' ),
+				__( 'User %s logged out.', 'pulse' ),
 				$user->display_name
 			),
 			$this->pulse_slug,
@@ -316,7 +316,7 @@ class Users extends Pulse {
 		if ( false === $current_user instanceof \WP_User ) {
 			$message = sprintf(
 				/* translators: %s: User display name. */
-				__( 'New user registered: %s', 'pulse' ),
+				__( 'New user registered: %s.', 'pulse' ),
 				$register_user->display_name
 			);
 
@@ -324,7 +324,7 @@ class Users extends Pulse {
 		} else {
 			$message = sprintf(
 				/* translators: %s: User display name. */
-				__( 'New account registered: %s', 'pulse' ),
+				__( 'New account registered: %s.', 'pulse' ),
 				$register_user->display_name
 			);
 
