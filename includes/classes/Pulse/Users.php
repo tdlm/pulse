@@ -36,6 +36,7 @@ class Users extends Pulse {
 		'deleted_user',
 		'password_reset',
 		'profile_update',
+		'retrieve_password',
 		'set_logged_in_cookie',
 		'user_register',
 	];
@@ -47,14 +48,15 @@ class Users extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
-			'user-created'         => __( 'Created', 'pulse' ),
-			'user-deleted'         => __( 'Deleted', 'pulse' ),
-			'user-log-in'          => __( 'Log in', 'pulse' ),
-			'user-log-out'         => __( 'Log out', 'pulse' ),
-			'user-profile-updated' => __( 'Profile updated', 'pulse' ),
-			'users'                => __( 'Users', 'pulse' ),
-			'user'                 => __( 'User', 'pulse' ),
-			'session'              => __( 'Session', 'pulse' ),
+			'user-created'                => __( 'Created', 'pulse' ),
+			'user-deleted'                => __( 'Deleted', 'pulse' ),
+			'user-log-in'                 => __( 'Log in', 'pulse' ),
+			'user-log-out'                => __( 'Log out', 'pulse' ),
+			'user-password-request-reset' => __( 'Reset', 'pulse' ),
+			'user-profile-updated'        => __( 'Updated', 'pulse' ),
+			'users'                       => __( 'Users', 'pulse' ),
+			'user'                        => __( 'User', 'pulse' ),
+			'session'                     => __( 'Session', 'pulse' ),
 		];
 	}
 
@@ -187,6 +189,38 @@ class Users extends Pulse {
 			'user',
 			$current_user->ID,
 			$user_id,
+		);
+	}
+
+
+	/**
+	 * Callback for retrieve_password.
+	 *
+	 * @param int $user_id The user ID.
+	 * @return void
+	 */
+	public function callback_retrieve_password( $user_login ) {
+		$current_user = get_current_user();
+		$email        = filter_var( $user_login, FILTER_VALIDATE_EMAIL );
+
+		if ( false === empty( $email ) ) {
+			$user = get_user_by( 'email', $email );
+		} else {
+			$user = get_user_by( 'login', $user_login );
+		}
+
+		Log::log(
+			'user-password-request-reset',
+			sprintf(
+				/* translators: %s: User display name. */
+				__( 'Password requested to be reset for user %s.', 'pulse' ),
+				$user->display_name
+			),
+			$this->pulse_slug,
+			'user',
+			$current_user->ID,
+			$user->ID,
+			[]
 		);
 	}
 
