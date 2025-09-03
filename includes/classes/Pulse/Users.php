@@ -34,6 +34,7 @@ class Users extends Pulse {
 		'clear_auth_cookie',
 		'delete_user',
 		'deleted_user',
+		'password_reset',
 		'profile_update',
 		'set_logged_in_cookie',
 		'user_register',
@@ -140,14 +141,39 @@ class Users extends Pulse {
 	}
 
 	/**
+	 * Callback for password_reset.
+	 *
+	 * @param \WP_User $user The user object.
+	 * @return void
+	 */
+	public function callback_password_reset( $user ) {
+		$current_user = get_current_user();
+
+		Log::log(
+			'password-reset',
+			sprintf(
+				/* translators: %s: User display name. */
+				__( 'User %s\'s password reset.', 'pulse' ),
+				$user->display_name
+			),
+			$this->pulse_slug,
+			'user',
+			$current_user->ID,
+			$user->ID,
+			[]
+		);
+	}
+
+	/**
 	 * Callback for profile_update.
 	 *
 	 * @param int      $user_id The user ID.
-	 * @param \WP_User $user The user object.
+	 * @param \WP_User $old_user_data The old user data.
+	 * @param array    $user_data The new user data.
 	 *
 	 * @return void
 	 */
-	public function callback_profile_update( $user_id, $user ) {
+	public function callback_profile_update( $user_id, $old_user_data, $user_data ) {
 		$current_user = wp_get_current_user();
 
 		Log::log(
@@ -155,13 +181,12 @@ class Users extends Pulse {
 			sprintf(
 				/* translators: %s: User display name. */
 				__( 'User %s\'s profile updated.', 'pulse' ),
-				$user->display_name
+				$old_user_data->display_name
 			),
 			$this->pulse_slug,
 			'user',
 			$current_user->ID,
 			$user_id,
-			[]
 		);
 	}
 
