@@ -19,6 +19,13 @@ use WP_Pulse\Registry;
 class Users extends Pulse {
 
 	/**
+	 * The pulse slug.
+	 *
+	 * @var string
+	 */
+	protected $pulse_slug = 'users';
+
+	/**
 	 * The actions to register.
 	 *
 	 * @var array
@@ -27,6 +34,7 @@ class Users extends Pulse {
 		'clear_auth_cookie',
 		'delete_user',
 		'deleted_user',
+		'profile_update',
 		'set_logged_in_cookie',
 		'user_register',
 	];
@@ -72,7 +80,7 @@ class Users extends Pulse {
 				__( '%s logged out', 'pulse' ),
 				$user->display_name
 			),
-			'users',
+			$this->pulse_slug,
 			'user',
 			$user->ID,
 			$user->ID,
@@ -122,7 +130,31 @@ class Users extends Pulse {
 		Log::log(
 			'user-deleted',
 			$message,
-			'users',
+			$this->pulse_slug,
+			'user',
+			$user->ID,
+			$user_id,
+			[]
+		);
+	}
+
+	/**
+	 * Callback for profile_update.
+	 *
+	 * @param int $user_id The user ID.
+	 * @return void
+	 */
+	public function callback_profile_update( $user_id ) {
+		$user = wp_get_current_user();
+
+		Log::log(
+			'user-profile-updated',
+			sprintf(
+				/* translators: %s: User display name. */
+				__( 'User %s profile updated.', 'pulse' ),
+				$user->display_name
+			),
+			$this->pulse_slug,
 			'user',
 			$user->ID,
 			$user_id,
@@ -159,7 +191,7 @@ class Users extends Pulse {
 				__( 'User %s logged in.', 'pulse' ),
 				$user->display_name
 			),
-			'users',
+			$this->pulse_slug,
 			'user',
 			$user_id,
 			$user_id,
@@ -198,7 +230,7 @@ class Users extends Pulse {
 		Log::log(
 			'user-created',
 			$message,
-			'users',
+			$this->pulse_slug,
 			'user',
 			$user_object_id,
 			$register_user->ID,

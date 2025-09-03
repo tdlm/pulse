@@ -12,7 +12,7 @@ namespace WP_Pulse;
 /**
  * Pulse class.
  */
-class Pulse {
+abstract class Pulse {
 
 	/**
 	 * The actions to register.
@@ -27,6 +27,20 @@ class Pulse {
 	 * @var bool
 	 */
 	private $is_registered = false;
+
+	/**
+	 * The pulse slug.
+	 *
+	 * @var string
+	 */
+	protected $pulse_slug;
+
+	/**
+	 * Get labels.
+	 *
+	 * @return array The labels.
+	 */
+	abstract public static function get_labels();
 
 	/**
 	 * Register the actions.

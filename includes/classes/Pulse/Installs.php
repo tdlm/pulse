@@ -18,6 +18,13 @@ use WP_Pulse\Log;
 class Installs extends Pulse {
 
 	/**
+	 * The pulse slug.
+	 *
+	 * @var string
+	 */
+	protected $pulse_slug = 'installs';
+
+	/**
 	 * The actions to register.
 	 *
 	 * @var array
@@ -63,7 +70,7 @@ class Installs extends Pulse {
 				$plugin_details['Name'],
 				$plugin_details['Version']
 			),
-			'installs',
+			$this->pulse_slug,
 			'plugin',
 			null,
 			null,
@@ -88,7 +95,7 @@ class Installs extends Pulse {
 				$plugin_details['Name'],
 				$plugin_details['Version']
 			),
-			'installs',
+			$this->pulse_slug,
 			'plugin',
 			null,
 			null,
@@ -118,7 +125,7 @@ class Installs extends Pulse {
 				$theme->get( 'Name' ),
 				$theme->get( 'Version' )
 			),
-			'installs',
+			$this->pulse_slug,
 			'theme',
 			null,
 			null,
@@ -149,7 +156,7 @@ class Installs extends Pulse {
 		Log::log(
 			'updated',
 			$description,
-			'installs',
+			$this->pulse_slug,
 			'core',
 			null,
 			null,

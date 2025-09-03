@@ -18,6 +18,13 @@ use WP_Pulse\Log;
 class Posts extends Pulse {
 
 	/**
+	 * The pulse slug.
+	 *
+	 * @var string
+	 */
+	protected $pulse_slug = 'posts';
+
+	/**
 	 * The actions to register.
 	 *
 	 * @var array

@@ -18,6 +18,13 @@ use WP_Pulse\Log;
 class UserSwitching extends Pulse {
 
 	/**
+	 * The pulse slug.
+	 *
+	 * @var string
+	 */
+	protected $pulse_slug = 'user_switching';
+
+	/**
 	 * The actions to register.
 	 *
 	 * @var array
@@ -75,7 +82,7 @@ class UserSwitching extends Pulse {
 				$current_user->display_name,
 				$previous_user->display_name
 			),
-			'user_switching',
+			$this->pulse_slug,
 			'session',
 			$previous_user->ID,
 			$previous_user->ID,
@@ -107,7 +114,7 @@ class UserSwitching extends Pulse {
 				__( 'Switched off %1$s.', 'pulse' ),
 				$user->display_name,
 			),
-			'user_switching',
+			$this->pulse_slug,
 			'session',
 			$user->ID,
 			$user->ID,
@@ -147,7 +154,7 @@ class UserSwitching extends Pulse {
 				$current_user->display_name,
 				$previous_user->display_name
 			),
-			'user_switching',
+			$this->pulse_slug,
 			'session',
 			$previous_user->ID,
 			$previous_user->ID,
