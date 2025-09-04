@@ -14,6 +14,8 @@ import { Records } from '../admin-dashboard/types';
  * @param date_range      The date range.
  * @param ip              The IP.
  * @param offset          The offset.
+ * @param order_by        The order by.
+ * @param order           The order.
  * @param pulse           The pulse.
  * @param user_id         The user ID.
  * @return The fetch records.
@@ -26,6 +28,8 @@ export default function useFetchRecords(
 	date_range: string,
 	ip: string,
 	offset: number,
+	order_by: string,
+	order: string,
 	pulse: string,
 	user_id: number
 ) {
@@ -44,6 +48,8 @@ export default function useFetchRecords(
 			ip,
 			window.PulseAdminDashboard.limit,
 			offset,
+			order_by,
+			order,
 			pulse,
 			user_id,
 		],
@@ -57,6 +63,8 @@ export default function useFetchRecords(
 				ip,
 				limit: window.PulseAdminDashboard.limit,
 				offset,
+				order_by,
+				order,
 				pulse,
 				user_id,
 				signal,

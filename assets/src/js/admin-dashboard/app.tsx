@@ -62,6 +62,14 @@ export default function AdminDashboardApp() {
 		defaultValue: '',
 	} );
 
+	const [ order_by, setOrderBy ] = useQueryState( 'orderby', {
+		defaultValue: 'created_at_gmt',
+	} );
+
+	const [ order, setOrder ] = useQueryState( 'order', {
+		defaultValue: 'DESC',
+	} );
+
 	const [ paged, setPaged ] = useQueryState( 'paged', {
 		defaultValue: 1,
 		parse: ( value ) => Number( value ),
@@ -91,6 +99,8 @@ export default function AdminDashboardApp() {
 		date_range,
 		ip,
 		offset,
+		order_by,
+		order,
 		pulse,
 		user_id
 	);
@@ -104,6 +114,8 @@ export default function AdminDashboardApp() {
 					context ||
 					date_range ||
 					ip ||
+					order_by ||
+					order ||
 					pulse ||
 					user_id ||
 					created_at
@@ -116,6 +128,8 @@ export default function AdminDashboardApp() {
 		created_at,
 		date_range,
 		ip,
+		order_by,
+		order,
 		pulse,
 		user_id,
 	] );
@@ -189,7 +203,7 @@ export default function AdminDashboardApp() {
 			</div>
 			<table className="pulse-table wp-list-table widefat fixed striped">
 				<thead>
-					<ColumnRow />
+					<ColumnRow orderBy={ order_by } order={ order } setOrderBy={ setOrderBy } setOrder={ setOrder } />
 				</thead>
 				<tbody className="the-list">
 					{ Array.isArray( data?.items ) &&
@@ -222,7 +236,7 @@ export default function AdminDashboardApp() {
 						) }
 				</tbody>
 				<tfoot>
-					<ColumnRow />
+					<ColumnRow orderBy={ order_by } order={ order } setOrderBy={ setOrderBy } setOrder={ setOrder } />
 				</tfoot>
 			</table>
 			<div className="tablenav bottom">

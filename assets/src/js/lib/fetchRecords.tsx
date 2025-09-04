@@ -29,6 +29,8 @@ export default async function fetchRecords( params: {
 	ip?: string;
 	limit?: number;
 	offset?: number;
+	order_by?: string;
+	order?: string;
 	pulse?: string;
 	user_id?: number;
 	signal?: AbortSignal;
@@ -40,6 +42,8 @@ export default async function fetchRecords( params: {
 		date_range,
 		search,
 		ip,
+		order_by,
+		order,
 		pulse,
 		user_id,
 		limit,
@@ -55,6 +59,8 @@ export default async function fetchRecords( params: {
 			ip,
 			limit,
 			offset,
+			order_by,
+			order,
 			pulse,
 			search,
 			user_id,
