@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import TimeAgo from 'react-timeago';
 import { makeIntlFormatter } from 'react-timeago/defaultFormatter';
 import { Record } from '../types';
+import CardUser from './card-user';
 
 const intlFormatter = makeIntlFormatter( {
 	locale: undefined, // string
@@ -82,7 +83,7 @@ export default function DataRow( {
 				<br />
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&created_at=${ moment(
+					href={ `/wp-admin/admin.php?page=wp-pulse&created_at=${ moment(
 						record.created_at
 					).format( 'YYYY-MM-DD' ) }` }
 					onClick={ ( e ) => {
@@ -112,7 +113,7 @@ export default function DataRow( {
 			</td>
 			<td data-colname="User">
 				<a
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&user_id=${ record.user_id }` }
+					href={ `/wp-admin/admin.php?page=wp-pulse&user_id=${ record.user_id }` }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setUserId( record.user_id );
@@ -128,37 +129,13 @@ export default function DataRow( {
 					/>
 				</a>
 				<div>
-					<a
-						href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&user_id=${ record.user_id }` }
-						onClick={ ( e ) => {
-							e.preventDefault();
-							setUserId( record.user_id );
-							setPaged( 1 );
-						} }
-					>
-						{ record.display_name }
-					</a>
-
-					<br />
-					<small>{ record.user_roles.join( ', ' ) }</small>
-					<br />
-					<a
-						title=""
-						href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&ip=${ record.ip }` }
-						onClick={ ( e ) => {
-							e.preventDefault();
-							setIp( record.ip );
-							setPaged( 1 );
-						} }
-					>
-						{ record.ip }
-					</a>
+					<CardUser record={ record } setUserId={ setUserId } setPaged={ setPaged } setIp={ setIp } />
 				</div>
 			</td>
 			<td data-colname="Context">
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }` }
+					href={ `/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }` }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setPulse( record.pulse );
@@ -171,7 +148,7 @@ export default function DataRow( {
 				↳&nbsp;
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }&context=${ record.context }` }
+					href={ `/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }&context=${ record.context }` }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setPulse( record.pulse );
@@ -185,7 +162,7 @@ export default function DataRow( {
 			<td data-colname="Action">
 				<a
 					title=""
-					href={ `http://localhost:8888/wp-admin/admin.php?page=wp-pulse&action=${ record.action }` }
+					href={ `/wp-admin/admin.php?page=wp-pulse&action=${ record.action }` }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setAction( record.action );
