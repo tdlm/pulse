@@ -1,4 +1,5 @@
 /// <reference path="../admin-dashboard/types.d.ts" />
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable camelcase */
 
@@ -6,7 +7,7 @@ import { useDebounce } from '@uidotdev/usehooks';
 import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
-import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-extraneous-dependencies
+import React, { useEffect, useState } from 'react';
 import useFetchRecords from '../lib/useFetchRecords';
 import ColumnRow from './components/column-row';
 import DataRow from './components/data-row';
