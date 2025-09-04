@@ -250,6 +250,16 @@ class Admin extends Singleton {
 
 		$tabs = $schema['tabs'];
 
+		Helpers\Media\enqueue_script(
+			'pulse/admin-settings',
+			[
+				[
+					'object_name' => 'PulseAdminSettings',
+				]
+			]
+		);
+		Helpers\Media\enqueue_style( 'pulse/admin-settings' );
+
 		View::include_template(
 			'admin/settings',
 			compact(
@@ -307,47 +317,38 @@ class Admin extends Singleton {
 					'title'  => 'General',
 					'fields' => [
 						[
-							'id'      => 'enable_logging',
-							'label'   => 'Enable logging',
-							'type'    => 'checkbox',
+							'class' => 'pulse-keep-forever',
 							'default' => false,
-							'desc'    => 'Write basic logs for debugging.',
+							'desc'    => sprintf('%s<br /><strong>%s</strong> %s', esc_html__('If enabled, pulse records will never be deleted.'), esc_html__('WARNING:'), esc_html__('Trimming older records will keep the database running more smoothly.')),
+							'help'    => 'Enabled',
+							'id'      => 'keep_forever',
+							'label'   => 'Keep records forever',
+							'type'    => 'checkbox',
 						],
 						[
-							'id'      => 'heartbeat_seconds',
-							'label'   => 'Heartbeat (seconds)',
+							'class' => 'pulse-keep-days',
+							'default' => 30,
+							'desc'    => esc_html__('How many days to keep records for.'),
+							'help'    => 'days',
+							'id'      => 'keep_days',
+							'label'   => 'Keep records for',
+							'max'     => 999,
+							'min'     => 1,
 							'type'    => 'number',
-							'min'     => 10,
-							'max'     => 600,
-							'step'    => 10,
-							'default' => 120,
-							'desc'    => 'How often to refresh data.',
-						],
+						]
 					],
 				],
 				'advanced' => [
 					'title'  => 'Advanced',
 					'fields' => [
 						[
-							'id'      => 'log_level',
-							'label'   => 'Log level',
-							'type'    => 'select',
-							'choices' => [
-								'error' => 'Error',
-								'warn'  => 'Warn',
-								'info'  => 'Info',
-								'debug' => 'Debug',
-							],
-							'default' => 'warn',
-							'desc'    => 'Choose the minimum log level.',
-						],
-						[
-							'id'      => 'custom_note',
-							'label'   => 'Custom note',
-							'type'    => 'textarea',
-							'default' => '',
-							'desc'    => 'Optional free-form text.',
-						],
+							'class' => 'button button-link button-link-delete',
+							'default' => false,
+							'desc' => __( 'WARNING: This will delete all pulse records from the database!', 'wp-pulse' ),
+							'id' => 'reset_all_pulses',
+							'label' => __( 'Reset Pulse Database', 'wp-pulse' ),
+							'type' => 'button',
+						]
 					],
 				],
 			],
@@ -429,31 +430,56 @@ class Admin extends Singleton {
 		$opts  = get_option( $this->option_key, [] );
 		$tab   = $args['tab'];
 
+		$class = true === isset( $field['class'] ) ? esc_attr( $field['class'] ) : '';
+		$label = true === isset( $field['label'] ) ? esc_html( $field['label'] ) : '';
 		$value = true === isset( $opts[ $tab ][ $id ] ) ? $opts[ $tab ][ $id ] : ( $field['default'] ?? '' );
 		$name  = $this->option_key . '[' . $tab . '][' . $id . ']';
+		$help  = true === isset( $field['help'] ) ? esc_html( $field['help'] ) : '';
+		$title = true === isset( $field['title'] ) ? esc_html( $field['title'] ) : '';
 
 		switch ( $type ) {
+			case 'button':
+				echo '<button type="button" class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</button>';
+
+				if (false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+			case 'link':
+				echo '<a href="' . esc_attr( $field['href'] ) . '" class="' . esc_attr( $field['class'] ) . '">' . esc_html( $field['label'] ) . '</a>';
+
+				if (false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+				}
+				break;
+
 			case 'checkbox':
-				echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="0" />';
+				echo '<label><input type="hidden" name="' . esc_attr( $name ) . '" value="0" />';
 				printf(
-					'<label><input type="checkbox" name="%s" value="1" %s /> %s</label>',
+					'<input type="checkbox" name="%s" value="1" %s class="%s" /> %s</label>',
 					esc_attr( $name ),
 					checked( (bool) $value, true, false ),
-					isset( $field['desc'] ) ? esc_html( $field['desc'] ) : ''
+					esc_attr( $class ),
+					esc_html( $help )
 				);
+				if (false === empty( $field['desc'] ) ) {
+					echo '<p class="description">' .  $field['desc'] . '</p>';
+				}
 				break;
 
 			case 'number':
 				printf(
-					'<input type="number" name="%s" value="%s" min="%s" max="%s" step="%s" class="small-text" />',
+					'<label><input type="number" name="%s" value="%s" min="%s" max="%s" step="%s" class="%s" /> %s</label>',
 					esc_attr( $name ),
 					esc_attr( $value ),
 					isset( $field['min'] ) ? esc_attr( $field['min'] ) : '',
 					isset( $field['max'] ) ? esc_attr( $field['max'] ) : '',
-					isset( $field['step'] ) ? esc_attr( $field['step'] ) : '1'
+					isset( $field['step'] ) ? esc_attr( $field['step'] ) : '1',
+					esc_attr( $class ),
+					esc_html( $help )
 				);
 				if ( ! empty( $field['desc'] ) ) {
-					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
+					echo '<p class="description">' .  $field['desc'] . '</p>';
 				}
 				break;
 

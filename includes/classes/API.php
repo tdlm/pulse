@@ -35,6 +35,13 @@ class API extends Singleton {
 						'args'                => [],
 					],
 				],
+				'database/reset' => [
+					[
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => [ self::class, 'reset_database' ],
+						'permission_callback' => [ self::class, 'reset_database_permission_callback' ],
+					],
+				],
 			],
 		);
 	}
@@ -98,5 +105,30 @@ class API extends Singleton {
 				'X-WP-TotalPages' => ceil( $records['count'] / $args['limit'] ),
 			]
 		);
+	}
+
+	/**
+	 * Reset the Pulse database.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return \WP_REST_Response
+	 */
+	public static function reset_database( \WP_REST_Request $request ) {
+		Database::reset();
+
+		return new \WP_REST_Response(
+			[
+				'message' => 'Pulse database reset.',
+			]
+		);
+	}
+
+	/**
+	 * Reset the Pulse database permission callback.
+	 *
+	 * @return bool
+	 */
+	public static function reset_database_permission_callback() {
+		return current_user_can( 'manage_options' );
 	}
 }

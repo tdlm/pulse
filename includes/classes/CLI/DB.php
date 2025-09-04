@@ -39,13 +39,13 @@ class DB extends \WP_CLI_Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp pulse db reset
+	 *     wp pulse db destroy
 	 *
 	 * @param array $args         The arguments.
 	 * @param array $assoc_args   The associative arguments.
 	 */
 	public function reset( $args, $assoc_args ) {
-		\WP_Pulse\Database::destroy_tables();
+		\WP_Pulse\Database::destroy();
 		\WP_Pulse\Database::remove_pulse_version_db();
 
 		\WP_CLI::success( 'Database reset.' );
