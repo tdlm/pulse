@@ -255,7 +255,7 @@ class Admin extends Singleton {
 			[
 				[
 					'object_name' => 'PulseAdminSettings',
-				]
+				],
 			]
 		);
 		Helpers\Media\enqueue_style( 'pulse/admin-settings.ts' );
@@ -317,38 +317,38 @@ class Admin extends Singleton {
 					'title'  => 'General',
 					'fields' => [
 						[
-							'class' => 'pulse-keep-forever',
+							'class'   => 'pulse-keep-forever',
 							'default' => false,
-							'desc'    => sprintf('%s<br /><strong>%s</strong> %s', esc_html__('If enabled, pulse records will never be deleted.'), esc_html__('WARNING:'), esc_html__('Trimming older records will keep the database running more smoothly.')),
+							'desc'    => sprintf( '%s<br /><strong>%s</strong> %s', esc_html__( 'If enabled, pulse records will never be deleted.' ), esc_html__( 'WARNING:' ), esc_html__( 'Trimming older records will keep the database running more smoothly.' ) ),
 							'help'    => 'Enabled',
 							'id'      => 'keep_forever',
 							'label'   => 'Keep records forever',
 							'type'    => 'checkbox',
 						],
 						[
-							'class' => 'pulse-keep-days',
+							'class'   => 'pulse-keep-days',
 							'default' => 30,
-							'desc'    => esc_html__('How many days to keep records for.'),
+							'desc'    => esc_html__( 'How many days to keep records for.' ),
 							'help'    => 'days',
 							'id'      => 'keep_days',
 							'label'   => 'Keep records for',
 							'max'     => 999,
 							'min'     => 1,
 							'type'    => 'number',
-						]
+						],
 					],
 				],
 				'advanced' => [
 					'title'  => 'Advanced',
 					'fields' => [
 						[
-							'class' => 'button button-link button-link-delete',
+							'class'   => 'button button-link button-link-delete',
 							'default' => false,
-							'desc' => __( 'WARNING: This will delete all pulse records from the database!', 'wp-pulse' ),
-							'id' => 'reset_all_pulses',
-							'label' => __( 'Reset Pulse Database', 'wp-pulse' ),
-							'type' => 'button',
-						]
+							'desc'    => __( 'WARNING: This will delete all pulse records from the database!', 'wp-pulse' ),
+							'id'      => 'reset_all_pulses',
+							'label'   => __( 'Reset Pulse Database', 'wp-pulse' ),
+							'type'    => 'button',
+						],
 					],
 				],
 			],
@@ -441,14 +441,14 @@ class Admin extends Singleton {
 			case 'button':
 				echo '<button type="button" class="' . esc_attr( $class ) . '" id="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</button>';
 
-				if (false === empty( $field['desc'] ) ) {
+				if ( false === empty( $field['desc'] ) ) {
 					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
 				}
 				break;
 			case 'link':
 				echo '<a href="' . esc_attr( $field['href'] ) . '" class="' . esc_attr( $field['class'] ) . '">' . esc_html( $field['label'] ) . '</a>';
 
-				if (false === empty( $field['desc'] ) ) {
+				if ( false === empty( $field['desc'] ) ) {
 					echo '<p class="description">' . esc_html( $field['desc'] ) . '</p>';
 				}
 				break;
@@ -462,8 +462,9 @@ class Admin extends Singleton {
 					esc_attr( $class ),
 					esc_html( $help )
 				);
-				if (false === empty( $field['desc'] ) ) {
-					echo '<p class="description">' .  $field['desc'] . '</p>';
+				if ( false === empty( $field['desc'] ) ) {
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<p class="description">' . $field['desc'] . '</p>';
 				}
 				break;
 
@@ -479,7 +480,8 @@ class Admin extends Singleton {
 					esc_html( $help )
 				);
 				if ( ! empty( $field['desc'] ) ) {
-					echo '<p class="description">' .  $field['desc'] . '</p>';
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<p class="description">' . $field['desc'] . '</p>';
 				}
 				break;
 

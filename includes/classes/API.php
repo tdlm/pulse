@@ -27,7 +27,7 @@ class API extends Singleton {
 	public static function init() {
 		self::set_api_routes(
 			[
-				'records' => [
+				'records'        => [
 					[
 						'methods'             => \WP_REST_Server::READABLE,
 						'callback'            => [ self::class, 'get_records' ],
