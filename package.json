@@ -4,9 +4,9 @@
   "description": "Pulse tracks user activity for logged in users in stunning detail.",
   "main": "pulse.php",
   "scripts": {
-    "assets:build": "wp-scripts build assets/src/js/*.js --output-path=assets/build",
-    "assets:start:hot": "wp-scripts start assets/src/js/*.js --output-path=assets/build --hot",
-    "assets:start": "wp-scripts start assets/src/js/*.js --output-path=assets/build",
+    "assets:build": "wp-scripts build assets/src/js/*.* --output-path=assets/build",
+    "assets:start:hot": "wp-scripts start assets/src/js/*.* --output-path=assets/build --hot",
+    "assets:start": "wp-scripts start assets/src/js/*.* --output-path=assets/build",
     "composer": "wp-env run cli --env-cwd=wp-content/plugins/pulse composer",
     "env:cli": "wp-env run cli wp",
     "env:destroy": "wp-env destroy",
@@ -39,6 +39,7 @@
     "@tanstack/react-query-devtools": "^5.85.5",
     "@types/moment": "^2.11.29",
     "@types/wordpress__api-fetch": "^3.2.4",
+    "@types/wordpress__element": "^2.4.1",
     "@types/wordpress__url": "^2.3.0",
     "@wordpress/env": "^10.29.0",
     "@wordpress/scripts": "^30.22.0"

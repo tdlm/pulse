@@ -4,24 +4,24 @@ import '../scss/admin-settings.scss';
 
 document.addEventListener( 'DOMContentLoaded', () => {
 
-    const checkboxKeepDays = document.querySelector( '.pulse-keep-days' );
-    const checkboxKeepForever = document.querySelector( '.pulse-keep-forever' );
+    const checkboxKeepDays: HTMLInputElement | null = document.querySelector( '.pulse-keep-days' );
+    const checkboxKeepForever: HTMLInputElement | null = document.querySelector( '.pulse-keep-forever' );
 
     if (checkboxKeepDays && checkboxKeepForever) {
         // On load, if the keep forever checkbox is checked, hide the keep days checkbox.
-        if (checkboxKeepForever.checked) {
-            checkboxKeepDays.closest('tr').classList.add( 'hidden' );
+        if (checkboxKeepForever?.checked) {
+            checkboxKeepDays?.closest('tr')?.classList.add( 'hidden' );
         }
 
         // On change, if the keep forever checkbox is checked, hide the keep days checkbox.
         // If the keep forever checkbox is unchecked, show the keep days checkbox.
-        checkboxKeepForever.addEventListener( 'change', ( e ) => {
+        checkboxKeepForever?.addEventListener( 'change', ( e: Event ) => {
             e.preventDefault();
 
-            if (e.target.checked) {
-                checkboxKeepDays.closest('tr').classList.add( 'hidden' );
+            if ((e.target as HTMLInputElement)?.checked) {
+                checkboxKeepDays?.closest('tr')?.classList.add( 'hidden' );
             } else {
-                checkboxKeepDays.closest('tr').classList.remove( 'hidden' );
+                checkboxKeepDays?.closest('tr')?.classList.remove( 'hidden' );
             }
         } );
     }
@@ -31,7 +31,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	);
 
 	if ( resetDatabaseButton ) {
-		resetDatabaseButton.addEventListener( 'click', ( e ) => {
+		resetDatabaseButton?.addEventListener( 'click', ( e: Event ) => {
 			e.preventDefault();
 
 			if (

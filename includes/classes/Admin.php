@@ -215,7 +215,7 @@ class Admin extends Singleton {
 		);
 
 		Helpers\Media\enqueue_script(
-			'pulse/admin-dashboard',
+			'pulse/admin-dashboard.tsx',
 			[
 				[
 					'object_name' => 'PulseAdminDashboard',
@@ -230,7 +230,7 @@ class Admin extends Singleton {
 				],
 			]
 		);
-		Helpers\Media\enqueue_style( 'pulse/admin-dashboard' );
+		Helpers\Media\enqueue_style( 'pulse/admin-dashboard.tsx' );
 
 		View::include_template( 'admin/dashboard' );
 	}
@@ -251,14 +251,14 @@ class Admin extends Singleton {
 		$tabs = $schema['tabs'];
 
 		Helpers\Media\enqueue_script(
-			'pulse/admin-settings',
+			'pulse/admin-settings.ts',
 			[
 				[
 					'object_name' => 'PulseAdminSettings',
 				]
 			]
 		);
-		Helpers\Media\enqueue_style( 'pulse/admin-settings' );
+		Helpers\Media\enqueue_style( 'pulse/admin-settings.ts' );
 
 		View::include_template(
 			'admin/settings',
