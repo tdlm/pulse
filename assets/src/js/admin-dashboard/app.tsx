@@ -110,19 +110,17 @@ export default function AdminDashboardApp() {
 			Boolean(
 				search ||
 					action ||
-					created_at ||
 					context ||
+					created_at ||
 					date_range ||
 					ip ||
-					order_by ||
-					order ||
+					order !== 'DESC' ||
+					order_by !== 'created_at_gmt' ||
 					pulse ||
-					user_id ||
-					created_at
+					user_id
 			)
 		);
 	}, [
-		search,
 		action,
 		context,
 		created_at,
@@ -131,6 +129,7 @@ export default function AdminDashboardApp() {
 		order_by,
 		order,
 		pulse,
+		search,
 		user_id,
 	] );
 
