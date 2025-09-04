@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+import { __ } from '@wordpress/i18n';
 import React from 'react';
 
 /**
@@ -22,7 +23,7 @@ export default function ColumnRow() {
 				aria-sort="ascending"
 			>
 				<a href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse&orderby=date&order=desc">
-					<span>Date</span>
+					<span>{ __( 'Date', 'pulse' ) }</span>
 					<span className="sorting-indicators">
 						<span
 							className="sorting-indicator asc"
@@ -40,24 +41,24 @@ export default function ColumnRow() {
 				id="summary"
 				className="manage-column column-summary"
 			>
-				Summary
+				{ __( 'Summary', 'pulse' ) }
 			</th>
 			<th
 				scope="col"
 				id="user_id"
 				className="manage-column column-user_id"
 			>
-				User
+				{ __( 'User', 'pulse' ) }
 			</th>
 			<th
 				scope="col"
 				id="context"
 				className="manage-column column-context"
 			>
-				Context
+				{ __( 'Context', 'pulse' ) }
 			</th>
 			<th scope="col" id="action" className="manage-column column-action">
-				Action
+				{ __( 'Action', 'pulse' ) }
 			</th>
 		</tr>
 	);

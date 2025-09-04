@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/no-unresolved */
 
+import { __ } from '@wordpress/i18n';
 import React from 'react';
 import Select from 'react-select';
 import { UserOption } from '../types';
@@ -47,7 +48,7 @@ export default function FilterUser( {
 				setPaged( 1 );
 			} }
 			options={ users }
-			placeholder="All users"
+			placeholder={ __( 'All users', 'pulse' ) }
 		/>
 	);
 }

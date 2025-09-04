@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { __ } from '@wordpress/i18n';
 import React from 'react';
 import PaginationButton from './pagination-button';
 import PaginationInput from './pagination-input';
@@ -44,7 +45,7 @@ export default function Pagination( {
 					htmlFor="current-page-selector"
 					className="screen-reader-text"
 				>
-					Current Page
+					{ __( 'Current Page', 'pulse' ) }
 				</label>
 				<PaginationInput
 					paged={ Number( paged ) }
@@ -52,7 +53,8 @@ export default function Pagination( {
 				/>
 				<span className="tablenav-paging-text">
 					{ ' ' }
-					of <span className="total-pages">{ totalPages }</span>
+					{ __( 'of', 'pulse' ) }{ ' ' }
+					<span className="total-pages">{ totalPages }</span>
 				</span>
 			</span>
 			<PaginationButton

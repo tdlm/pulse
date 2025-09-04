@@ -24,7 +24,7 @@ export default function PaginationInput( {
 			className="current-page"
 			value={ paged }
 			name="paged"
-			size="1"
+			size={ 1 }
 			type="text"
 			onChange={ ( e ) => setPage( Number( e.target.value ) ) }
 		/>

@@ -36,13 +36,14 @@
   "license": "GPL-2.0-or-later",
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.83.1",
-    "@tanstack/react-query-devtools": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.9",
     "@types/moment": "^2.11.29",
     "@types/wordpress__api-fetch": "^3.2.4",
     "@types/wordpress__element": "^2.4.1",
+    "@types/wordpress__i18n": "^3.4.0",
     "@types/wordpress__url": "^2.3.0",
-    "@wordpress/env": "^10.29.0",
-    "@wordpress/scripts": "^30.22.0"
+    "@wordpress/env": "^10.30.0",
+    "@wordpress/scripts": "^30.23.0"
   },
   "engines": {
     "node": ">=22.0.0",
@@ -53,10 +54,10 @@
     "url": "https://github.com/tdlm/pulse.git"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query": "^5.85.9",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
-    "nuqs": "^2.5.1",
+    "nuqs": "^2.5.2",
     "react-select": "^5.10.2",
     "react-timeago": "^8.3.0"
   }

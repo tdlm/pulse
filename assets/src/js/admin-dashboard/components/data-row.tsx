@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/no-unresolved */
 
-import React, { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import moment from 'moment';
+import React, { useState } from 'react';
 import TimeAgo from 'react-timeago';
 import { makeIntlFormatter } from 'react-timeago/defaultFormatter';
 import { Record } from '../types';
@@ -67,7 +68,7 @@ export default function DataRow( {
 					onClick={ () => setIsExpanded( ! isExpanded ) }
 				>
 					<span className="screen-reader-text">
-						Show more details
+						{ __( 'Show more details', 'pulse' ) }
 					</span>
 				</button>
 			</td>

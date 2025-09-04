@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-01T04:16:55+00:00\n"
+"POT-Creation-Date: 2025-09-04T02:27:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pulse\n"
@@ -39,108 +39,268 @@ msgstr ""
 msgid "https://tdlm.github.io"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:39
+#: includes/classes/Pulse/Installs.php:46
 msgid "Activated"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:40
+#: includes/classes/Pulse/Installs.php:47
 msgid "Deactivated"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:41
+#: includes/classes/Pulse/Installs.php:48
+#: includes/classes/Pulse/Media.php:51
+#: includes/classes/Pulse/Users.php:57
 msgid "Updated"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:42
+#: includes/classes/Pulse/Installs.php:49
 msgid "Installs"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:43
+#: includes/classes/Pulse/Installs.php:50
 msgid "Plugin"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:44
+#: includes/classes/Pulse/Installs.php:51
 msgid "Theme"
 msgstr ""
 
-#: includes/classes/Pulse/Installs.php:45
+#: includes/classes/Pulse/Installs.php:52
 msgid "Core"
 msgstr ""
 
 #. translators: %1$s: Plugin name. %2$s: Plugin version.
-#: includes/classes/Pulse/Installs.php:62
+#: includes/classes/Pulse/Installs.php:69
 msgid "Plugin %1$s version %2$s activated."
 msgstr ""
 
 #. translators: %1$s: Plugin name. %2$s: Plugin version.
-#: includes/classes/Pulse/Installs.php:87
+#: includes/classes/Pulse/Installs.php:94
 msgid "Plugin %1$s version %2$s deactivated."
 msgstr ""
 
 #. translators: %1$s: Theme name. %2$s: Theme version.
-#: includes/classes/Pulse/Installs.php:117
+#: includes/classes/Pulse/Installs.php:124
 msgid "Theme %1$s version %2$s activated."
 msgstr ""
 
 #. translators: %1$s: New WordPress version.
-#: includes/classes/Pulse/Installs.php:143
+#: includes/classes/Pulse/Installs.php:150
 msgid "WordPress automatically updated to version %1$s."
 msgstr ""
 
 #. translators: %1$s: New WordPress version.
-#: includes/classes/Pulse/Installs.php:146
+#: includes/classes/Pulse/Installs.php:153
 msgid "WordPress updated to version %1$s."
 msgstr ""
 
-#: includes/classes/Pulse/Posts.php:36
+#: includes/classes/Pulse/Media.php:47
+msgid "Added"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:48
+msgid "Attached"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:49
+#: includes/classes/Pulse/Posts.php:43
+#: includes/classes/Pulse/Users.php:53
 msgid "Deleted"
 msgstr ""
 
-#: includes/classes/Pulse/Posts.php:37
+#: includes/classes/Pulse/Media.php:50
+msgid "Edited"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:52
+msgid "Uploaded"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:53
+msgid "Media"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:54
+msgid "Archive"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:55
+msgid "Code"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:56
+msgid "Audio"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:57
+msgid "Document"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:58
+msgid "Image"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:59
+msgid "Interactive"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:60
+msgid "Spreadsheet"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:61
+msgid "Text"
+msgstr ""
+
+#: includes/classes/Pulse/Media.php:62
+msgid "Video"
+msgstr ""
+
+#. translators: %1$s: Attachment title. %2$s: Parent post title.
+#: includes/classes/Pulse/Media.php:85
+msgid "Attached \"%1$s\" to post \"%2$s\"."
+msgstr ""
+
+#. translators: %s: Attachment title.
+#: includes/classes/Pulse/Media.php:94
+msgid "Added \"%s\" to Media Library"
+msgstr ""
+
+#. translators: %s: Attachment title.
+#: includes/classes/Pulse/Media.php:130
+msgid "Updated \"%s\" attachment."
+msgstr ""
+
+#. translators: %s: Attachment title.
+#: includes/classes/Pulse/Media.php:159
+msgid "Deleted \"%s\" attachment."
+msgstr ""
+
+#. translators: %s: Attachment title.
+#: includes/classes/Pulse/Media.php:194
+msgid "Edited \"%s\" image."
+msgstr ""
+
+#: includes/classes/Pulse/Posts.php:44
 msgid "Posts"
 msgstr ""
 
 #. translators: %1$s: Post type label. %2$s: Post title.
-#: includes/classes/Pulse/Posts.php:69
+#: includes/classes/Pulse/Posts.php:76
 msgid "%1$s \"%2$s\" deleted from the trash."
 msgstr ""
 
-#: includes/classes/Pulse/Posts.php:118
+#: includes/classes/Pulse/Posts.php:125
 msgid "(no title)"
 msgstr ""
 
-#: includes/classes/Pulse/UserSwitching.php:38
+#: includes/classes/Pulse/Users.php:52
+msgid "Created"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:54
+msgid "Log in"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:55
+msgid "Log out"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:56
+msgid "Reset"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:58
+msgid "Role Changed"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:59
+msgid "Users"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:60
+msgid "User"
+msgstr ""
+
+#: includes/classes/Pulse/Users.php:61
+#: includes/classes/Pulse/UserSwitching.php:45
 msgid "Session"
 msgstr ""
 
-#: includes/classes/Pulse/UserSwitching.php:39
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:86
+msgid "User %s logged out."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:125
+#: includes/classes/Pulse/Users.php:131
+msgid "User %s deleted."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:160
+msgid "User %s's password reset."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:187
+msgid "User %s's profile updated."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:218
+msgid "Password requested to be reset for user %s."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:256
+msgid "User %1$s's role changed from %2$s to %3$s."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:295
+msgid "User %s logged in."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:319
+msgid "New user registered: %s."
+msgstr ""
+
+#. translators: %s: User display name.
+#: includes/classes/Pulse/Users.php:327
+msgid "New account registered: %s."
+msgstr ""
+
+#: includes/classes/Pulse/UserSwitching.php:46
 msgid "Switched Back"
 msgstr ""
 
-#: includes/classes/Pulse/UserSwitching.php:40
+#: includes/classes/Pulse/UserSwitching.php:47
 msgid "Switched Off"
 msgstr ""
 
-#: includes/classes/Pulse/UserSwitching.php:41
+#: includes/classes/Pulse/UserSwitching.php:48
 msgid "Switched To"
 msgstr ""
 
-#: includes/classes/Pulse/UserSwitching.php:42
+#: includes/classes/Pulse/UserSwitching.php:49
 msgid "User Switching"
 msgstr ""
 
 #. translators: %1$s: Current user display name. %2$s: Previous user display name.
-#: includes/classes/Pulse/UserSwitching.php:74
+#: includes/classes/Pulse/UserSwitching.php:81
 msgid "Switched back to %1$s from %2$s."
 msgstr ""
 
 #. translators: %1$s: User display name.
-#: includes/classes/Pulse/UserSwitching.php:107
+#: includes/classes/Pulse/UserSwitching.php:114
 msgid "Switched off %1$s."
 msgstr ""
 
 #. translators: %1$s: Current user display name. %2$s: Previous user display name.
-#: includes/classes/Pulse/UserSwitching.php:146
+#: includes/classes/Pulse/UserSwitching.php:153
 msgid "Switched to %1$s from %2$s."
 msgstr ""
 

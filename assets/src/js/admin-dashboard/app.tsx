@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 
 import { useDebounce } from '@uidotdev/usehooks';
+import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-extraneous-dependencies
@@ -126,7 +127,7 @@ export default function AdminDashboardApp() {
 					className="screen-reader-text"
 					htmlFor="record-search-input"
 				>
-					Search Records:
+					{ __( 'Search Records:', 'pulse' ) }
 				</label>
 				<input
 					type="search"
@@ -139,7 +140,7 @@ export default function AdminDashboardApp() {
 					name=""
 					id="search-submit"
 					className="button"
-					value="Search Records"
+					value={ __( 'Search Records', 'pulse' ) }
 				/>
 			</p>
 			<div className="tablenav top">
@@ -163,7 +164,7 @@ export default function AdminDashboardApp() {
 							>
 								<span className="dashicons dashicons-dismiss"></span>
 								<span className="record-query-reset-text">
-									Reset filters
+									{ __( 'Reset filters', 'pulse' ) }
 								</span>
 							</a>
 						) }
@@ -176,7 +177,7 @@ export default function AdminDashboardApp() {
 					) }
 				>
 					<span className="displaying-num">
-						{ data?.count } items
+						{ data?.count } { __( 'items', 'pulse' ) }
 					</span>
 					<Pagination
 						paged={ Number( paged ) }
@@ -209,7 +210,12 @@ export default function AdminDashboardApp() {
 						data.items.length === 0 && (
 							<tr className="no-items">
 								<td className="colspanchange" colSpan={ 6 }>
-									<p>No pulse records were found.</p>
+									<p>
+										{ __(
+											'No pulse records were found.',
+											'pulse'
+										) }
+									</p>
 								</td>
 							</tr>
 						) }
@@ -221,16 +227,22 @@ export default function AdminDashboardApp() {
 			<div className="tablenav bottom">
 				<div className="alignleft actions hidden">
 					<select name="action2" id="bulk-action-selector-bottom">
-						<option value="-1">Export Actions</option>
-						<option value="csv">Download CSV</option>
-						<option value="json">Download JSON</option>
+						<option value="-1">
+							{ __( 'Export Actions', 'pulse' ) }
+						</option>
+						<option value="csv">
+							{ __( 'Download CSV', 'pulse' ) }
+						</option>
+						<option value="json">
+							{ __( 'Download JSON', 'pulse' ) }
+						</option>
 					</select>
 					<input
 						type="submit"
 						name="bulk_action"
 						id="doaction2"
 						className="button action"
-						value="Apply"
+						value={ __( 'Apply', 'pulse' ) }
 					/>
 				</div>
 
@@ -241,7 +253,7 @@ export default function AdminDashboardApp() {
 					) }
 				>
 					<span className="displaying-num">
-						{ data?.count } items
+						{ data?.count } { __( 'items', 'pulse' ) }
 					</span>
 					<Pagination
 						paged={ Number( paged ) }

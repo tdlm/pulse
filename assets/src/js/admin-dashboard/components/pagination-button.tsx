@@ -1,4 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
+
+import { __ } from '@wordpress/i18n';
 import React from 'react';
 
 type PaginationButtonProps = {
@@ -17,10 +19,10 @@ const typeMap = {
 };
 
 const screenReaderTextMap = {
-	first: 'First page',
-	previous: 'Previous page',
-	next: 'Next page',
-	last: 'Last page',
+	first: __( 'First page', 'pulse' ),
+	previous: __( 'Previous page', 'pulse' ),
+	next: __( 'Next page', 'pulse' ),
+	last: __( 'Last page', 'pulse' ),
 };
 
 export default function PaginationButton( {
