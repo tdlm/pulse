@@ -220,12 +220,14 @@ class Admin extends Singleton {
 				[
 					'object_name' => 'PulseAdminDashboard',
 					'value'       => [
-						'count'  => intval( $records['count'] ),
-						'items'  => $records['items'],
-						'offset' => $offset,
-						'pages'  => intval( ceil( $records['count'] / $per_page ) ),
-						'limit'  => intval( $per_page ),
-						'users'  => $records['users'],
+						'admin_url'          => admin_url(),
+						'dashboard_base_url' => admin_url( 'admin.php?page=wp-pulse' ),
+						'count'              => intval( $records['count'] ),
+						'items'              => $records['items'],
+						'offset'             => $offset,
+						'pages'              => intval( ceil( $records['count'] / $per_page ) ),
+						'limit'              => intval( $per_page ),
+						'users'              => $records['users'],
 					],
 				],
 			]

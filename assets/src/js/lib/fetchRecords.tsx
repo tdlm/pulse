@@ -18,6 +18,8 @@ import { Records, Record, UserOption } from '../admin-dashboard/types';
  * @param params.pulse      The pulse.
  * @param params.user_id    The user ID.
  * @param params.signal     The signal.
+ * @param params.order_by
+ * @param params.order
  * @return The fetch records.
  */
 export default async function fetchRecords( params: {

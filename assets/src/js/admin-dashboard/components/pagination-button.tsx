@@ -2,6 +2,7 @@
 
 import { __ } from '@wordpress/i18n';
 import React from 'react';
+import { addQueryArgs } from '@wordpress/url';
 
 type PaginationButtonProps = {
 	currentPage: number;
@@ -57,7 +58,10 @@ export default function PaginationButton( {
 	return (
 		<a
 			className="last-page button"
-			href={ `/wp-admin/admin.php?page=wp-pulse&paged=${ page }` }
+			href={ addQueryArgs(
+				window.PulseAdminDashboard.dashboard_base_url,
+				{ paged: page }
+			) }
 			onClick={ ( e ) => {
 				e.preventDefault();
 				setPage( page );

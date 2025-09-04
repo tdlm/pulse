@@ -2,6 +2,7 @@
 /* eslint-disable import/no-unresolved */
 
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import moment from 'moment';
 import React, { useState } from 'react';
 import TimeAgo from 'react-timeago';
@@ -83,9 +84,14 @@ export default function DataRow( {
 				<br />
 				<a
 					title=""
-					href={ `/wp-admin/admin.php?page=wp-pulse&created_at=${ moment(
-						record.created_at
-					).format( 'YYYY-MM-DD' ) }` }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.dashboard_base_url,
+						{
+							created_at: moment( record.created_at ).format(
+								'YYYY-MM-DD'
+							),
+						}
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setCreatedAt(
@@ -113,7 +119,10 @@ export default function DataRow( {
 			</td>
 			<td data-colname="User">
 				<a
-					href={ `/wp-admin/admin.php?page=wp-pulse&user_id=${ record.user_id }` }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.dashboard_base_url,
+						{ user_id: record.user_id }
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setUserId( record.user_id );
@@ -129,13 +138,21 @@ export default function DataRow( {
 					/>
 				</a>
 				<div>
-					<CardUser record={ record } setUserId={ setUserId } setPaged={ setPaged } setIp={ setIp } />
+					<CardUser
+						record={ record }
+						setUserId={ setUserId }
+						setPaged={ setPaged }
+						setIp={ setIp }
+					/>
 				</div>
 			</td>
 			<td data-colname="Context">
 				<a
 					title=""
-					href={ `/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }` }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.dashboard_base_url,
+						{ pulse: record.pulse }
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setPulse( record.pulse );
@@ -148,7 +165,10 @@ export default function DataRow( {
 				↳&nbsp;
 				<a
 					title=""
-					href={ `/wp-admin/admin.php?page=wp-pulse&pulse=${ record.pulse }&context=${ record.context }` }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.dashboard_base_url,
+						{ pulse: record.pulse, context: record.context }
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setPulse( record.pulse );
@@ -162,7 +182,10 @@ export default function DataRow( {
 			<td data-colname="Action">
 				<a
 					title=""
-					href={ `/wp-admin/admin.php?page=wp-pulse&action=${ record.action }` }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.dashboard_base_url,
+						{ action: record.action }
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setAction( record.action );

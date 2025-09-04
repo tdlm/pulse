@@ -134,7 +134,7 @@ export default function AdminDashboardApp() {
 	] );
 
 	return (
-		<form method="get" action="/wp-admin/admin.php">
+		<form method="get" action={ window.PulseAdminDashboard.admin_url }>
 			<input type="hidden" name="page" value="wp-pulse" />
 			<p className="search-box">
 				<label
@@ -173,7 +173,10 @@ export default function AdminDashboardApp() {
 						/>
 						{ hasFilters && (
 							<a
-								href="/wp-admin/admin.php?page=wp-pulse"
+								href={
+									window.PulseAdminDashboard
+										.dashboard_base_url
+								}
 								id="record-query-reset"
 							>
 								<span className="dashicons dashicons-dismiss"></span>
@@ -202,7 +205,12 @@ export default function AdminDashboardApp() {
 			</div>
 			<table className="pulse-table wp-list-table widefat fixed striped">
 				<thead>
-					<ColumnRow orderBy={ order_by } order={ order } setOrderBy={ setOrderBy } setOrder={ setOrder } />
+					<ColumnRow
+						orderBy={ order_by }
+						order={ order }
+						setOrderBy={ setOrderBy }
+						setOrder={ setOrder }
+					/>
 				</thead>
 				<tbody className="the-list">
 					{ Array.isArray( data?.items ) &&
@@ -235,7 +243,12 @@ export default function AdminDashboardApp() {
 						) }
 				</tbody>
 				<tfoot>
-					<ColumnRow orderBy={ order_by } order={ order } setOrderBy={ setOrderBy } setOrder={ setOrder } />
+					<ColumnRow
+						orderBy={ order_by }
+						order={ order }
+						setOrderBy={ setOrderBy }
+						setOrder={ setOrder }
+					/>
 				</tfoot>
 			</table>
 			<div className="tablenav bottom">
