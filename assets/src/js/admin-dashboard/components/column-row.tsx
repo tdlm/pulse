@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-
 import { __ } from "@wordpress/i18n";
+import clsx from "clsx";
 import React from "react";
 
 type ColumnRowProps = {
@@ -31,8 +31,8 @@ export default function ColumnRow({
       <th
         scope="col"
         id="date"
-        className="manage-column column-date sorted asc"
-        aria-sort="ascending"
+        className={clsx("manage-column column-date sorted", order === "asc" ? "asc" : "desc")}
+        aria-sort={order === "asc" ? "ascending" : "descending"}
       >
         <a
           href={`/admin.php?page=wp-pulse&orderby=${orderBy}&order=${order}`}
