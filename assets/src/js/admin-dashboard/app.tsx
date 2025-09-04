@@ -134,7 +134,7 @@ export default function AdminDashboardApp() {
 	] );
 
 	return (
-		<form method="get" action="http://localhost:8888/wp-admin/admin.php">
+		<form method="get" action="/wp-admin/admin.php">
 			<input type="hidden" name="page" value="wp-pulse" />
 			<p className="search-box">
 				<label
@@ -173,7 +173,7 @@ export default function AdminDashboardApp() {
 						/>
 						{ hasFilters && (
 							<a
-								href="http://localhost:8888/wp-admin/admin.php?page=wp-pulse"
+								href="/wp-admin/admin.php?page=wp-pulse"
 								id="record-query-reset"
 							>
 								<span className="dashicons dashicons-dismiss"></span>
