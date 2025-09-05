@@ -210,7 +210,7 @@ class Posts extends Pulse {
 
 			$message = sprintf(
 				/* translators: %s: Post title. */
-				__( 'Post "%s" pending.', 'pulse' ),
+				__( 'Post "%s" pending review.', 'pulse' ),
 				$post->post_title
 			);
 		} elseif ( 'future' === $new_status ) {
@@ -226,10 +226,9 @@ class Posts extends Pulse {
 			$action = 'post-future-published';
 
 			$message = sprintf(
-				/* translators: %s: Post title. %s: Post type. */
-				__( 'Post "%1$s" (%2$s) published.', 'pulse' ),
-				$post->post_title,
-				$post->post_type
+				/* translators: %s: Post title. */
+				__( 'Post "%1$s" published.', 'pulse' ),
+				$post->post_title
 			);
 		} elseif ( 'private' === $new_status ) {
 			$action = 'post-privately-published';
@@ -257,9 +256,12 @@ class Posts extends Pulse {
 			);
 		}
 
+		// If we don't have an action or message, we don't have anything to log.
 		if ( true === empty( $action ) || true === empty( $message ) ) {
 			return;
 		}
+
+		// TODO: Log the revision_id, if it exists.
 
 		Log::log(
 			$action,
