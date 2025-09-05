@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -43,7 +44,7 @@ export default function ColumnRow( {
 				aria-sort={ order === 'asc' ? 'ascending' : 'descending' }
 			>
 				<a
-					href={ `/admin.php?page=wp-pulse&orderby=${ orderBy }&order=${ order }` }
+					href={ addQueryArgs( window.PulseAdminDashboard.settings.dashboard_base_url, { orderby: orderBy, order: order } ) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setOrderBy( orderBy );
