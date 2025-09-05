@@ -93,7 +93,22 @@ body.wp-pulse .wrap h1 {
         margin-bottom: 20px;
     }
 
+    // Animate opening closing of details.
     .pulse-row-details {
+        margin: 0;
+        padding: 0;
+
+        summary {
+            color: #777;
+            cursor: pointer;
+
+            &:hover {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .pulse-row-details-content {
         background-color: #ffffff;
         border: 1px solid #ccc;
         margin: 0;

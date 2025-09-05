@@ -31,11 +31,6 @@ export default function ColumnRow( {
 		<tr>
 			<th
 				scope="col"
-				id="expand-toggle"
-				className="manage-column column-expand-toggle"
-			></th>
-			<th
-				scope="col"
 				id="date"
 				className={ clsx(
 					'manage-column column-date sorted',

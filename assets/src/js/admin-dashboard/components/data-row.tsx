@@ -58,22 +58,6 @@ export default function DataRow( {
 
 	return (
 		<tr>
-			<td data-colname="Expand Toggle">
-				<button
-					aria-label="Expand row"
-					className={ `pulse-expand-toggle dashicons ${
-						isExpanded
-							? 'dashicons-arrow-down'
-							: 'dashicons-arrow-right'
-					}` }
-					type="button"
-					onClick={ () => setIsExpanded( ! isExpanded ) }
-				>
-					<span className="screen-reader-text">
-						{ __( 'Show more details', 'pulse' ) }
-					</span>
-				</button>
-			</td>
 			<td data-colname="Date">
 				<strong>
 					<TimeAgo
@@ -111,11 +95,12 @@ export default function DataRow( {
 			</td>
 			<td data-colname="Description">
 				<p>{ record.description }</p>
-				{ isExpanded && (
-					<div className="pulse-row-details">
+				<details className="pulse-row-details">
+					<summary>{ __( 'Details', 'pulse' ) }</summary>
+					<div className="pulse-row-details-content">
 						<pre>{ JSON.stringify( record, null, 2 ) }</pre>
 					</div>
-				) }
+				</details>
 			</td>
 			<td data-colname="User">
 				<a
