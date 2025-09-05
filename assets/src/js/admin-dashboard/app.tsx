@@ -98,6 +98,7 @@ export default function AdminDashboardApp() {
 		created_at,
 		date_range,
 		ip,
+		!!window.PulseAdminDashboard.settings.live_updates_enabled,
 		offset,
 		order_by,
 		order,
@@ -134,7 +135,7 @@ export default function AdminDashboardApp() {
 	] );
 
 	return (
-		<form method="get" action={ window.PulseAdminDashboard.admin_url }>
+		<form method="get" action={ window.PulseAdminDashboard.settings.admin_url }>
 			<input type="hidden" name="page" value="wp-pulse" />
 			<p className="search-box">
 				<label
@@ -174,8 +175,7 @@ export default function AdminDashboardApp() {
 						{ hasFilters && (
 							<a
 								href={
-									window.PulseAdminDashboard
-										.dashboard_base_url
+									window.PulseAdminDashboard.settings.dashboard_base_url
 								}
 								id="record-query-reset"
 							>

@@ -85,7 +85,7 @@ export default function DataRow( {
 				<a
 					title=""
 					href={ addQueryArgs(
-						window.PulseAdminDashboard.dashboard_base_url,
+						window.PulseAdminDashboard.settings.dashboard_base_url,
 						{
 							created_at: moment( record.created_at ).format(
 								'YYYY-MM-DD'
@@ -120,7 +120,7 @@ export default function DataRow( {
 			<td data-colname="User">
 				<a
 					href={ addQueryArgs(
-						window.PulseAdminDashboard.dashboard_base_url,
+						window.PulseAdminDashboard.settings.dashboard_base_url,
 						{ user_id: record.user_id }
 					) }
 					onClick={ ( e ) => {
@@ -150,7 +150,7 @@ export default function DataRow( {
 				<a
 					title=""
 					href={ addQueryArgs(
-						window.PulseAdminDashboard.dashboard_base_url,
+						window.PulseAdminDashboard.settings.dashboard_base_url,
 						{ pulse: record.pulse }
 					) }
 					onClick={ ( e ) => {
@@ -166,7 +166,7 @@ export default function DataRow( {
 				<a
 					title=""
 					href={ addQueryArgs(
-						window.PulseAdminDashboard.dashboard_base_url,
+						window.PulseAdminDashboard.settings.dashboard_base_url,
 						{ pulse: record.pulse, context: record.context }
 					) }
 					onClick={ ( e ) => {
@@ -183,7 +183,7 @@ export default function DataRow( {
 				<a
 					title=""
 					href={ addQueryArgs(
-						window.PulseAdminDashboard.dashboard_base_url,
+						window.PulseAdminDashboard.settings.dashboard_base_url,
 						{ action: record.action }
 					) }
 					onClick={ ( e ) => {

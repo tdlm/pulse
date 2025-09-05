@@ -27,17 +27,24 @@ export default function useFetchRecords(
 	created_at: string,
 	date_range: string,
 	ip: string,
+	isLive: boolean,
 	offset: number,
 	order_by: string,
 	order: string,
 	pulse: string,
-	user_id: number
+	userId: number
 ) {
 	return useQuery< Records >( {
 		initialData: {
-			...window.PulseAdminDashboard,
+			count: window.PulseAdminDashboard.count,
+			items: window.PulseAdminDashboard.items,
+			limit: window.PulseAdminDashboard.limit,
+			offset: window.PulseAdminDashboard.offset,
+			pages: window.PulseAdminDashboard.pages,
+			users: window.PulseAdminDashboard.users,
 		},
 		refetchInterval: 10 * 1000, // 10 seconds.
+		enabled: isLive,
 		queryKey: [
 			'records',
 			action,
@@ -51,7 +58,7 @@ export default function useFetchRecords(
 			order_by,
 			order,
 			pulse,
-			user_id,
+			userId,
 		],
 		queryFn: ( { signal } ) =>
 			fetchRecords( {
@@ -66,7 +73,7 @@ export default function useFetchRecords(
 				order_by,
 				order,
 				pulse,
-				user_id,
+				user_id: userId,
 				signal,
 			} ),
 	} );

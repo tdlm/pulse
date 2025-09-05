@@ -220,14 +220,17 @@ class Admin extends Singleton {
 				[
 					'object_name' => 'PulseAdminDashboard',
 					'value'       => [
-						'admin_url'          => admin_url(),
-						'dashboard_base_url' => admin_url( 'admin.php?page=wp-pulse' ),
 						'count'              => intval( $records['count'] ),
 						'items'              => $records['items'],
 						'offset'             => $offset,
 						'pages'              => intval( ceil( $records['count'] / $per_page ) ),
 						'limit'              => intval( $per_page ),
 						'users'              => $records['users'],
+						'settings'           => [
+							'admin_url'          => admin_url(),
+							'dashboard_base_url' => admin_url( 'admin.php?page=wp-pulse' ),	
+							'live_updates_enabled' => self::are_live_updates_enabled(),
+						]
 					],
 				],
 			]
@@ -598,6 +601,23 @@ class Admin extends Singleton {
 		}
 
 		return $merged;
+	}
+
+	/**
+	 * Check if live updates are enabled.
+	 *
+	 * @return bool
+	 */
+	public static function are_live_updates_enabled() {
+		$user_id = get_current_user_id();
+
+		$live_updates_enabled = get_user_option( 'pulse_live_update', $user_id );
+
+		if (true === empty( $live_updates_enabled )) {
+			$live_updates_enabled = 'on';
+		}
+
+		return 'on' === $live_updates_enabled;
 	}
 
 	/**

@@ -59,7 +59,7 @@ export default function PaginationButton( {
 		<a
 			className="last-page button"
 			href={ addQueryArgs(
-				window.PulseAdminDashboard.dashboard_base_url,
+				window.PulseAdminDashboard.settings.dashboard_base_url,
 				{ paged: page }
 			) }
 			onClick={ ( e ) => {
