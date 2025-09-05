@@ -4,7 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import TimeAgo from 'react-timeago';
 import { makeIntlFormatter } from 'react-timeago/defaultFormatter';
 import { Record } from '../types';
@@ -54,8 +54,6 @@ export default function DataRow( {
 	setPulse,
 	setUserId,
 }: DataRowProps ) {
-	const [ isExpanded, setIsExpanded ] = useState( false );
-
 	return (
 		<tr>
 			<td data-colname="Date">
@@ -94,13 +92,42 @@ export default function DataRow( {
 				</span>
 			</td>
 			<td data-colname="Description">
-				<p>{ record.description }</p>
-				<details className="pulse-row-details">
-					<summary>{ __( 'Details', 'pulse' ) }</summary>
-					<div className="pulse-row-details-content">
-						<pre>{ JSON.stringify( record, null, 2 ) }</pre>
-					</div>
-				</details>
+				<div className="pulse-row-description">
+					{ record.description }
+					{ ( Object.keys( record.pulse_links ).length > 0 && (
+						<div className="row-actions">
+							{ Object.keys( record.pulse_links ).map(
+								( key, _ ) => (
+									<>
+										<span key={ key }>
+											<a
+												href={ decodeURIComponent(
+													decodeURIComponent(
+														record.pulse_links[
+															key
+														]
+													)
+												) }
+											>
+												{ key }
+											</a>
+										</span>
+										{ _ <
+											Object.keys( record.pulse_links )
+												.length -
+												1 && <span> | </span> }
+									</>
+								)
+							) }
+						</div>
+					) ) || <div className="row-actions">&nbsp;</div> }
+					<details className="pulse-row-details">
+						<summary>{ __( 'Details', 'pulse' ) }</summary>
+						<div className="pulse-row-details-content">
+							<pre>{ JSON.stringify( record, null, 2 ) }</pre>
+						</div>
+					</details>
+				</div>
 			</td>
 			<td data-colname="User">
 				<a

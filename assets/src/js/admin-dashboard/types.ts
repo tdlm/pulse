@@ -1,3 +1,8 @@
+export type PulseLink = {
+	label: string;
+	link: string;
+};
+
 export type Record = {
 	id: number;
 	created_at: string;
@@ -14,6 +19,7 @@ export type Record = {
 	pulse: string;
 	context: string;
 	action: string;
+	pulse_links: PulseLink[];
 };
 
 export type Records = {

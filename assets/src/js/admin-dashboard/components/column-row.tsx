@@ -39,7 +39,10 @@ export default function ColumnRow( {
 				aria-sort={ order === 'asc' ? 'ascending' : 'descending' }
 			>
 				<a
-					href={ addQueryArgs( window.PulseAdminDashboard.settings.dashboard_base_url, { orderby: orderBy, order: order } ) }
+					href={ addQueryArgs(
+						window.PulseAdminDashboard.settings.dashboard_base_url,
+						{ orderby: orderBy, order }
+					) }
 					onClick={ ( e ) => {
 						e.preventDefault();
 						setOrderBy( orderBy );

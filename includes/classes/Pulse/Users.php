@@ -63,6 +63,30 @@ class Users extends Pulse {
 	}
 
 	/**
+	 * Get links.
+	 *
+	 * @param object $record The pulse record.
+	 *
+	 * @return array The links.
+	 */
+	public static function get_links( $record ) {
+		$links = [];
+
+		if ( false === isset( $record->object_id ) ) {
+			return $links;
+		}
+
+		$edit_user_link = get_edit_user_link( $record->object_id );
+
+		if ( false === empty( $edit_user_link ) ) {
+			$links[ __( 'Edit User', 'pulse' ) ] = html_entity_decode( $edit_user_link, ENT_QUOTES | ENT_HTML5 );
+		}
+
+		return $links;
+	}
+
+
+	/**
 	 * Callback for clear_auth_cookie.
 	 *
 	 * @return void

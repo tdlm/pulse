@@ -23,12 +23,7 @@ import Pagination from './components/pagination';
  * @return The table nav pages class.
  */
 const getTableNavPagesClass = ( totalItems: number, totalPages: number ) => {
-	console.log({
-		totalItems,
-		totalPages,
-	})
 	if ( totalItems < 1 ) {
-		console.log('no-pages');
 		return 'no-pages';
 	} else if ( 1 === totalPages ) {
 		return 'one-page';
@@ -103,7 +98,7 @@ export default function AdminDashboardApp() {
 		created_at,
 		date_range,
 		ip,
-		!!window.PulseAdminDashboard.settings.live_updates_enabled,
+		!! window.PulseAdminDashboard.settings.live_updates_enabled,
 		offset,
 		order_by,
 		order,
@@ -140,7 +135,10 @@ export default function AdminDashboardApp() {
 	] );
 
 	return (
-		<form method="get" action={ window.PulseAdminDashboard.settings.admin_url }>
+		<form
+			method="get"
+			action={ window.PulseAdminDashboard.settings.admin_url }
+		>
 			<input type="hidden" name="page" value="wp-pulse" />
 			<p className="search-box">
 				<label
@@ -180,7 +178,8 @@ export default function AdminDashboardApp() {
 						{ hasFilters && (
 							<a
 								href={
-									window.PulseAdminDashboard.settings.dashboard_base_url
+									window.PulseAdminDashboard.settings
+										.dashboard_base_url
 								}
 								id="record-query-reset"
 							>
@@ -195,7 +194,10 @@ export default function AdminDashboardApp() {
 				<div
 					className={ clsx(
 						'tablenav-pages',
-						getTableNavPagesClass( Number( data?.count ), Number( data?.pages ) )
+						getTableNavPagesClass(
+							Number( data?.count ),
+							Number( data?.pages )
+						)
 					) }
 				>
 					<span className="displaying-num">
@@ -281,7 +283,10 @@ export default function AdminDashboardApp() {
 				<div
 					className={ clsx(
 						'tablenav-pages',
-						getTableNavPagesClass( Number( data?.count ), Number( data?.pages ) )
+						getTableNavPagesClass(
+							Number( data?.count ),
+							Number( data?.pages )
+						)
 					) }
 				>
 					<span className="displaying-num">

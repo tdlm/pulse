@@ -93,13 +93,40 @@ body.wp-pulse .wrap h1 {
         margin-bottom: 20px;
     }
 
+    .pulse-row-description {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 0;
+    }
+
+    .pulse-row-links {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        li {
+            list-style: none;
+
+            a {
+                text-decoration: none;
+                font-weight: 500;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
     // Animate opening closing of details.
     .pulse-row-details {
         margin: 0;
         padding: 0;
 
         summary {
-            color: #777;
+            color: #999;
             cursor: pointer;
 
             &:hover {

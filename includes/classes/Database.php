@@ -110,6 +110,7 @@ class Database {
 
 			$pulse = Helpers\Strings\to_pascal_case( $result->pulse );
 
+			// Get labels.
 			if ( true === method_exists( 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ) ) {
 				$labels = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_labels' ] );
 			} else {
@@ -118,7 +119,16 @@ class Database {
 
 			$result->action_label  = true === isset( $labels[ $result->action ] ) ? $labels[ $result->action ] : $result->action;
 			$result->context_label = true === isset( $labels[ $result->context ] ) ? $labels[ $result->context ] : $result->context;
-			$result->pulse_label   = true === isset( $labels[ $result->pulse ] ) ? $labels[ $result->pulse ] : $result->pulse;
+
+			// Get links.
+			if ( true === method_exists( 'WP_Pulse\\Pulse\\' . $pulse, 'get_links' ) ) {
+				$links = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_links' ], $result );
+			} else {
+				$links = [];
+			}
+
+			$result->pulse_label = true === isset( $labels[ $result->pulse ] ) ? $labels[ $result->pulse ] : $result->pulse;
+			$result->pulse_links = $links;
 		}
 
 		$count_query = "SELECT COUNT(*) FROM {$table_name} AS pulse";

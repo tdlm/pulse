@@ -64,6 +64,35 @@ class Media extends Pulse {
 	}
 
 	/**
+	 * Get links.
+	 *
+	 * @param object $record The pulse record.
+	 *
+	 * @return array The links.
+	 */
+	public static function get_links( $record ) {
+		$links = [];
+
+		if ( false === isset( $record->object_id ) ) {
+			return $links;
+		}
+
+		$edit_media_link = get_edit_post_link( $record->object_id );
+
+		if ( false === empty( $edit_media_link ) ) {
+			$links[ __( 'Edit Media', 'pulse' ) ] = html_entity_decode( $edit_media_link, ENT_QUOTES | ENT_HTML5 );
+		}
+
+		$permalink = get_permalink( $record->object_id );
+
+		if ( false === empty( $permalink ) ) {
+			$links[ __( 'View', 'pulse' ) ] = html_entity_decode( $permalink, ENT_QUOTES | ENT_HTML5 );
+		}
+
+		return $links;
+	}
+
+	/**
 	 * Add attachment callback.
 	 *
 	 * @param int $post_id The post ID.

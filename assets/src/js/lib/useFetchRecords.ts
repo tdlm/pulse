@@ -13,11 +13,12 @@ import { Records } from '../admin-dashboard/types';
  * @param created_at      The created at.
  * @param date_range      The date range.
  * @param ip              The IP.
+ * @param isLive          Is record fetching live?
  * @param offset          The offset.
  * @param order_by        The order by.
  * @param order           The order.
  * @param pulse           The pulse.
- * @param user_id         The user ID.
+ * @param userId          The user ID.
  * @return The fetch records.
  */
 export default function useFetchRecords(
