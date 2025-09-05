@@ -98,8 +98,8 @@ export default function DataRow( {
 						<div className="row-actions">
 							{ Object.keys( record.pulse_links ).map(
 								( key, _ ) => (
-									<>
-										<span key={ key }>
+									<React.Fragment key={ key }>
+										<span>
 											<a
 												href={ decodeURIComponent(
 													decodeURIComponent(
@@ -116,7 +116,7 @@ export default function DataRow( {
 											Object.keys( record.pulse_links )
 												.length -
 												1 && <span> | </span> }
-									</>
+									</React.Fragment>
 								)
 							) }
 						</div>

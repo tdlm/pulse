@@ -77,7 +77,7 @@ class Database {
 			$where_clauses[] = $wpdb->prepare( 'pulse.description LIKE %s', '%' . $args['search'] . '%' );
 		}
 
-		if ( false === empty( $args['user_id'] ) ) {
+		if ( true === isset( $args['user_id'] ) && false === is_null( $args['user_id'] ) && '' !== $args['user_id'] ) {
 			$where_clauses[] = $wpdb->prepare( 'pulse.user_id = %s', $args['user_id'] );
 		}
 

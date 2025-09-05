@@ -118,7 +118,7 @@ export default function AdminDashboardApp() {
 					order !== 'DESC' ||
 					order_by !== 'created_at_gmt' ||
 					pulse ||
-					user_id
+					user_id !== null
 			)
 		);
 	}, [
