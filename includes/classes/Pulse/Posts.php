@@ -263,6 +263,10 @@ class Posts extends Pulse {
 
 		// TODO: Log the revision_id, if it exists.
 
+		// Build out log details.
+		$details = compact('old_status');
+		$details = array_merge($details, $this->get_post_details($post->ID));
+
 		Log::log(
 			$action,
 			$message,
@@ -270,18 +274,7 @@ class Posts extends Pulse {
 			$post->post_type,
 			$current_user->ID,
 			$post->ID,
-			[
-				'new_status'      => $new_status,
-				'old_status'      => $old_status,
-				'post_author'     => $post->post_author,
-				'post_date_gmt'   => $post->post_date_gmt,
-				'post_date'       => $post->post_date,
-				'post_parent'     => $post->post_parent,
-				'post_status'     => $post->post_status,
-				'post_title'      => $post->post_title,
-				'post_type_label' => get_post_type_label( $post->post_type ),
-				'post_type'       => $post->post_type,
-			]
+			$details
 		);
 	}
 
@@ -321,13 +314,10 @@ class Posts extends Pulse {
 	 * Get post details.
 	 *
 	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post Optional. Post object.
 	 * @return array Post details.
 	 */
-	private function get_post_details( $post_id, $post = null ) {
-		if ( null === $post ) {
-			$post = get_post( $post_id );
-		}
+	private function get_post_details( $post_id ) {
+		$post = get_post( $post_id );
 
 		if ( false === $post instanceof \WP_Post ) {
 			return [];
@@ -337,14 +327,17 @@ class Posts extends Pulse {
 		$post_type_label  = true === $post_type_object instanceof \WP_Post_Type ? $post_type_object->labels->singular_name : ucfirst( $post->post_type );
 
 		return [
-			'post_id'         => $post->ID,
-			'post_title'      => $post->post_title ? $post->post_title : __( '(no title)', 'pulse' ),
-			'post_type'       => $post->post_type,
-			'post_type_label' => $post_type_label,
-			'post_status'     => $post->post_status,
-			'post_author'     => $post->post_author,
-			'post_date'       => $post->post_date,
-			'post_modified'   => $post->post_modified,
+			'post_author'       => $post->post_author,
+			'post_date_gmt'     => $post->post_date_gmt,
+			'post_date'         => $post->post_date,
+			'post_id'           => $post->ID,
+			'post_modified'     => $post->post_modified,
+			'post_modified_gmt' => $post->post_modified_gmt,
+			'post_parent'       => $post->post_parent,
+			'post_status'       => $post->post_status,
+			'post_title'        => $post->post_title ? $post->post_title : __( '(no title)', 'pulse' ),
+			'post_type_label'   => $post_type_label,
+			'post_type'         => $post->post_type,
 		];
 	}
 }
