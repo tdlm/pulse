@@ -50,6 +50,13 @@ body.wp-pulse .wrap h1 {
             align-items: center;
             gap: 3px;
         }
+
+        &.one-page,
+        &.no-pages {
+            .pagination-links {
+                display: none;
+            }
+        }
     }
 
     .one-page .pagination-links {

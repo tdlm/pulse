@@ -23,7 +23,12 @@ import Pagination from './components/pagination';
  * @return The table nav pages class.
  */
 const getTableNavPagesClass = ( totalItems: number, totalPages: number ) => {
+	console.log({
+		totalItems,
+		totalPages,
+	})
 	if ( totalItems < 1 ) {
+		console.log('no-pages');
 		return 'no-pages';
 	} else if ( 1 === totalPages ) {
 		return 'one-page';
@@ -190,7 +195,7 @@ export default function AdminDashboardApp() {
 				<div
 					className={ clsx(
 						'tablenav-pages',
-						getTableNavPagesClass( data?.count, data?.pages )
+						getTableNavPagesClass( Number( data?.count ), Number( data?.pages ) )
 					) }
 				>
 					<span className="displaying-num">
@@ -276,7 +281,7 @@ export default function AdminDashboardApp() {
 				<div
 					className={ clsx(
 						'tablenav-pages',
-						getTableNavPagesClass( data?.count, data?.pages )
+						getTableNavPagesClass( Number( data?.count ), Number( data?.pages ) )
 					) }
 				>
 					<span className="displaying-num">
