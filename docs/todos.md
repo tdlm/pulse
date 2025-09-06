@@ -5,27 +5,30 @@
 - [ ] Activity Logging:
     - [x] Core logging system (`Log::log()`)
     - [x] Database storage with metadata
-    - [ ] WordPress action coverage
+    - [ ] WordPress action coverage p0
         - [x] Installer
         - [x] Media
         - [x] Posts
         - [x] User Switching
         - [x] Users
-        - [ ] ACF
-        - [ ] BBPress
         - [ ] Blogs
-        - [ ] BuddyPress
         - [ ] Comments
-        - [ ] Easy Digital Downloads
         - [ ] Editor
-        - [ ] Gravity Forms
-        - [ ] Jetpack
         - [ ] Menus
-        - [ ] Mercator
         - [ ] Settings
         - [ ] Taxonomies
-        - [ ] Two Factor
         - [ ] Widgets
+    - [ ] WordPress action coverage p1
+        - [ ] ACF
+        - [ ] AISEO
+        - [ ] BBPress
+        - [ ] BuddyPress
+        - [ ] Easy Digital Downloads
+        - [ ] Gravity Forms
+        - [ ] Jetpack
+        - [ ] Mercator
+        - [ ] Rank Math SEO
+        - [ ] Two Factor
         - [ ] WooCommerce
         - [ ] WordPress SEO
 - [x] Dashboard Detail
@@ -77,6 +80,7 @@
 - [ ] Add GitHub action to deploy to WordPress SVN
 - [ ] Split label getters for actions and context
 - [ ] Take care of TODOs
+- [ ] Refine icon
 
 ## Pre v1.0.0 Release Checks
 - [ ] Make sure all functions have "@since v1.0.0" tag
