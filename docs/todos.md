@@ -2,64 +2,84 @@
 
 ## Core Features
 
-- [x] Activity Logging: Core logging system (`Log::log()`)
-- [x] Activity Logging: Database storage with metadata
-- [ ] Activity Logging: WordPress action coverage
-    - [ ] ACF
-    - [ ] BBPress
-    - [ ] Blogs
-    - [ ] BuddyPress
-    - [ ] Comments
-    - [ ] Easy Digital Downloads
-    - [ ] Editor
-    - [ ] Gravity Forms
-    - [x] Installer
-    - [ ] Jetpack
-    - [ ] Media
-    - [ ] Menus
-    - [ ] Mercator
-    - [ ] Posts
-    - [ ] Settings
-    - [ ] Taxonomies
-    - [ ] Two Factor
-    - [x] User Switching
-    - [ ] Users
-    - [ ] Widgets
-    - [ ] WooCommerce
-    - [ ] WordPress SEO
-- [_] Dashboard Detail: Expandable row details
-- [x] Dashboard Detail: Metadata display (JSON format)
-- [x] Dashboard Detail: User information (avatar, roles, IP)
-- [x] Dashboard Detail: Timestamp with relative time
-- [x] CLI: Data export (JSON/CSV via `wp pulse query`)
-- [x] CLI: Database reset
-- [x] CLI: Database migration
-- [ ] Dashboard: Web interface export buttons
-- [x] Dashboard: Search functionality with debouncing
-- [x] Dashboard: Backend filtering (action, context, ip, pulse, user_id)
-- [x] Dashboard: Table view of activity records
-- [x] Dashboard: Real-time updates (10s interval)
-- [x] Dashboard: Main dashboard page
-- [x] Dashboard: React-based interface
-- [x] Dashboard: Search input
-- [x] Dashboard: Data table with sorting
-- [ ] Dashboard: UI filter controls/dropdowns using React Query
-- [ ] Dashboard: Pagination using React Query
-- [ ] Dashboard: Filter UI components
-- [ ] Settings: Settings page
-- [ ] Settings: Data retention settings
-- [ ] Settings: General configuration options
-- [x] Developer Integration: Base Pulse class for extension
-- [x] Developer Integration: Filter hook (`wp_pulse_pulses`) 
-- [x] Developer Integration: Public Log API
-- [ ] Developer Integration: Documentation/examples
+- [ ] Activity Logging:
+    - [x] Core logging system (`Log::log()`)
+    - [x] Database storage with metadata
+    - [ ] WordPress action coverage
+        - [x] Installer
+        - [x] Media
+        - [x] Posts
+        - [x] User Switching
+        - [x] Users
+        - [ ] ACF
+        - [ ] BBPress
+        - [ ] Blogs
+        - [ ] BuddyPress
+        - [ ] Comments
+        - [ ] Easy Digital Downloads
+        - [ ] Editor
+        - [ ] Gravity Forms
+        - [ ] Jetpack
+        - [ ] Menus
+        - [ ] Mercator
+        - [ ] Settings
+        - [ ] Taxonomies
+        - [ ] Two Factor
+        - [ ] Widgets
+        - [ ] WooCommerce
+        - [ ] WordPress SEO
+- [x] Dashboard Detail
+    - [x] Expandable row details
+    - [x] Metadata display (JSON format)
+    - [x] User information (avatar, roles, IP)
+    - [x] Timestamp with relative time
+- [x] CLI
+    - [x] Data export (JSON/CSV via `wp pulse query`)
+        - [ ] Bring up to date with Database::get_records() params
+    - [x] Database reset
+    - [x] Database migration
+- [ ] Dashboard
+    - [x] Search functionality with debouncing
+    - [x] Backend filtering (action, context, ip, pulse, user_id)
+    - [x] Table view of activity records
+    - [x] Real-time updates (10s interval)
+    - [x] Main dashboard page
+    - [x] React-based interface
+    - [x] Search input
+    - [x] Data table with sorting
+    - [x] UI filter controls/dropdowns using React Query
+    - [x] Pagination using React Query
+    - [x] Filter UI components
+    - [ ] Web interface export buttons
+- [ ] Settings
+    - [x] Settings page
+    - [x] General configuration options
+    - [x] Records reset w/ warning
+    - [ ] Data retention settings
+- [ ] Developer Integration
+    - [x] Base Pulse class for extension
+    - [x] Filter hook (`wp_pulse_pulses`) 
+    - [x] Public Log API
+    - [ ] Documentation/examples
+- [ ] Object Detail View: View details and history of a particular object (user, post).
+    - [ ] Set up page
+    - [ ] User history view
+    - [ ] Post history view
+- [ ] Multi site compatibility
+- [ ] Cron
+    - [ ] Delete record / meta older than retention date
 
 ## Technical Debt
-- [ ] Add js lint / fixing via wp-scripts
-- [ ] Fix TypeScript type error in fetchRecords
+- [x] Add js lint / fixing via wp-scripts
+- [x] Fix TypeScript type error in fetchRecords
 - [ ] Add proper error handling
 - [ ] Improve loading states
 - [ ] Add GitHub action to deploy to WordPress SVN
+
+## Pre v1.0.0 Release Checks
+- [ ] Make sure all functions have "@since v1.0.0" tag
+- [ ] Make sure all text has i18n and escaping
+- [ ] Make sure all extensible items have filters
 
 ## Future State
 - [ ] Pro Version
