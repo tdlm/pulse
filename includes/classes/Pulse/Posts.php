@@ -261,11 +261,27 @@ class Posts extends Pulse {
 			return;
 		}
 
-		// TODO: Log the revision_id, if it exists.
+		// For WordPress 5.6+.
+		if ( true === function_exists( 'wp_get_latest_revision_id_and_total_count' ) ) {
+			$revision_data = wp_get_latest_revision_id_and_total_count( $post->ID );
+			$revision_id   = $revision_data['latest_id'];
+		} else {
+			// For older versions of WordPress.
+			$revisions       = wp_get_post_revisions(
+				$post->ID,
+				[
+					'order'          => 'DESC',
+					'posts_per_page' => 1,
+				]
+			);
+			$latest_revision = array_shift( $revisions );
+			$revision_id     = true === property_exists( $latest_revision, 'ID' ) ? $latest_revision->ID : null;
+		}
 
 		// Build out log details.
-		$details = compact('old_status');
-		$details = array_merge($details, $this->get_post_details($post->ID));
+		$details = compact( 'old_status', 'revision_id' );
+		$details = array_merge( $details, $this->get_post_details( $post->ID ) );
+		$details = array_merge( $details, \WP_Pulse\Helpers\Users\get_user_details( $current_user->ID ) );
 
 		Log::log(
 			$action,
@@ -313,7 +329,7 @@ class Posts extends Pulse {
 	/**
 	 * Get post details.
 	 *
-	 * @param int      $post_id Post ID.
+	 * @param int $post_id Post ID.
 	 * @return array Post details.
 	 */
 	private function get_post_details( $post_id ) {
