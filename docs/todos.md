@@ -75,6 +75,8 @@
 - [ ] Add proper error handling
 - [ ] Improve loading states
 - [ ] Add GitHub action to deploy to WordPress SVN
+- [ ] Split label getters for actions and context
+- [ ] Take care of TODOs
 
 ## Pre v1.0.0 Release Checks
 - [ ] Make sure all functions have "@since v1.0.0" tag
