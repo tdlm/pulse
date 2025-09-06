@@ -66,7 +66,7 @@ class API extends Singleton {
 				'limit'      => 20,
 				'offset'     => 0,
 				'orderby'    => 'created_at_gmt',
-				'order'      => 'DESC',
+				'order'      => 'desc',
 				'pulse'      => '',
 				'search'     => '',
 				'user_id'    => '',

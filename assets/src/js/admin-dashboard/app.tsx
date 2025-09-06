@@ -67,7 +67,7 @@ export default function AdminDashboardApp() {
 	} );
 
 	const [ order, setOrder ] = useQueryState( 'order', {
-		defaultValue: 'DESC',
+		defaultValue: 'desc',
 	} );
 
 	const [ paged, setPaged ] = useQueryState( 'paged', {
@@ -115,7 +115,7 @@ export default function AdminDashboardApp() {
 					created_at ||
 					date_range ||
 					ip ||
-					order !== 'DESC' ||
+					order !== 'desc' ||
 					order_by !== 'created_at_gmt' ||
 					pulse ||
 					user_id !== null

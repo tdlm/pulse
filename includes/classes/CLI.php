@@ -50,7 +50,7 @@ class CLI extends \WP_CLI_Command {
 				'limit'   => 20,
 				'offset'  => 0,
 				'orderby' => 'created_at_gmt',
-				'order'   => 'DESC',
+				'order'   => 'desc',
 			]
 		);
 
