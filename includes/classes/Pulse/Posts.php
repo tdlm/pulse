@@ -264,7 +264,12 @@ class Posts extends Pulse {
 		// For WordPress 5.6+.
 		if ( true === function_exists( 'wp_get_latest_revision_id_and_total_count' ) ) {
 			$revision_data = wp_get_latest_revision_id_and_total_count( $post->ID );
-			$revision_id   = $revision_data['latest_id'];
+
+			if (true === is_wp_error( $revision_data )) {
+				$revision_id = null;
+			} else {
+				$revision_id = $revision_data['latest_id'];
+			}
 		} else {
 			// For older versions of WordPress.
 			$revisions       = wp_get_post_revisions(
@@ -279,7 +284,12 @@ class Posts extends Pulse {
 		}
 
 		// Build out log details.
-		$details = compact( 'old_status', 'revision_id' );
+		$details = compact( 'old_status' );
+
+		if (false === empty( $revision_id )) {
+			$details['revision_id'] = $revision_id;
+		}
+
 		$details = array_merge( $details, $this->get_post_details( $post->ID ) );
 		$details = array_merge( $details, \WP_Pulse\Helpers\Users\get_user_details( $current_user->ID ) );
 
