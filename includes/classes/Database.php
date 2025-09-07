@@ -92,6 +92,14 @@ class Database {
 
 		// Enrich results with user data.
 		foreach ( $results as $result ) {
+
+			// Populate meta object.
+			$result->meta = [];
+			$meta_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}pulse_meta WHERE pulse_id = %d", $result->id ) );
+			foreach ( $meta_results as $meta_result ) {
+				$result->meta[ $meta_result->meta_key ] = $meta_result->meta_value;
+			}
+
 			// Get user roles.
 			$user_info          = get_userdata( $result->user_id );
 			$result->user_roles = true === is_object( $user_info ) && true === property_exists( $user_info, 'roles' ) ? $user_info->roles : [];
@@ -127,8 +135,11 @@ class Database {
 				$links = [];
 			}
 
-			$result->pulse_label = true === isset( $labels[ $result->pulse ] ) ? $labels[ $result->pulse ] : $result->pulse;
+			// Set pulse links.
 			$result->pulse_links = $links;
+
+			// Set pulse labels.
+			$result->pulse_label = true === isset( $labels[ $result->pulse ] ) ? $labels[ $result->pulse ] : $result->pulse;
 		}
 
 		$count_query = "SELECT COUNT(*) FROM {$table_name} AS pulse";
