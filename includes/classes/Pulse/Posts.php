@@ -12,8 +12,6 @@ namespace WP_Pulse\Pulse;
 use WP_Pulse\Pulse;
 use WP_Pulse\Log;
 
-use function WP_Pulse\Helpers\Post\get_post_type_label;
-
 /**
  * Posts class.
  */
@@ -265,7 +263,7 @@ class Posts extends Pulse {
 		if ( true === function_exists( 'wp_get_latest_revision_id_and_total_count' ) ) {
 			$revision_data = wp_get_latest_revision_id_and_total_count( $post->ID );
 
-			if (true === is_wp_error( $revision_data )) {
+			if ( true === is_wp_error( $revision_data ) ) {
 				$revision_id = null;
 			} else {
 				$revision_id = $revision_data['latest_id'];
@@ -286,7 +284,7 @@ class Posts extends Pulse {
 		// Build out log details.
 		$details = compact( 'old_status' );
 
-		if (false === empty( $revision_id )) {
+		if ( false === empty( $revision_id ) ) {
 			$details['revision_id'] = $revision_id;
 		}
 
