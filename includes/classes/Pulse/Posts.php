@@ -55,6 +55,9 @@ class Posts extends Pulse {
 			'post-updated'             => __( 'Updated', 'pulse' ),
 			'posts'                    => __( 'Posts', 'pulse' ),
 			'post'                     => __( 'Post', 'pulse' ),
+			'wp_global_styles'         => __( 'Global Styles', 'pulse' ),
+			'wp_navigation'            => __( 'Navigation', 'pulse' ),
+			'wp_template'              => __( 'Template', 'pulse' ),
 		];
 	}
 
