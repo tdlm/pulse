@@ -121,12 +121,6 @@ export default function DataRow( {
 							) }
 						</div>
 					) ) || <div className="row-actions">&nbsp;</div> }
-					<details className="pulse-row-details">
-						<summary>{ __( 'Details', 'pulse' ) }</summary>
-						<div className="pulse-row-details-content">
-							<pre>{ JSON.stringify( record, null, 2 ) }</pre>
-						</div>
-					</details>
 				</div>
 			</td>
 			<td data-colname="User">
