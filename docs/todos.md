@@ -65,7 +65,7 @@
     - [x] Public Log API
     - [ ] Documentation/examples
 - [ ] Object Detail View: View details and history of a particular object (user, post).
-    - [ ] Set up page
+    - [x] Set up page
     - [ ] User history view
     - [ ] Post history view
 - [ ] Multi site compatibility
