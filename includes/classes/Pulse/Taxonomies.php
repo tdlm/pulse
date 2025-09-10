@@ -3,7 +3,7 @@
  * Keeps a finger on the pulse of taxonomy-related activity.
  *
  * @package WP_Pulse
- * @subpackage Pulse\Taxonomy
+ * @subpackage Pulse\Taxonomies
  * @since 1.0.0
  */
 
@@ -14,16 +14,16 @@ use WP_Pulse\Log;
 use WP_Pulse\Registry;
 
 /**
- * Taxonomy class.
+ * Taxonomies class.
  */
-class Taxonomy extends Pulse {
+class Taxonomies extends Pulse {
 
 	/**
 	 * The pulse slug.
 	 *
 	 * @var string
 	 */
-	protected $pulse_slug = 'taxonomy';
+	protected $pulse_slug = 'taxonomies';
 
 	/**
 	 * The actions to register.
@@ -46,6 +46,7 @@ class Taxonomy extends Pulse {
 		return [
 			'category'     => __( 'Category', 'pulse' ),
 			'post_tag'     => __( 'Tag', 'pulse' ),
+			'taxonomies'   => __( 'Taxonomies', 'pulse' ),
 			'term-created' => __( 'Created', 'pulse' ),
 			'term-deleted' => __( 'Deleted', 'pulse' ),
 			'term-edited'  => __( 'Edited', 'pulse' ),
