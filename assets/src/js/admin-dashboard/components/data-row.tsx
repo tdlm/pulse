@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/no-unresolved */
 
-import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import moment from 'moment';
 import React from 'react';
