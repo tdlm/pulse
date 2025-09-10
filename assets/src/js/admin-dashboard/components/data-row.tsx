@@ -6,6 +6,7 @@ import moment from 'moment';
 import React from 'react';
 import TimeAgo from 'react-timeago';
 import { makeIntlFormatter } from 'react-timeago/defaultFormatter';
+import '../globals.d.ts';
 import { Record } from '../types';
 import CardUser from './card-user';
 
