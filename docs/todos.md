@@ -13,10 +13,11 @@
         - [x] Users
         - [ ] Blogs
         - [ ] Comments
-        - [ ] Editor
         - [ ] Menus
+        - [ ] Plugin Editor
         - [ ] Settings
-        - [ ] Taxonomies
+        - [x] Taxonomies
+        - [ ] Theme Editor
         - [ ] Widgets
     - [ ] WordPress action coverage p1
         - [ ] ACF

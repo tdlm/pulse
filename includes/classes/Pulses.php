@@ -27,6 +27,7 @@ class Pulses {
 				'Installs',
 				'Media',
 				'Posts',
+				'Taxonomy',
 				'Users',
 				'UserSwitching',
 			]
