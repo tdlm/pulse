@@ -29,6 +29,7 @@ class Database {
 			'context'    => '',
 			'created_at' => '',
 			'date_range' => '',
+			'id'         => '',
 			'ip'         => '',
 			'limit'      => 20,
 			'offset'     => 0,
@@ -65,6 +66,10 @@ class Database {
 			);
 		}
 
+		if ( false === empty( $args['id'] ) ) {
+			$where_clauses[] = $wpdb->prepare( 'pulse.id = %s', $args['id'] );
+		}
+
 		if ( false === empty( $args['ip'] ) ) {
 			$where_clauses[] = $wpdb->prepare( 'pulse.ip = %s', $args['ip'] );
 		}
@@ -95,6 +100,7 @@ class Database {
 
 			// Populate meta object.
 			$result->meta = [];
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			$meta_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}pulse_meta WHERE pulse_id = %d", $result->id ) );
 			foreach ( $meta_results as $meta_result ) {
 				$result->meta[ $meta_result->meta_key ] = $meta_result->meta_value;
@@ -128,12 +134,19 @@ class Database {
 			$result->action_label  = true === isset( $labels[ $result->action ] ) ? $labels[ $result->action ] : $result->action;
 			$result->context_label = true === isset( $labels[ $result->context ] ) ? $labels[ $result->context ] : $result->context;
 
+			$links = [];
+
 			// Get links.
 			if ( true === method_exists( 'WP_Pulse\\Pulse\\' . $pulse, 'get_links' ) ) {
 				$links = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_links' ], $result );
-			} else {
-				$links = [];
 			}
+
+			$links = array_merge(
+				[
+					'Details' => add_query_arg( [ 'pulse_id' => $result->id ], admin_url( 'admin.php?page=wp-pulse' ) ),
+				],
+				$links
+			);
 
 			// Set pulse links.
 			$result->pulse_links = $links;

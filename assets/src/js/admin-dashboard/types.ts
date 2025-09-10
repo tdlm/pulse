@@ -20,6 +20,10 @@ export type Record = {
 	context: string;
 	action: string;
 	pulse_links: PulseLink[];
+	meta?: Array< {
+		key: string;
+		value: string;
+	} >;
 };
 
 export type Records = {

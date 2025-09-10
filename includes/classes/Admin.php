@@ -182,6 +182,21 @@ class Admin extends Singleton {
 	 * @return void
 	 */
 	public static function render_pulse_page() {
+		$pulse_id = filter_input( INPUT_GET, 'pulse_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		if ( false === empty( $pulse_id ) ) {
+			self::render_pulse_detail_page( $pulse_id );
+		} else {
+			self::render_pulse_dashboard_page();
+		}
+	}
+
+	/**
+	 * Render the pulse dashboard page.
+	 *
+	 * @return void
+	 */
+	public static function render_pulse_dashboard_page() {
 		$user_id  = get_current_user_id();
 		$per_page = get_user_option( 'pulse_per_page', $user_id );
 
@@ -238,6 +253,42 @@ class Admin extends Singleton {
 		Helpers\Media\enqueue_style( 'pulse/admin-dashboard.tsx' );
 
 		View::include_template( 'admin/dashboard' );
+	}
+
+	/**
+	 * Render the pulse detail page.
+	 *
+	 * @param int $pulse_id The pulse ID.
+	 *
+	 * @return void
+	 */
+	public static function render_pulse_detail_page( $pulse_id ) {
+		$records = Database::get_records(
+			[
+				'id' => $pulse_id,
+			]
+		);
+
+		if ( 1 > intval( $records['count'] ) ) {
+			self::notice( 'Pulse not found.', 'error' );
+		}
+
+		$record = $records['items'][0] ?? [];
+
+		Helpers\Media\enqueue_script(
+			'pulse/admin-pulse-detail.tsx',
+			[
+				[
+					'object_name' => 'PulseAdminPulseDetail',
+					'value'       => [
+						'record' => $record,
+					],
+				],
+			]
+		);
+		Helpers\Media\enqueue_style( 'pulse/admin-pulse-detail.tsx' );
+
+		View::include_template( 'admin/pulse-detail' );
 	}
 
 	/**

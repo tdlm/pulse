@@ -1,4 +1,4 @@
-import { Records } from "./types";
+import { Records, Record } from "./types";
 
 declare global {
   interface Window {
@@ -9,6 +9,9 @@ declare global {
         live_updates_enabled: boolean
       }
     };
+    PulseAdminPulseDetail: {
+      record: Record;
+    }
   }
 }
 
