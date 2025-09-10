@@ -275,6 +275,8 @@ class Admin extends Singleton {
 
 		$record = $records['items'][0] ?? [];
 
+		$meta = Database::get_record_meta( $pulse_id );
+
 		Helpers\Media\enqueue_script(
 			'pulse/admin-pulse-detail.tsx',
 			[
@@ -282,6 +284,7 @@ class Admin extends Singleton {
 					'object_name' => 'PulseAdminPulseDetail',
 					'value'       => [
 						'record' => $record,
+						'meta'   => $meta,
 					],
 				],
 			]

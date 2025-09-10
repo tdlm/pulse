@@ -201,6 +201,28 @@ class Database {
 	}
 
 	/**
+	 * Get the meta for a record.
+	 *
+	 * @param int $pulse_id The pulse ID.
+	 *
+	 * @return array The meta.
+	 */
+	public static function get_record_meta( $pulse_id ) {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$meta_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}pulse_meta WHERE pulse_id = %d", $pulse_id ) );
+
+		$meta = [];
+
+		foreach ( $meta_results as $meta_result ) {
+			$meta[ $meta_result->meta_key ] = $meta_result->meta_value;
+		}
+
+		return $meta;
+	}
+
+	/**
 	 * Destroy the tables.
 	 *
 	 * @return void
