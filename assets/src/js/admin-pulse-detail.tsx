@@ -2,6 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import './admin-dashboard/globals.d.ts';
 
 import '../scss/admin-pulse-detail.scss';
 
