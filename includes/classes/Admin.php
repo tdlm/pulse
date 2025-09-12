@@ -517,7 +517,7 @@ class Admin extends Singleton {
 				printf(
 					'<input type="checkbox" name="%s" value="1" %s class="%s" /> %s</label>',
 					esc_attr( $name ),
-					checked( (bool) $value, true, false ),
+					true === checked( (bool) $value, true, false ),
 					esc_attr( $class ),
 					esc_html( $help )
 				);
@@ -532,13 +532,13 @@ class Admin extends Singleton {
 					'<label><input type="number" name="%s" value="%s" min="%s" max="%s" step="%s" class="%s" /> %s</label>',
 					esc_attr( $name ),
 					esc_attr( $value ),
-					isset( $field['min'] ) ? esc_attr( $field['min'] ) : '',
-					isset( $field['max'] ) ? esc_attr( $field['max'] ) : '',
-					isset( $field['step'] ) ? esc_attr( $field['step'] ) : '1',
+					true === isset( $field['min'] ) ? esc_attr( $field['min'] ) : '',
+					true === isset( $field['max'] ) ? esc_attr( $field['max'] ) : '',
+					true === isset( $field['step'] ) ? esc_attr( $field['step'] ) : '1',
 					esc_attr( $class ),
 					esc_html( $help )
 				);
-				if ( ! empty( $field['desc'] ) ) {
+				if ( false === empty( $field['desc'] ) ) {
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '<p class="description">' . $field['desc'] . '</p>';
 				}
@@ -547,7 +547,7 @@ class Admin extends Singleton {
 			case 'select':
 				echo '<select name="' . esc_attr( $name ) . '">';
 				foreach ( $field['choices'] as $k => $label ) {
-					printf( '<option value="%s" %s>%s</option>', esc_attr( $k ), selected( $value, $k, false ), esc_html( $label ) );
+					printf( '<option value="%s" %s>%s</option>', esc_attr( $k ), true === selected( $value, $k, false ), esc_html( $label ) );
 				}
 				echo '</select>';
 				if ( false === empty( $field['desc'] ) ) {
