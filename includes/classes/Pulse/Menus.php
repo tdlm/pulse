@@ -57,11 +57,11 @@ class Menus extends Pulse {
 
 		Log::log(
 			'menu-created',
-			sprintf( 
-                /* translators: %s: Menu ID. */
-                __( 'Menu "%s" created.', 'pulse' ),
-                $menu_id
-            ),
+			sprintf(
+				/* translators: %s: Menu ID. */
+				__( 'Menu "%s" created.', 'pulse' ),
+				$menu_id
+			),
 			$this->pulse_slug,
 			$menu_id,
 			$current_user->ID,
@@ -79,11 +79,11 @@ class Menus extends Pulse {
 
 		Log::log(
 			'menu-deleted',
-			sprintf( 
-                /* translators: %s: Menu ID. */
-                __( 'Menu "%s" deleted.', 'pulse' ),
-                $menu_id
-            ),
+			sprintf(
+				/* translators: %s: Menu ID. */
+				__( 'Menu "%s" deleted.', 'pulse' ),
+				$menu_id
+			),
 			$this->pulse_slug,
 			$menu_id,
 			$current_user->ID,
@@ -101,11 +101,11 @@ class Menus extends Pulse {
 
 		Log::log(
 			'menu-updated',
-			sprintf( 
-                /* translators: %s: Menu ID. */
-                __( 'Menu "%s" updated.', 'pulse' ),
-                $menu_id
-            ),
+			sprintf(
+				/* translators: %s: Menu ID. */
+				__( 'Menu "%s" updated.', 'pulse' ),
+				$menu_id
+			),
 			$this->pulse_slug,
 			$menu_id,
 			$current_user->ID,

@@ -43,7 +43,7 @@ export type Option = {
 export type UserOption = Option & {
 	id: number;
 	email: string;
-	gravatar_url: string;
+	avatar_urls: string[];
 	name: string;
 };
 

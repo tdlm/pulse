@@ -175,18 +175,19 @@ class Database {
 			$user_info = get_userdata( $user_id );
 
 			$user_object = [
-				'id'           => null,
-				'name'         => null,
-				'email'        => null,
-				'gravatar_url' => null,
+				'id'          => null,
+				'name'        => null,
+				'email'       => null,
+				'avatar_urls' => null,
 			];
 
 			if ( false !== $user_info && true === $user_info instanceof \WP_User ) {
 				$user_object = [
-					'id'           => $user_id,
-					'name'         => $user_info->display_name,
-					'email'        => $user_info->user_email,
-					'gravatar_url' => true === isset( $user_info->user_email ) ? get_avatar_url( $user_info->user_email, [ 'size' => 80 ] ) : '',
+					'avatar_urls' => true === isset( $user_info->user_email ) ? [ 96 => get_avatar_url( $user_info->user_email, [ 'size' => 96 ] ) ] : [],
+					'email'       => $user_info->user_email,
+					'id'          => $user_id,
+					'name'        => $user_info->display_name,
+					'value'       => $user_id,
 				];
 			}
 

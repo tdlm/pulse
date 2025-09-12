@@ -3,14 +3,47 @@
 
 import { __ } from '@wordpress/i18n';
 import React from 'react';
-import Select from 'react-select';
+import AsyncSelect from 'react-select/async';
 import { UserOption } from '../types';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 type FilterUserProps = {
 	userId: number | null;
 	setUserId: ( userId: number | null ) => void;
 	setPaged: ( paged: number ) => void;
 	users: UserOption[];
+};
+
+/**
+ * Load options.
+ *
+ * @param inputValue The input value.
+ * @return The options.
+ */
+const loadOptions = async ( inputValue: string ) => {
+	if ( '' === inputValue ) {
+		return [];
+	}
+
+	if ( 3 > inputValue.length ) {
+		return [];
+	}
+
+	const response = await apiFetch( {
+		path: addQueryArgs( '/wp/v2/users', {
+			search: inputValue,
+		} ),
+		method: 'GET',
+		parse: false,
+	} );
+	const data = await response.json();
+	return data.map( ( user: UserOption ) => ( {
+		avatar_urls: user.avatar_urls,
+		id: user.id,
+		name: user.name,
+		value: user.id,
+	} ) );
 };
 
 /**
@@ -30,24 +63,29 @@ export default function FilterUser( {
 	users,
 }: FilterUserProps ) {
 	return (
-		<Select
+		<AsyncSelect
+			cacheOptions
 			className="user-filter"
+			classNames={ {
+				input: () => 'user-filter-input',
+			} }
+			defaultOptions={ users }
 			defaultValue={ users?.find(
 				( option ) => Number( option.id ) === Number( userId )
 			) }
+			loadOptions={ loadOptions }
 			formatOptionLabel={ ( option: UserOption ) => (
 				<div className="user-option">
-					<img src={ option.gravatar_url } alt="" />
+					<img src={ option.avatar_urls[ 96 ] } alt="" />
 					<span>{ option.name }</span>
 				</div>
 			) }
 			isClearable
-			isSearchable={ false }
+			isSearchable={ true }
 			onChange={ ( option ) => {
 				setUserId( null === option ? null : Number( option?.id ) );
 				setPaged( 1 );
 			} }
-			options={ users }
 			placeholder={ __( 'All users', 'pulse' ) }
 		/>
 	);
