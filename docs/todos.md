@@ -37,16 +37,16 @@
     - [x] Metadata display (JSON format)
     - [x] User information (avatar, roles, IP)
     - [x] Timestamp with relative time
-- [x] CLI
-    - [x] Data export (JSON/CSV via `wp pulse query`)
-        - [ ] Bring up to date with Database::get_records() params
-    - [x] Database reset
-    - [x] Database migration
 - [x] Settings
     - [x] Settings page
     - [x] General configuration options
     - [x] Records reset w/ warning
     - [x] Data retention settings
+- [ ] CLI
+    - [x] Data export (JSON/CSV via `wp pulse query`)
+        - [ ] Bring up to date with Database::get_records() params
+    - [x] Database reset
+    - [x] Database migration
 - [ ] Dashboard
     - [x] Search functionality with debouncing
     - [x] Backend filtering (action, context, ip, pulse, user_id)
@@ -66,7 +66,8 @@
     - [x] Public Log API
     - [ ] Documentation/examples
 - [ ] Object Detail View: View details and history of a particular object (user, post).
-    - [x] Set up page
+    - [x] Set up detail page
+    - [ ] Make detail page pretty
     - [ ] User history view
     - [ ] Post history view
 - [x] Cron
