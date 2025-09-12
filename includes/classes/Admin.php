@@ -33,7 +33,7 @@ class Admin extends Singleton {
 	 *
 	 * @var string
 	 */
-	public $option_key = 'wp-pulse';
+	public static $option_key = 'wp-pulse';
 
 	/**
 	 * Add the menu page.
@@ -424,7 +424,7 @@ class Admin extends Singleton {
 	public function register_settings() {
 		register_setting(
 			'pulse_settings_group',
-			$this->option_key,
+			self::$option_key,
 			[
 				'type'              => 'array',
 				'sanitize_callback' => [ $this, 'sanitize_pulse_options' ],
@@ -456,7 +456,7 @@ class Admin extends Singleton {
 			}
 		}
 
-		$options = get_option( $this->option_key );
+		$options = self::get_setting();
 
 		if ( false === $options ) {
 			$defaults = [];
@@ -471,7 +471,7 @@ class Admin extends Singleton {
 				}
 			}
 
-			update_option( $this->option_key, $defaults );
+			update_option( self::$option_key, $defaults );
 		}
 	}
 
@@ -486,15 +486,14 @@ class Admin extends Singleton {
 		$field = $args['field'];
 		$id    = $field['id'];
 		$type  = $field['type'] ?? 'text';
-		$opts  = get_option( $this->option_key, [] );
+		$opts  = self::get_setting();
 		$tab   = $args['tab'];
 
 		$class = true === isset( $field['class'] ) ? esc_attr( $field['class'] ) : '';
 		$label = true === isset( $field['label'] ) ? esc_html( $field['label'] ) : '';
 		$value = true === isset( $opts[ $tab ][ $id ] ) ? $opts[ $tab ][ $id ] : ( $field['default'] ?? '' );
-		$name  = $this->option_key . '[' . $tab . '][' . $id . ']';
+		$name  = self::$option_key . '[' . $tab . '][' . $id . ']';
 		$help  = true === isset( $field['help'] ) ? esc_html( $field['help'] ) : '';
-		$title = true === isset( $field['title'] ) ? esc_html( $field['title'] ) : '';
 
 		switch ( $type ) {
 			case 'button':
@@ -517,7 +516,7 @@ class Admin extends Singleton {
 				printf(
 					'<input type="checkbox" name="%s" value="1" %s class="%s" /> %s</label>',
 					esc_attr( $name ),
-					true === checked( (bool) $value, true, false ),
+					checked( $value, 1, false ),
 					esc_attr( $class ),
 					esc_html( $help )
 				);
@@ -594,7 +593,7 @@ class Admin extends Singleton {
 		$schema = self::get_settings_schema();
 
 		// Start from existing so other-tab values aren't wiped.
-		$out = get_option( $this->option_key, [] );
+		$out = self::get_setting();
 
 		// Merge the input with the existing options.
 		$merged = array_merge( $out, $input );
@@ -655,6 +654,26 @@ class Admin extends Singleton {
 		}
 
 		return $merged;
+	}
+
+	/**
+	 * Get a setting.
+	 *
+	 * @param string $section The section.
+	 * @param string $key The key.
+	 * @param string $fallback The fallback value.
+	 * @return string
+	 */
+	public static function get_setting( $section = '', $key = '', $fallback = '' ) {
+		$settings = get_option( self::$option_key, [] );
+
+		if ( true === empty( $section ) && true === empty( $key ) ) {
+			return $settings;
+		} elseif ( true === empty( $key ) ) {
+			return $settings[ $section ] ?? $fallback;
+		}
+
+		return true === isset( $settings[ $section ][ $key ] ) ? $settings[ $section ][ $key ] : $fallback;
 	}
 
 	/**

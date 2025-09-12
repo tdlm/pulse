@@ -70,17 +70,18 @@
     - [ ] User history view
     - [ ] Post history view
 - [ ] Multi site compatibility
-- [ ] Cron
-    - [ ] Delete record / meta older than retention date
+- [x] Cron
+    - [x] Delete record / meta older than retention date
 
 ## Technical Debt
 - [x] Add js lint / fixing via wp-scripts
 - [x] Fix TypeScript type error in fetchRecords
 - [ ] Add proper error handling
 - [ ] Improve loading states
-- [ ] Add GitHub action to deploy to WordPress SVN
 - [ ] Split label getters for actions and context
-- [ ] Take care of TODOs
+- [ ] Take care of inline TODOs
+- [ ] Add unit tests
+- [ ] Add GitHub action to deploy to WordPress SVN
 - [ ] Refine icon
 
 ## Pre v1.0.0 Release Checks

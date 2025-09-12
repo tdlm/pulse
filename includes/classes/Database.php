@@ -224,6 +224,32 @@ class Database {
 	}
 
 	/**
+	 * Delete records before days ago.
+	 *
+	 * @param int $days_ago The number of days ago.
+	 * @return void
+	 */
+	public static function delete_records_before_days_ago( $days_ago ) {
+		global $wpdb;
+
+		// Get UTC date.
+		$purge_date = new \DateTime();
+		$purge_date->setTimezone( new \DateTimeZone( 'UTC' ) );
+		$purge_date->modify( '-' . $days_ago . ' days' );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query(
+			$wpdb->prepare(
+				"DELETE pulse, pulse_meta
+				FROM {$wpdb->prefix}pulse AS pulse
+				LEFT JOIN {$wpdb->prefix}pulse_meta AS pulse_meta ON pulse.id = pulse_meta.pulse_id
+				WHERE pulse.created_at_gmt < %s",
+				$purge_date->format( 'Y-m-d H:i:s' )
+			)
+		);
+	}
+
+	/**
 	 * Destroy the tables.
 	 *
 	 * @return void
