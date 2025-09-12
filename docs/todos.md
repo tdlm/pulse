@@ -42,9 +42,9 @@
     - [x] General configuration options
     - [x] Records reset w/ warning
     - [x] Data retention settings
-- [ ] CLI
+- [x] CLI
     - [x] Data export (JSON/CSV via `wp pulse query`)
-        - [ ] Bring up to date with Database::get_records() params
+        - [x] Bring up to date with Database::get_records() params
     - [x] Database reset
     - [x] Database migration
 - [ ] Dashboard
