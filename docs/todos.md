@@ -42,6 +42,11 @@
         - [ ] Bring up to date with Database::get_records() params
     - [x] Database reset
     - [x] Database migration
+- [x] Settings
+    - [x] Settings page
+    - [x] General configuration options
+    - [x] Records reset w/ warning
+    - [x] Data retention settings
 - [ ] Dashboard
     - [x] Search functionality with debouncing
     - [x] Backend filtering (action, context, ip, pulse, user_id)
@@ -55,11 +60,6 @@
     - [x] Pagination using React Query
     - [x] Filter UI components
     - [ ] Web interface export buttons
-- [ ] Settings
-    - [x] Settings page
-    - [x] General configuration options
-    - [x] Records reset w/ warning
-    - [ ] Data retention settings
 - [ ] Developer Integration
     - [x] Base Pulse class for extension
     - [x] Filter hook (`wp_pulse_pulses`) 
@@ -69,16 +69,15 @@
     - [x] Set up page
     - [ ] User history view
     - [ ] Post history view
-- [ ] Multi site compatibility
 - [x] Cron
     - [x] Delete record / meta older than retention date
+- [ ] Multi site compatibility
 
 ## Technical Debt
 - [x] Add js lint / fixing via wp-scripts
 - [x] Fix TypeScript type error in fetchRecords
 - [ ] Add proper error handling
 - [ ] Improve loading states
-- [ ] Split label getters for actions and context
 - [ ] Take care of inline TODOs
 - [ ] Add unit tests
 - [ ] Add GitHub action to deploy to WordPress SVN
