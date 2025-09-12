@@ -19,8 +19,20 @@ class CLI extends \WP_CLI_Command {
 	 *
 	 * ## OPTIONS
 	 *
+	 * [--action=<action>]
+	 * : The action to filter the records by.
+	 *
+	 * [--created_at=<created_at>]
+	 * : The created at to filter the records by.
+	 *
+	 * [--date_range=<date_range>]
+	 * : The date range to filter the records by.
+	 *
 	 * [--format=<format>]
 	 * : The format to use for the output. Valid formats are: table, json, csv, yaml, count.
+	 *
+	 * [--ip=<ip>]
+	 * : The ip to filter the records by.
 	 *
 	 * [--limit=<limit>]
 	 * : The number of records to return.
@@ -34,6 +46,18 @@ class CLI extends \WP_CLI_Command {
 	 * [--order=<order>]
 	 * : The order to sort the records in.
 	 *
+	 * [--pulse=<pulse>]
+	 * : The pulse to filter the records by.
+	 *
+	 * [--pulse_context=<context>]
+	 * : The context to filter the records by.
+	 *
+	 * [--search=<search>]
+	 * : The search to filter the records by.
+	 *
+	 * [--user_id=<user_id>]
+	 * : The user id to filter the records by.
+	 *
 	 * ## EXAMPLES
 	 *
 	 *     wp pulse query
@@ -46,11 +70,20 @@ class CLI extends \WP_CLI_Command {
 		$args = wp_parse_args(
 			$assoc_args,
 			[
-				'format'  => 'table',
-				'limit'   => 20,
-				'offset'  => 0,
-				'orderby' => 'created_at_gmt',
-				'order'   => 'desc',
+				'action'        => '',
+				'created_at'    => '',
+				'date_range'    => '',
+				'format'        => 'table',
+				'id'            => '',
+				'ip'            => '',
+				'limit'         => 20,
+				'offset'        => 0,
+				'order'         => 'desc',
+				'orderby'       => 'created_at_gmt',
+				'pulse_context' => '',
+				'pulse'         => '',
+				'search'        => '',
+				'user_id'       => '',
 			]
 		);
 
@@ -72,13 +105,34 @@ class CLI extends \WP_CLI_Command {
 
 		$records = Database::get_records(
 			[
-				'limit'   => $args['limit'],
-				'offset'  => $args['offset'],
-				'orderby' => $args['orderby'],
-				'order'   => $args['order'],
+				'action'     => $args['action'],
+				'context'    => $args['pulse_context'],
+				'created_at' => $args['created_at'],
+				'date_range' => $args['date_range'],
+				'id'         => $args['id'],
+				'ip'         => $args['ip'],
+				'limit'      => $args['limit'],
+				'offset'     => $args['offset'],
+				'order'      => $args['order'],
+				'orderby'    => $args['orderby'],
+				'pulse'      => $args['pulse'],
+				'search'     => $args['search'],
+				'user_id'    => $args['user_id'],
 			]
 		);
 
-		\WP_CLI\Utils\format_items( $args['format'], $records, [ 'id', 'user_id', 'action', 'created_at_gmt' ] );
+		\WP_CLI\Utils\format_items(
+			$args['format'],
+			$records['items'],
+			[
+				'id',
+				'user_id',
+				'action',
+				'description',
+				'ip',
+				'created_at',
+				'created_at_gmt',
+			]
+		);
 	}
 }
