@@ -27,11 +27,25 @@ class API extends Singleton {
 	public static function init() {
 		self::set_api_routes(
 			[
+				'export'         => [
+					[
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => [ self::class, 'export' ],
+						'permission_callback' => [ self::class, 'export_permission_callback' ],
+					],
+				],
+				'export/download' => [
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => [ self::class, 'export_download' ],
+						'permission_callback' => '__return_true', // No need to check for permission.
+					],
+				],
 				'records'        => [
 					[
 						'methods'             => \WP_REST_Server::READABLE,
 						'callback'            => [ self::class, 'get_records' ],
-						'permission_callback' => '__return_true',
+						'permission_callback' => [ self::class, 'get_records_permission_callback' ],
 						'args'                => [],
 					],
 				],
@@ -44,6 +58,137 @@ class API extends Singleton {
 				],
 			],
 		);
+	}
+
+	/**
+	 * Export.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return \WP_REST_Response
+	 */
+	public static function export( \WP_REST_Request $request ) {
+		$args = $request->get_params();
+
+		$parsed_args = wp_parse_args(
+			$args,
+			[
+				'filters' => [],
+				'selectedFields' => [],
+				'exportType' => 'csv',
+			]
+		);
+
+		$filters = $parsed_args['filters'] ?? [];
+		$selected_fields = $parsed_args['selectedFields'] ?? [];
+		$export_type = $parsed_args['exportType'] ?? 'csv';
+
+		// TODO: Change this so no limit is actually no limit.
+		$filters = array_merge($filters, ['limit' => 9999999999999999]);
+
+		$records = Database::get_records($filters);
+
+		// Generate file content based on export type.
+		$file_content = '';
+		$file_extension = '';
+		$mime_type = '';
+
+		switch ( $export_type ) {
+			case 'json':
+				// Filter records to only include selected fields.
+				$filtered_records = [];
+				foreach ( $records['items'] as $record ) {
+					$filtered_record = [];
+					foreach ( $selected_fields as $field ) {
+						$filtered_record[ $field ] = $record->$field ?? '';
+					}
+					$filtered_records[] = $filtered_record;
+				}
+				
+				$file_content = wp_json_encode( $filtered_records, JSON_PRETTY_PRINT );
+				$file_extension = 'json';
+				$mime_type = 'application/json';
+				break;
+
+			case 'csv':
+			default:
+				// Generate CSV content in memory.
+				$output = fopen('php://temp', 'r+');
+				fputcsv($output, $selected_fields);
+
+				foreach ($records['items'] as $record) {
+					$row = [];
+					foreach ($selected_fields as $field) {
+						$row[] = $record->$field ?? '';
+					}
+					fputcsv($output, $row);
+				}
+
+				// Get the CSV content.
+				rewind($output);
+				$file_content = stream_get_contents($output);
+				fclose($output);
+				
+				$file_extension = 'csv';
+				$mime_type = 'text/csv';
+				break;
+		}
+
+		// Store export data temporarily and return download URL
+		$export_id = wp_generate_uuid4();
+		$export_data = [
+			'filename' => 'pulse-export-' . date('Y-m-d-H-i-s') . '.' . $file_extension,
+			'content' => $file_content,
+			'mimeType' => $mime_type,
+			'expires' => time() + 300, // 5 minutes.
+		];
+		
+		// Store in transient (or could use wp_options for persistence).
+		set_transient( 'pulse_export_' . $export_id, $export_data, 300 );
+
+		return new \WP_REST_Response(
+			[
+				'downloadUrl' => rest_url( 'wp-pulse/v1/export/download?id=' . $export_id ),
+				'filename' => $export_data['filename'],
+				'size' => strlen($file_content),
+			],
+			200
+		);
+	}
+
+	/**
+	 * Download export file directly.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return void
+	 */
+	public static function export_download( \WP_REST_Request $request ) {
+		$export_id = $request->get_param( 'id' );
+		
+		if ( true === empty( $export_id ) ) {
+			status_header( 400 );
+			die( 'Missing export ID' );
+		}
+
+		$export_data = get_transient( 'pulse_export_' . $export_id );
+		
+		if ( false === $export_data ) {
+			status_header( 404 );
+			die( 'Export not found or expired' );
+		}
+
+		// Delete the transient after use.
+		delete_transient( 'pulse_export_' . $export_id );
+
+		// Set headers for file download.
+		header( 'Content-Type: ' . $export_data['mimeType'] );
+		header( 'Content-Disposition: attachment; filename="' . $export_data['filename'] . '"' );
+		header( 'Content-Length: ' . strlen( $export_data['content'] ) );
+		header( 'Pragma: no-cache' );
+		header( 'Expires: 0' );
+
+		// Output file content.
+		echo $export_data['content'];
+		exit;
 	}
 
 	/**
@@ -121,6 +266,24 @@ class API extends Singleton {
 				'message' => 'Pulse database reset.',
 			]
 		);
+	}
+
+	/**
+	 * Export permission callback.
+	 *
+	 * @return bool
+	 */
+	public static function export_permission_callback() {
+		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * Get records permission callback.
+	 *
+	 * @return bool
+	 */
+	public static function get_records_permission_callback() {
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
