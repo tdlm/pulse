@@ -15,6 +15,7 @@
     "env:shell": "wp-env run cli bash",
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",
+    "env:tail": "npx wp-env run cli tail -f wp-content/debug.log",
     "format-js": "wp-scripts lint-js assets/src/js/ --fix",
     "format-php": "npm run composer fix",
     "lang:i18n": "wp-env run cli wp i18n make-pot wp-content/plugins/pulse/ wp-content/plugins/pulse/languages/pulse-en_US.po --exclude=assets/build,node_modules,vendor",

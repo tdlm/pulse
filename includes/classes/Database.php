@@ -90,7 +90,11 @@ class Database {
 			$query .= ' WHERE ' . implode( ' AND ', $where_clauses );
 		}
 
-		$query .= " ORDER BY {$args['orderby']} {$args['order']} LIMIT %d OFFSET %d";
+		$query .= " ORDER BY {$args['orderby']} {$args['order']}";
+
+		if ( true === isset( $args['limit'] ) && false === is_null( $args['limit'] ) && '' !== $args['limit'] && -1 !== $args['limit'] ) {
+			$query .= ' LIMIT %d OFFSET %d';
+		}
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $query, $args['limit'], $args['offset'] ) );
