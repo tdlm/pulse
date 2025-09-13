@@ -110,27 +110,22 @@ class API extends Singleton {
 
 			case 'csv':
 			default:
-				// Generate CSV content in memory.
+				// Generate CSV content using string building (WordPress-friendly).
+				$csv_rows = [];
 
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
-				$output = fopen( 'php://temp', 'r+' );
-				fputcsv( $output, $selected_fields );
+				// Add header row.
+				$csv_rows[] = self::array_to_csv_row( $selected_fields );
 
+				// Add data rows.
 				foreach ( $records['items'] as $record ) {
 					$row = [];
 					foreach ( $selected_fields as $field ) {
 						$row[] = $record->$field ?? '';
 					}
-					fputcsv( $output, $row );
+					$csv_rows[] = self::array_to_csv_row( $row );
 				}
 
-				// Get the CSV content.
-				rewind( $output );
-				$file_content = stream_get_contents( $output );
-
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
-				fclose( $output );
-
+				$file_content   = implode( "\n", $csv_rows );
 				$file_extension = 'csv';
 				$mime_type      = 'text/csv';
 				break;
@@ -278,7 +273,7 @@ class API extends Singleton {
 	 * @return bool
 	 */
 	public static function export_permission_callback() {
-		return current_user_can( 'manage_options' );
+		return true === current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -287,7 +282,90 @@ class API extends Singleton {
 	 * @return bool
 	 */
 	public static function get_records_permission_callback() {
-		return current_user_can( 'manage_options' );
+		return true === current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * Convert array to CSV row string.
+	 *
+	 * @param array $data The data array.
+	 * @return string The CSV row string.
+	 */
+	private static function array_to_csv_row( array $data ): string {
+		$escaped_data = [];
+
+		foreach ( $data as $field ) {
+			$field = (string) $field;
+
+			// Escape quotes by doubling them.
+			$field = str_replace( '"', '""', $field );
+
+			// Wrap in quotes if field contains comma, quote, or newline.
+			if ( strpos( $field, ',' ) !== false || strpos( $field, '"' ) !== false || strpos( $field, "\n" ) !== false || strpos( $field, "\r" ) !== false ) {
+				$field = '"' . $field . '"';
+			}
+
+			$escaped_data[] = $field;
+		}
+
+		return implode( ',', $escaped_data );
+	}
+
+	/**
+	 * Generate CSV using WP_Filesystem (alternative approach).
+	 *
+	 * @param array $records The records to export.
+	 * @param array $selected_fields The selected fields.
+	 * @return string|false The CSV content or false on failure.
+	 */
+	private static function generate_csv_with_wp_filesystem( array $records, array $selected_fields ) {
+		// Initialize WP_Filesystem.
+		if ( false === function_exists( 'WP_Filesystem' ) ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		$access_type = get_filesystem_method();
+		if ( 'direct' !== $access_type ) {
+			// Can't use WP_Filesystem without credentials for non-direct methods.
+			return false;
+		}
+
+		WP_Filesystem();
+		global $wp_filesystem;
+
+		// Create temporary file.
+		$temp_file = wp_tempnam( 'pulse_export_' );
+
+		if ( true === empty( $temp_file ) ) {
+			return false;
+		}
+
+		// Write CSV header.
+		$csv_content = self::array_to_csv_row( $selected_fields ) . "\n";
+
+		// Write CSV data.
+		foreach ( $records as $record ) {
+			$row = [];
+			foreach ( $selected_fields as $field ) {
+				$row[] = $record->$field ?? '';
+			}
+			$csv_content .= self::array_to_csv_row( $row ) . "\n";
+		}
+
+		// Write to temporary file.
+		if ( false === $wp_filesystem->put_contents( $temp_file, $csv_content ) ) {
+			wp_delete_file( $temp_file );
+			return false;
+		}
+
+		// Read content back.
+		$file_content = $wp_filesystem->get_contents( $temp_file );
+
+		// Clean up temporary file.
+		wp_delete_file( $temp_file );
+
+		return $file_content;
 	}
 
 	/**
