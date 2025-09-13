@@ -39,6 +39,7 @@
     "@tanstack/react-query-devtools": "^5.87.4",
     "@types/moment": "^2.13.0",
     "@types/wordpress__api-fetch": "^3.2.4",
+    "@types/wordpress__components": "^23.0.12",
     "@types/wordpress__element": "^2.4.1",
     "@types/wordpress__i18n": "^3.4.0",
     "@types/wordpress__url": "^2.3.0",
@@ -58,6 +59,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "nuqs": "^2.6.0",
+    "react-icons": "^5.5.0",
     "react-select": "^5.10.2",
     "react-timeago": "^8.3.0"
   }
