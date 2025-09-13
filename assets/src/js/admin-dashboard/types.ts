@@ -3,6 +3,19 @@ export type PulseLink = {
 	link: string;
 };
 
+export type Filters = {
+	action?: string;
+	context?: string;
+	created_at?: string;
+	date_range?: string;
+	ip?: string;
+	offset?: number;
+	order_by?: string;
+	order?: string;
+	pulse?: string;
+	user_id?: number;
+};
+
 export type Record = {
 	id: number;
 	created_at: string;

@@ -82,6 +82,21 @@ body.wp-pulse .wrap h1 {
         width: 64px;
     }
 
+    .pulse-export-actions {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        button {
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
     .pulse-table {
         border-collapse: collapse;
         max-width: 100%;

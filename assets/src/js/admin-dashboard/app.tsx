@@ -1,4 +1,4 @@
-/// <reference path="../admin-dashboard/types.d.ts" />
+/// <reference path="../admin-dashboard/globals.d.ts" />
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable camelcase */
@@ -8,9 +8,17 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 import { useQueryState } from 'nuqs';
 import React, { useEffect, useState } from 'react';
+
+// Types.
+import { Filters } from './types';
+
+// Hooks.
 import useFetchRecords from '../lib/useFetchRecords';
+
+// Components.
 import ColumnRow from './components/column-row';
 import DataRow from './components/data-row';
+import ExportModal from './components/export-modal';
 import FilterDate from './components/filter-date';
 import FilterUser from './components/filter-user';
 import Pagination from './components/pagination';
@@ -83,6 +91,18 @@ export default function AdminDashboardApp() {
 		defaultValue: null,
 		parse: ( value ) => Number( value ),
 	} );
+
+	const filters = {
+		action,
+		context,
+		created_at,
+		date_range,
+		ip,
+		order_by,
+		order,
+		pulse,
+		user_id,
+	} as Filters;
 
 	const debouncedSearch = useDebounce( search, 350 );
 
@@ -259,24 +279,16 @@ export default function AdminDashboardApp() {
 				</tfoot>
 			</table>
 			<div className="tablenav bottom">
-				<div className="alignleft actions hidden">
-					<select name="action2" id="bulk-action-selector-bottom">
-						<option value="-1">
-							{ __( 'Export Actions', 'pulse' ) }
-						</option>
-						<option value="csv">
-							{ __( 'Download CSV', 'pulse' ) }
-						</option>
-						<option value="json">
-							{ __( 'Download JSON', 'pulse' ) }
-						</option>
-					</select>
-					<input
-						type="submit"
-						name="bulk_action"
-						id="doaction2"
-						className="button action"
-						value={ __( 'Apply', 'pulse' ) }
+				<div className="alignleft actions pulse-export-actions">
+					<ExportModal
+						exportType="csv"
+						filters={ filters }
+						label={ __( 'Export CSV', 'pulse' ) }
+					/>
+					<ExportModal
+						exportType="json"
+						filters={ filters }
+						label={ __( 'Export JSON', 'pulse' ) }
 					/>
 				</div>
 
