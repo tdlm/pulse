@@ -47,7 +47,7 @@
         - [x] Bring up to date with Database::get_records() params
     - [x] Database reset
     - [x] Database migration
-- [ ] Dashboard
+- [x] Dashboard
     - [x] Search functionality with debouncing
     - [x] Backend filtering (action, context, ip, pulse, user_id)
     - [x] Table view of activity records
@@ -59,7 +59,7 @@
     - [x] UI filter controls/dropdowns using React Query
     - [x] Pagination using React Query
     - [x] Filter UI components
-    - [ ] Web interface export buttons
+    - [x] Web interface export buttons
 - [ ] Developer Integration
     - [x] Base Pulse class for extension
     - [x] Filter hook (`wp_pulse_pulses`) 
