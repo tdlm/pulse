@@ -1,4 +1,4 @@
-/// <reference path="../admin-dashboard/types.d.ts" />
+/// <reference path="../admin-dashboard/globals.d.ts" />
 /* eslint-disable camelcase */
 import { useQuery } from '@tanstack/react-query';
 import fetchRecords from './fetchRecords';
