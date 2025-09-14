@@ -42,7 +42,14 @@ class Menus extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
-			'menu-created' => __( 'Created', 'pulse' ),
+			'footer-menu'    => __( 'Footer Menu', 'pulse' ),
+			'menu-created'   => __( 'Created', 'pulse' ),
+			'menu-deleted'   => __( 'Deleted', 'pulse' ),
+			'menu-updated'   => __( 'Updated', 'pulse' ),
+			'menu'           => __( 'Menu', 'pulse' ),
+			'menus'          => __( 'Menus', 'pulse' ),
+			'primary-menu'   => __( 'Primary Menu', 'pulse' ),
+			'secondary-menu' => __( 'Secondary Menu', 'pulse' ),
 		];
 	}
 
@@ -55,16 +62,19 @@ class Menus extends Pulse {
 	public function callback_wp_create_nav_menu( $menu_id ) {
 		$current_user = wp_get_current_user();
 
+		$menu = get_term( $menu_id, 'nav_menu' );
+
 		Log::log(
 			'menu-created',
 			sprintf(
 				/* translators: %s: Menu ID. */
 				__( 'Menu "%s" created.', 'pulse' ),
-				$menu_id
+				$menu->name
 			),
 			$this->pulse_slug,
-			$menu_id,
+			$menu->name,
 			$current_user->ID,
+			$menu_id,
 		);
 	}
 
@@ -77,38 +87,54 @@ class Menus extends Pulse {
 	public function callback_delete_nav_menu( $menu_id ) {
 		$current_user = wp_get_current_user();
 
+		$menu = get_term( $menu_id, 'nav_menu' );
+
 		Log::log(
 			'menu-deleted',
 			sprintf(
 				/* translators: %s: Menu ID. */
 				__( 'Menu "%s" deleted.', 'pulse' ),
-				$menu_id
+				$menu->name
 			),
 			$this->pulse_slug,
-			$menu_id,
+			$menu->name,
 			$current_user->ID,
+			$menu_id,
 		);
 	}
 
 	/**
 	 * Callback for wp_update_nav_menu.
 	 *
-	 * @param int $menu_id The menu ID.
+	 * @param array ...$args The arguments.
 	 * @return void
 	 */
-	public function callback_wp_update_nav_menu( $menu_id ) {
+	public function callback_wp_update_nav_menu( ...$args ) {
 		$current_user = wp_get_current_user();
+
+		// Extract args this way since we sporadically get the menu data.
+		$menu_id   = $args[0] ?? null;
+		$menu_data = $args[1] ?? [];
+
+		// If we don't have a menu ID, we don't care.
+		if ( true === empty( $menu_id ) ) {
+			return;
+		}
+
+		$menu = get_term( $menu_id, 'nav_menu' );
 
 		Log::log(
 			'menu-updated',
 			sprintf(
 				/* translators: %s: Menu ID. */
 				__( 'Menu "%s" updated.', 'pulse' ),
-				$menu_id
+				$menu->name
 			),
 			$this->pulse_slug,
-			$menu_id,
+			$menu->slug,
 			$current_user->ID,
+			$menu_id,
+			$menu_data
 		);
 	}
 }
