@@ -15,6 +15,9 @@ declare global {
         value: string;
       }>;
       record: Record;
+      settings: {
+        admin_url: string;
+      };
     };
   }
 }

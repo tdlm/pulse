@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { __ } from '@wordpress/i18n';
 import React, { useState } from 'react';
+import { addQueryArgs } from '@wordpress/url';
 import { createRoot } from 'react-dom/client';
 import './admin-dashboard/globals.d.ts';
 
@@ -18,11 +19,11 @@ function PulseDetailApp() {
 
 	return (
 		<>
-			<table className="form-table">
+			<table className="form-table striped">
 				<tbody>
 					<tr>
 						<th scope="row">
-							<label htmlFor="pulse-id">
+							<label>
 								{ __( 'Pulse ID', 'pulse' ) }
 							</label>
 						</th>
@@ -30,43 +31,130 @@ function PulseDetailApp() {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label htmlFor="pulse-id">
+							<label>
+								{ __( 'Date', 'pulse' ) }
+							</label>
+						</th>
+						<td>{ record.created_at }</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label>
+								{ __( 'Pulse', 'pulse' ) }
+							</label>
+						</th>
+						<td>
+							<a
+								href={ addQueryArgs(
+									window.PulseAdminPulseDetail.settings
+										.admin_url,
+									{ page: 'wp-pulse', pulse: record.pulse }
+								) }
+							>
+								{ record.pulse_label }
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label>
 								{ __( 'Action', 'pulse' ) }
 							</label>
 						</th>
-						<td>{ record.action }</td>
+						<td>
+							<a
+								href={ addQueryArgs(
+									window.PulseAdminPulseDetail.settings
+										.admin_url,
+									{ page: 'wp-pulse', action: record.action }
+								) }
+							>
+								{ record.action_label }
+							</a>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label htmlFor="pulse-id">
+							<label>
 								{ __( 'Context', 'pulse' ) }
 							</label>
 						</th>
-						<td>{ record.context }</td>
+						<td>
+							<a
+								href={ addQueryArgs(
+									window.PulseAdminPulseDetail.settings
+										.admin_url,
+									{
+										page: 'wp-pulse',
+										pulse: record.pulse,
+										context: record.context,
+									}
+								) }
+							>
+								{ record.context_label }
+							</a>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label htmlFor="pulse-id">
+							<label>
 								{ __( 'Description', 'pulse' ) }
 							</label>
 						</th>
 						<td>{ record.description }</td>
 					</tr>
+
+					{ record.user_id && record.display_name && (
+						<tr>
+							<th scope="row">
+								<label>
+									{ __( 'Action done by', 'pulse' ) }
+								</label>
+							</th>
+							<td>
+								<a
+									href={ addQueryArgs(
+										window.PulseAdminPulseDetail.settings
+											.admin_url,
+										{
+											page: 'wp-pulse',
+											user_id: record.user_id,
+										}
+									) }
+								>
+									{ record.display_name }
+								</a>
+								{' '}(
+								<a
+									href={ addQueryArgs(
+										window.PulseAdminPulseDetail.settings
+											.admin_url + 'user-edit.php',
+										{ user_id: record.user_id }
+									) }
+								>
+									Edit User
+								</a>
+								)
+							</td>
+						</tr>
+					) }
 					<tr>
 						<th scope="row">
-							<label htmlFor="pulse-id">
-								{ __( 'User', 'pulse' ) }
-							</label>
-						</th>
-						<td>{ record.user_id }</td>
-					</tr>
-					<tr>
-						<th scope="row">
-							<label htmlFor="pulse-id">
+							<label>
 								{ __( 'IP', 'pulse' ) }
 							</label>
 						</th>
-						<td>{ record.ip }</td>
+						<td>
+							<a
+								href={ addQueryArgs(
+									window.PulseAdminPulseDetail.settings
+										.admin_url,
+									{ page: 'wp-pulse', ip: record.ip }
+								) }
+							>
+								{ record.ip }
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -74,12 +162,12 @@ function PulseDetailApp() {
 			{ Object.keys( meta ?? {} ).length > 0 && (
 				<>
 					<h2>{ __( 'Meta', 'pulse' ) }</h2>
-					<table className="form-table">
+					<table className="form-table striped">
 						<tbody>
 							{ Object.keys( meta ?? {} ).map( ( key ) => (
 								<tr key={ key }>
 									<th scope="row">
-										<label htmlFor="pulse-id">
+										<label>
 											{ key }
 										</label>
 									</th>

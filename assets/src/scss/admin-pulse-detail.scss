@@ -1,0 +1,21 @@
+#pulse-detail-container {
+    .form-table {
+        margin-top: 0;
+
+        th,
+        td {
+            padding: 0.5rem 0;
+        }
+    }
+
+    h2 {
+        background: #f0f6fc;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: inset 0 -1px 0 #dcdcde,
+                    inset 0 -1px 0 #dcdcde;
+        margin-bottom: 0;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+        transform: translateX(-0.5rem);
+        width: calc(100%);
+    }
+}

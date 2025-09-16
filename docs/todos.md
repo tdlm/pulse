@@ -67,7 +67,7 @@
     - [ ] Documentation/examples
 - [ ] Object Detail View: View details and history of a particular object (user, post).
     - [x] Set up detail page
-    - [ ] Make detail page pretty
+    - [x] Make detail page pretty
     - [ ] User history view
     - [ ] Post history view
 - [x] Cron
