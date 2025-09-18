@@ -1,8 +1,8 @@
 /// <reference path="../admin-dashboard/globals.d.ts" />
 /* eslint-disable camelcase */
 import { useQuery } from '@tanstack/react-query';
-import fetchRecords from './fetchRecords';
 import { Records } from '../admin-dashboard/types';
+import fetchRecords from './fetchRecords';
 
 /**
  * Use fetch records.
