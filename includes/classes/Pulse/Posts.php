@@ -41,6 +41,8 @@ class Posts extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
+			'custom_css'               => __( 'Custom CSS', 'pulse' ),
+			'customize_changeset'      => __( 'Customize Changeset', 'pulse' ),
 			'post-deleted'             => __( 'Deleted', 'pulse' ),
 			'post-draft-saved'         => __( 'Draft Saved', 'pulse' ),
 			'post-drafted'             => __( 'Drafted', 'pulse' ),
