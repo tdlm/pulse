@@ -42,7 +42,7 @@ class Posts extends Pulse {
 	public static function get_labels() {
 		return [
 			'custom_css'               => __( 'Custom CSS', 'pulse' ),
-			'customize_changeset'      => __( 'Customize Changeset', 'pulse' ),
+			'customize_changeset'      => __( 'Changeset', 'pulse' ),
 			'post-deleted'             => __( 'Deleted', 'pulse' ),
 			'post-draft-saved'         => __( 'Draft Saved', 'pulse' ),
 			'post-drafted'             => __( 'Drafted', 'pulse' ),
@@ -77,16 +77,58 @@ class Posts extends Pulse {
 			return $links;
 		}
 
-		$edit_media_link = get_edit_post_link( $record->object_id );
+		$post = get_post( $record->object_id );
 
-		if ( false === empty( $edit_media_link ) ) {
-			$links[ __( 'Edit', 'pulse' ) ] = html_entity_decode( $edit_media_link, ENT_QUOTES | ENT_HTML5 );
+		if ( false === $post instanceof \WP_Post ) {
+			return $links;
 		}
 
-		$permalink = get_permalink( $record->object_id );
+		if ( true === isset( $record->meta['new_status'] ) && $post->post_status !== $record->meta['new_status'] ) {
+			return $links;
+		}
 
-		if ( false === empty( $permalink ) ) {
-			$links[ __( 'View', 'pulse' ) ] = html_entity_decode( $permalink, ENT_QUOTES | ENT_HTML5 );
+		switch ( $post->post_status ) {
+			case 'trash':
+				$post_type_label = \WP_Pulse\Helpers\Post\get_post_type_label( $post->post_type );
+
+				$untrash_post = wp_nonce_url(
+					add_query_arg(
+						array(
+							'action' => 'untrash',
+							'post'   => $post->ID,
+						),
+						admin_url( 'post.php' )
+					),
+					sprintf( 'untrash-post_%d', $post->ID )
+				);
+
+				$delete_post = wp_nonce_url(
+					add_query_arg(
+						array(
+							'action' => 'delete',
+							'post'   => $post->ID,
+						),
+						admin_url( 'post.php' )
+					),
+					sprintf( 'delete-post_%d', $post->ID )
+				);
+
+				$links[ sprintf( __( 'Restore %s', 'pulse' ), $post_type_label ) ] = $untrash_post;
+				$links[ sprintf( __( 'Delete %s', 'pulse' ), $post_type_label ) ] = $delete_post;
+				break;
+			default:
+				$edit_post_link = get_edit_post_link( $record->object_id );
+
+				if ( false === empty( $edit_post_link ) ) {
+					$links[ __( 'Edit', 'pulse' ) ] = $edit_post_link;
+				}
+
+				$permalink = get_permalink( $record->object_id );
+
+				if ( false === empty( $permalink ) ) {
+					$links[ __( 'View', 'pulse' ) ] = $permalink;
+				}
+				break;
 		}
 
 		return $links;
