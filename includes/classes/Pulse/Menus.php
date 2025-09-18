@@ -42,15 +42,43 @@ class Menus extends Pulse {
 	 */
 	public static function get_labels() {
 		return [
+			'footer'         => __( 'Footer', 'pulse' ),
 			'footer-menu'    => __( 'Footer Menu', 'pulse' ),
 			'menu-created'   => __( 'Created', 'pulse' ),
 			'menu-deleted'   => __( 'Deleted', 'pulse' ),
 			'menu-updated'   => __( 'Updated', 'pulse' ),
 			'menu'           => __( 'Menu', 'pulse' ),
 			'menus'          => __( 'Menus', 'pulse' ),
+			'primary'        => __( 'Primary', 'pulse' ),
 			'primary-menu'   => __( 'Primary Menu', 'pulse' ),
+			'secondary'      => __( 'Secondary', 'pulse' ),
 			'secondary-menu' => __( 'Secondary Menu', 'pulse' ),
 		];
+	}
+
+	/**
+	 * Get links.
+	 *
+	 * @param object $record The pulse record.
+	 *
+	 * @return array The links.
+	 */
+	public static function get_links( $record ) {
+		$links = [];
+
+		if ( false === isset( $record->object_id ) ) {
+			return $links;
+		}
+
+		$menu = get_term( $record->object_id, 'nav_menu' );
+
+		if ( false === $menu instanceof \WP_Term ) {
+			return $links;
+		}
+
+		$links[ __( 'Edit Menu', 'pulse' ) ] = admin_url( 'nav-menus.php?action=edit&menu=' . $record->object_id );
+
+		return $links;
 	}
 
 	/**
@@ -72,7 +100,7 @@ class Menus extends Pulse {
 				$menu->name
 			),
 			$this->pulse_slug,
-			$menu->name,
+			strtolower( $menu->name ),
 			$current_user->ID,
 			$menu_id,
 		);
@@ -97,7 +125,7 @@ class Menus extends Pulse {
 				$menu->name
 			),
 			$this->pulse_slug,
-			$menu->name,
+			strtolower( $menu->name ),
 			$current_user->ID,
 			$menu_id,
 		);
@@ -121,6 +149,11 @@ class Menus extends Pulse {
 			return;
 		}
 
+		// If we don't have menu data, we don't care.
+		if ( true === empty( $menu_data ) ) {
+			return;
+		}
+
 		$menu = get_term( $menu_id, 'nav_menu' );
 
 		Log::log(
@@ -131,7 +164,7 @@ class Menus extends Pulse {
 				$menu->name
 			),
 			$this->pulse_slug,
-			$menu->slug,
+			strtolower( $menu->name ),
 			$current_user->ID,
 			$menu_id,
 			$menu_data

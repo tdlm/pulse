@@ -91,42 +91,49 @@ class Posts extends Pulse {
 			case 'trash':
 				$post_type_label = \WP_Pulse\Helpers\Post\get_post_type_label( $post->post_type );
 
-				$untrash_post = wp_nonce_url(
+				$links[ sprintf(
+					/* translators: %s: Post type label. */
+					__( 'Restore %s', 'pulse' ),
+					$post_type_label
+				) ] = wp_nonce_url(
 					add_query_arg(
-						array(
+						[
 							'action' => 'untrash',
 							'post'   => $post->ID,
-						),
+						],
 						admin_url( 'post.php' )
 					),
 					sprintf( 'untrash-post_%d', $post->ID )
 				);
 
-				$delete_post = wp_nonce_url(
+				$links[ sprintf(
+					/* translators: %s: Post type label. */
+					__( 'Delete %s', 'pulse' ),
+					$post_type_label
+				) ] = wp_nonce_url(
 					add_query_arg(
-						array(
+						[
 							'action' => 'delete',
 							'post'   => $post->ID,
-						),
+						],
 						admin_url( 'post.php' )
 					),
 					sprintf( 'delete-post_%d', $post->ID )
 				);
-
-				$links[ sprintf( __( 'Restore %s', 'pulse' ), $post_type_label ) ] = $untrash_post;
-				$links[ sprintf( __( 'Delete %s', 'pulse' ), $post_type_label ) ] = $delete_post;
 				break;
 			default:
 				$edit_post_link = get_edit_post_link( $record->object_id );
 
 				if ( false === empty( $edit_post_link ) ) {
-					$links[ __( 'Edit', 'pulse' ) ] = $edit_post_link;
+					$links[ /* translators: %s: Post type label. */
+						__( 'Edit', 'pulse' ) ] = $edit_post_link;
 				}
 
 				$permalink = get_permalink( $record->object_id );
 
 				if ( false === empty( $permalink ) ) {
-					$links[ __( 'View', 'pulse' ) ] = $permalink;
+					$links[ /* translators: %s: Post type label. */
+						__( 'View', 'pulse' ) ] = $permalink;
 				}
 				break;
 		}
