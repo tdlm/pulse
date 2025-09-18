@@ -277,16 +277,14 @@ class Admin extends Singleton {
 
 		$meta = Database::get_record_meta( $pulse_id );
 
-		error_log( print_r( compact( 'record', 'meta' ), true ) );
-
 		Helpers\Media\enqueue_script(
 			'pulse/admin-pulse-detail.tsx',
 			[
 				[
 					'object_name' => 'PulseAdminPulseDetail',
 					'value'       => [
-						'record' => $record,
-						'meta'   => $meta,
+						'record'   => $record,
+						'meta'     => $meta,
 						'settings' => [
 							'admin_url' => admin_url(),
 						],
