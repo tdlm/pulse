@@ -145,10 +145,19 @@ class Database {
 				$links = call_user_func( [ 'WP_Pulse\\Pulse\\' . $pulse, 'get_links' ], $result );
 			}
 
+			// Add details link.
 			$links = array_merge(
 				[
 					'Details' => add_query_arg( [ 'pulse_id' => $result->id ], admin_url( 'admin.php?page=wp-pulse' ) ),
 				],
+				$links
+			);
+
+			// Decode links.
+			$links = array_map(
+				function ( $link ) {
+					return html_entity_decode( $link, ENT_QUOTES | ENT_HTML5 );
+				},
 				$links
 			);
 
